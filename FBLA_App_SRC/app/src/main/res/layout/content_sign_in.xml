@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fbla.com.fbla_app_src.signIn"
+    tools:showIn="@layout/activity_sign_in"
+    android:background="@drawable/bckg_1">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logoLogin"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/colorsuit"
+        android:layout_marginTop="25dp" />
+
+    <EditText
+        android:layout_width="265dp"
+        android:layout_height="35dp"
+        android:inputType="textPersonName"
+        android:hint="Email"
+        android:textColorHint="#ffffff"
+        android:ems="10"
+        android:id="@+id/userNameLogin"
+        android:layout_below="@+id/logoLogin"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/mybutton2"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:textSize="20sp"
+        />
+    <EditText
+        android:layout_width="265dp"
+        android:layout_height="35dp"
+        android:inputType="textPersonName"
+        android:hint="Password"
+        android:textColorHint="#ffffff"
+        android:ems="10"
+        android:id="@+id/passwordLogin"
+        android:layout_below="@+id/userNameLogin"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/mybutton2"
+        android:gravity="center"
+        android:layout_marginTop="13dp"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:layout_width="265dp"
+        android:layout_height="35dp"
+        android:text="Sign in"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:id="@+id/signInButton"
+        android:textAllCaps="false"
+        android:layout_below="@+id/passwordLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/mybutton"/>
+    <View
+        android:layout_width="115dp"
+        android:layout_height="4dp"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/view"
+        android:layout_alignLeft="@+id/signInButton"
+        android:layout_alignStart="@+id/signInButton"
+        android:layout_alignTop="@+id/view2" />
+    <View
+        android:layout_width="115dp"
+        android:layout_height="4dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/signInButton"
+        android:layout_alignRight="@+id/signInButton"
+
+        android:layout_marginTop="31dp"
+        android:id="@+id/view2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="OR"
+        android:textColor="#ffffff"
+        android:layout_marginTop="56dp"
+        android:id="@+id/textView2"
+        android:layout_alignTop="@id/signInButton"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:layout_width="265dp"
+        android:layout_height="35dp"
+        android:text="Sign in with Twitter"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:id="@+id/facebookSignIn"
+        android:textAllCaps="false"
+        android:layout_below="@+id/twitterSignIn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/mybutton"/>
+    <Button
+        android:layout_width="265dp"
+        android:layout_height="35dp"
+        android:text="Sign in with Facebook"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:id="@+id/twitterSignIn"
+        android:textAllCaps="false"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/mybutton"/>
+
+
+</RelativeLayout>

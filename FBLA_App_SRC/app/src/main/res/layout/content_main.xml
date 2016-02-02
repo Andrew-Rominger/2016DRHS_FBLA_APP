@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign in here."
-        android:id="@+id/textView"
+        android:id="@+id/moveToSignIn"
         android:textColor="#60C6C7"
         android:layout_below="@+id/account"
         android:layout_centerHorizontal="true" />

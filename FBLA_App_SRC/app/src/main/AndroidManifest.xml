@@ -22,8 +22,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login_activity"
+            android:name=".signupEmail"
             android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".signIn"
+            android:label="@string/title_activity_sign_in"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".profilePage"
+            android:label="@string/title_activity_profile_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
