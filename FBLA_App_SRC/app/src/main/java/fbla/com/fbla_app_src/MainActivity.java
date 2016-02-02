@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import com.facebook.FacebookSdk;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
