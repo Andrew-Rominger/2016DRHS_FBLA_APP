@@ -1,5 +1,6 @@
 package fbla.com.fbla_app_src;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,9 +20,8 @@ import com.backendless.async.callback.BackendlessCallback;
 
 
 public class MainActivity extends AppCompatActivity {
-    private Button signUp;
-    private EditText emailField;
-    private EditText passwordField;
+    private Button EmailSU;
+
     BackendlessUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,45 +29,24 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         String appVersion = "v1";
         Backendless.initApp(this, "67BF989E-7E10-5DB8-FFD7-C9147CA4F200", "12F047DB-382A-F6DA-FF16-C6A0A1F0CE00", appVersion);
-
-    }
-    /*
-    public void signUp(View v)
-    {
-        user = new BackendlessUser();
-        user.setEmail(emailField.getText().toString());
-        user.setPassword(passwordField.getText().toString());
-        Backendless.UserService.register(user, new BackendlessCallback<BackendlessUser>() {
-            @Override
-            public void handleResponse(BackendlessUser backendlessUser) {
-                Log.i("Registration", backendlessUser.getEmail() + " successfully registered");
-            }
-        });
-
-    }
-    ?
-    */
-
-          /*
-
-        signUp = (Button) findViewById(R.id.signUpButton);
-        emailField = (EditText) findViewById(R.id.emailtext);
-        passwordField = (EditText) findViewById(R.id.passwordText);
-
-
-        signUp.setOnClickListener(new View.OnClickListener()
-        {
+        EmailSU = (Button) findViewById(R.id.signupEmailButton);
+        EmailSU.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                signUp(v);
+               moveToEmailSignUp();
             }
         });
-        */
+
+    }
+    public void moveToEmailSignUp()
+    {
+        Intent moveToSU = new Intent(MainActivity.this, login_activity.class);
+        startActivity(moveToSU);
+    }
+
 
 
 
