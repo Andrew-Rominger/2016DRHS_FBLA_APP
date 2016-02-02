@@ -13,31 +13,21 @@
     tools:showIn="@layout/activity_main"
     tools:context="fbla.com.fbla_app_src.MainActivity">
 
-    <EditText
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/emailtext"
-        android:hint="Email"
+        android:id="@+id/imageView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="66dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:id="@+id/signUpButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/colorWithTagline" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/passwordText"
-        android:hint="Passoword"
-        android:gravity="center"
-        android:layout_below="@+id/emailtext"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/SignUpWithEmail"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:hint="Sign Up With Email"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"/>
 </RelativeLayout>

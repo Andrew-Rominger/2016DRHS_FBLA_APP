@@ -16,6 +16,7 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.BackendlessCallback;
 
+
 public class MainActivity extends AppCompatActivity {
     private Button signUp;
     private EditText emailField;
@@ -32,20 +33,8 @@ public class MainActivity extends AppCompatActivity {
         String appVersion = "v1";
         Backendless.initApp(this, "67BF989E-7E10-5DB8-FFD7-C9147CA4F200", "12F047DB-382A-F6DA-FF16-C6A0A1F0CE00", appVersion);
 
-        signUp = (Button) findViewById(R.id.signUpButton);
-        emailField = (EditText) findViewById(R.id.emailtext);
-        passwordField = (EditText) findViewById(R.id.passwordText);
-
-
-        signUp.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                signUp(v);
-            }
-        });
     }
+    /*
     public void signUp(View v)
     {
         user = new BackendlessUser();
@@ -59,7 +48,28 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    ?
+    */
+
+          /*
+
+        signUp = (Button) findViewById(R.id.signUpButton);
+        emailField = (EditText) findViewById(R.id.emailtext);
+        passwordField = (EditText) findViewById(R.id.passwordText);
+
+
+        signUp.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                signUp(v);
+            }
+        });
+        */
 
 
 
 }
+
+
