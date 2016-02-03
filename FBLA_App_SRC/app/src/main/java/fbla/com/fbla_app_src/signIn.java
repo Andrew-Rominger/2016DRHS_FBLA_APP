@@ -19,54 +19,55 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 
-public class signIn extends AppCompatActivity{
+import java.io.Serializable;
+
+public class signIn extends AppCompatActivity implements Serializable {
     public EditText enterUsername;
     public EditText enterPassword;
     public Button signinButton;
-    String userToken;
     BackendlessUser user;
+    Intent moveTo;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         enterUsername = (EditText) findViewById(R.id.userNameLogin);
         enterPassword = (EditText) findViewById(R.id.passwordLogin);
         signinButton = (Button) findViewById(R.id.signInButton);
+
+        String appVersion = "v1";
+        Backendless.initApp(this, "67BF989E-7E10-5DB8-FFD7-C9147CA4F200", "12F047DB-382A-F6DA-FF16-C6A0A1F0CE00", appVersion);
         signinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                CharSequence userName = enterUsername.getText();
-                CharSequence password = enterPassword.getText();
-
-                if(isLoginValuesValid(userName, password))
+                Backendless.UserService.login( enterUsername.getText().toString(), enterPassword.getText().toString(), new AsyncCallback<BackendlessUser>()
                 {
-                    LoadingCallback<BackendlessUser> loginCallback = createLoginCallback();
-                }
+                    public void handleResponse( BackendlessUser user )
+                    {
+                        // user has been logged in
+                        user = Backendless.UserService.CurrentUser();
+                        Toast.makeText(signIn.this, "User " + user.getProperty("userName") + " logged in.", Toast.LENGTH_LONG).show();
+                        if((Boolean) user.getProperty("firstTimeLogin"))
+                        {
+                            moveTo = new Intent(signIn.this, extrainfo.class);
+                        }
+                        else
+                        {
+                            moveTo = new Intent(signIn.this, profilePage.class);
+                        }
+                        startActivity(moveTo);
+                    }
 
+                    public void handleFault( BackendlessFault fault )
+                    {
+                       Toast.makeText(signIn.this,"Code: " + fault.getCode(),Toast.LENGTH_LONG ).show();
+                    }
+                });
             }
         });
-
-
-
-    }
-    public void loginUser(String userName, String password, AsyncCallback<BackendlessUser> callback)
-    {
-        Backendless.UserService.login(userName, password, callback);
-    }
-    public boolean isLoginValuesValid(CharSequence userName, CharSequence password)
-    {
-        if(userName != null && password != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
 

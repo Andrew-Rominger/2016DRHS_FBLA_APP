@@ -105,7 +105,6 @@
         android:layout_height="wrap_content"
         android:text="Show password"
         android:id="@+id/shwoPW"
-        android:hapticFeedbackEnabled="true"
 
         android:checked="false"
         android:textSize="13sp"

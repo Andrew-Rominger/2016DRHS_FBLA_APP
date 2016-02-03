@@ -70,10 +70,19 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Skip"
         android:id="@+id/skipToFriends"
-        android:layout_below="@+id/nameField"
+        android:layout_below="@+id/saveExtra"
         android:layout_centerHorizontal="true"
         android:textColor="#60C6C7"
         android:layout_margin="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:background="@drawable/mybutton"
+        android:id="@+id/saveExtra"
+        android:layout_below="@id/nameField"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

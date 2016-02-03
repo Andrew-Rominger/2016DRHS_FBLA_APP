@@ -20,15 +20,19 @@ public class profilePage extends AppCompatActivity {
 
     BackendlessUser user;
     TextView unameField;
+    Intent moved;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
+
         unameField = (TextView) findViewById(R.id.usernameTextbox);
         user = Backendless.UserService.CurrentUser();
         unameField.setText(user.getProperty("userName").toString());
+
+
 
 
     }

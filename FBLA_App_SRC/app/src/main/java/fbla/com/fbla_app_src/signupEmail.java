@@ -5,18 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.backendless.*;
+import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.async.callback.BackendlessCallback;
-
-import javax.xml.validation.Validator;
+import com.backendless.exceptions.BackendlessFault;
 
 public class signupEmail extends AppCompatActivity
 {
@@ -25,8 +22,10 @@ public class signupEmail extends AppCompatActivity
     EditText emailInput;
     EditText passwordInput;
     Button signUp;
+    CharSequence userName;
     EditText passwordCheck;
     CheckBox showPW;
+    String appVersion = "v1";
     EditText userNameInput;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +36,7 @@ public class signupEmail extends AppCompatActivity
         goBack = (ImageView) findViewById(R.id.goBackPic);
         signUp = (Button) findViewById(R.id.signUp);
         showPW = (CheckBox) findViewById(R.id.shwoPW);
+        Backendless.initApp(this, "67BF989E-7E10-5DB8-FFD7-C9147CA4F200", "12F047DB-382A-F6DA-FF16-C6A0A1F0CE00", appVersion);
         //Edit Text
 
 
@@ -78,15 +78,15 @@ public class signupEmail extends AppCompatActivity
 
         if(checked)
         {
-            password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            password.setSelection(password.getText().length());
+            passwordInput.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            passwordInput.setSelection(passwordInput.getText().length());
         }
         else
         {
-            password.setInputType(InputType.TYPE_CLASS_TEXT |
+            passwordInput.setInputType(InputType.TYPE_CLASS_TEXT |
                     InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-            password.setSelection(password.getText().length());
+            passwordInput.setSelection(passwordInput.getText().length());
 
 
         }
@@ -103,29 +103,44 @@ public class signupEmail extends AppCompatActivity
 
         CharSequence email = emailInput.getText();
         CharSequence password = passwordInput.getText();
-        CharSequence userName = userNameInput.getText();
+        userName = userNameInput.getText();
         boolean isValidEmail = fbla.com.fbla_app_src.Validator.isEmailValid(getApplicationContext(), email);
         boolean isValidPassword = fbla.com.fbla_app_src.Validator.isPasswordValid(getApplicationContext(), password);
         boolean isValidName = fbla.com.fbla_app_src.Validator.isNameValid(getApplicationContext(), userName);
         if(isValidEmail && isValidPassword && isValidName)
         {
-            registerUser(userName.toString(), email.toString(), password.toString());
+            registerUser(userName.toString(), email.toString(), password.toString(), new AsyncCallback<BackendlessUser>() {
+                @Override
+                public void handleResponse(BackendlessUser backendlessUser)
+                {
+                    Toast.makeText(signupEmail.this, "User " + userName.toString() + " created. Retuning to login screen.", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(signupEmail.this, MainActivity.class));
+                }
+
+                @Override
+                public void handleFault(BackendlessFault backendlessFault)
+                {
+                    Toast.makeText(signupEmail.this, backendlessFault.getCode().toString(), Toast.LENGTH_LONG).show();
+                }
+            });
 
 
         }
 
 
     }
-    public void registerUser( String name, String email, String password, AsyncCallback<BackendlessUser> registrationCallback )
+    public void registerUser( String userName, String email, String password, AsyncCallback<BackendlessUser> registrationCallback )
     {
         BackendlessUser user = new BackendlessUser();
         user.setEmail( email );
         user.setPassword( password );
-        user.setProperty( "name", name );
+        user.setProperty( "userName", userName );
+        user.setProperty("firstTimeLogin", true);
 
         //Backendless handles password hashing by itself, so we don't need to send hash instead of plain text
         Backendless.UserService.register( user, registrationCallback );
     }
+
 
 
 
