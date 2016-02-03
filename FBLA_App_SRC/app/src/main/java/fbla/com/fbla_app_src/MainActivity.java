@@ -10,14 +10,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.backendless.persistence.local.UserTokenStorageFactory;
 
 
 public class MainActivity extends AppCompatActivity {
     private Button EmailSU;
     private TextView moveToSignIn;
+
     Window window;
 
     BackendlessUser user;
@@ -43,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         moveToSignIn = (TextView) findViewById(R.id.moveToSignIn);
-        moveToSignIn.setOnClickListener(new View.OnClickListener() {
+        moveToSignIn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 Intent movetosignIn = new Intent(MainActivity.this, signIn.class);

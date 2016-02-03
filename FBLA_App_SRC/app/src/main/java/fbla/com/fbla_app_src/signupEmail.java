@@ -23,17 +23,19 @@ public class signupEmail extends AppCompatActivity
     Button signUp;
     EditText passwordCheck;
     CheckBox showPW;
+    EditText userName;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         goBack = (ImageView) findViewById(R.id.goBackPic);
-        email = (EditText) findViewById(R.id.userNameField);
+        email = (EditText) findViewById(R.id.emailField);
         password = (EditText) findViewById(R.id.passwordField);
         passwordCheck = (EditText) findViewById(R.id.passwordFieldCheck);
         signUp = (Button) findViewById(R.id.signUp);
         showPW = (CheckBox) findViewById(R.id.shwoPW);
+        userName = (EditText)findViewById(R.id.userNameField);
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,11 +98,11 @@ public class signupEmail extends AppCompatActivity
             user = new BackendlessUser();
             user.setEmail(email.getText().toString().toLowerCase());
             user.setPassword(password.getText().toString().toLowerCase());
+            user.setProperty("userName", userName.getText().toString());
 
             Backendless.UserService.register(user, new BackendlessCallback<BackendlessUser>() {
                 @Override
-                public void handleResponse(BackendlessUser backendlessUser)
-                {
+                public void handleResponse(BackendlessUser backendlessUser) {
                     Toast.makeText(getApplicationContext(), "Account created, returning to login screen", Toast.LENGTH_SHORT).show();
                 }
             });
