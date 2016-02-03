@@ -33,16 +33,15 @@ public class MainActivity extends AppCompatActivity {
         String appVersion = "v1";
         Backendless.initApp(this, "67BF989E-7E10-5DB8-FFD7-C9147CA4F200", "12F047DB-382A-F6DA-FF16-C6A0A1F0CE00", appVersion);
         window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {window.setStatusBarColor(Color.RED);}
+        {window.setStatusBarColor(Color.TRANSPARENT);window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);}
 
         EmailSU = (Button) findViewById(R.id.signupEmailButton);
         EmailSU.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-               moveToEmailSignUp();
+            public void onClick(View v) {
+                moveToEmailSignUp();
             }
         });
         moveToSignIn = (TextView) findViewById(R.id.moveToSignIn);

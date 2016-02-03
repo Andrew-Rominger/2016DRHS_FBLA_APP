@@ -26,26 +26,9 @@ public class profilePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
-        Bundle extras = getIntent().getExtras();
         unameField = (TextView) findViewById(R.id.usernameTextbox);
-        Backendless.UserService.login(extras.getString("uname").toLowerCase(), extras.getString("pword").toLowerCase(), new AsyncCallback<BackendlessUser>()
-        {
-            public void handleResponse( BackendlessUser user )
-            {
-                // user has been logged in
-
-            }
-
-            public void handleFault( BackendlessFault fault )
-            {
-                // login failed, to get the error code call fault.getCode()
-                Toast.makeText(getApplicationContext(), fault.getCode(), Toast.LENGTH_LONG).show();
-            }
-
-        });
         user = Backendless.UserService.CurrentUser();
         unameField.setText(user.getProperty("userName").toString());
-
 
 
     }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.backendless.UserService;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -23,6 +24,7 @@ public class signIn extends AppCompatActivity{
     public EditText enterPassword;
     public Button signinButton;
     String userToken;
+    BackendlessUser user;
 
 
     @Override
@@ -35,34 +37,36 @@ public class signIn extends AppCompatActivity{
         signinButton = (Button) findViewById(R.id.signInButton);
         signinButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                CharSequence userName = enterUsername.getText();
+                CharSequence password = enterPassword.getText();
 
-
-                Backendless.UserService.login(enterUsername.getText().toString().toLowerCase(), enterPassword.getText().toString().toLowerCase(), new AsyncCallback<BackendlessUser>() {
-                    public void handleResponse(BackendlessUser user) {
-                        // user has been logged in
-                        boolean isValidLogin = Backendless.UserService.isValidLogin();
-                        if (isValidLogin) {
-                            Toast.makeText(getApplicationContext(), "Logged In", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(signIn.this, profilePage.class);
-                            intent.putExtra("uname", enterUsername.getText().toString().toLowerCase());
-                            intent.putExtra("pword", enterPassword.getText().toString().toLowerCase());
-                            startActivity(intent);
-                        }
-                    }
-
-                    public void handleFault(BackendlessFault fault) {
-                        // login failed, to get the error code call fault.getCode()
-                        Toast.makeText(getApplicationContext(), fault.getCode(), Toast.LENGTH_LONG).show();
-                    }
-
-                }, true);
+                if(isLoginValuesValid(userName, password))
+                {
+                    LoadingCallback<BackendlessUser> loginCallback = createLoginCallback();
+                }
 
             }
         });
 
 
 
+    }
+    public void loginUser(String userName, String password, AsyncCallback<BackendlessUser> callback)
+    {
+        Backendless.UserService.login(userName, password, callback);
+    }
+    public boolean isLoginValuesValid(CharSequence userName, CharSequence password)
+    {
+        if(userName != null && password != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

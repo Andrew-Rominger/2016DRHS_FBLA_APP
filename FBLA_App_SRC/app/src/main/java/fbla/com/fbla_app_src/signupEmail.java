@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,30 +13,34 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.backendless.*;
+import com.backendless.async.callback.AsyncCallback;
 import com.backendless.async.callback.BackendlessCallback;
+
+import javax.xml.validation.Validator;
 
 public class signupEmail extends AppCompatActivity
 {
     ImageView goBack;
     BackendlessUser user;
-    EditText email;
-    EditText password;
+    EditText emailInput;
+    EditText passwordInput;
     Button signUp;
     EditText passwordCheck;
     CheckBox showPW;
-    EditText userName;
+    EditText userNameInput;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //Buttons, images
         goBack = (ImageView) findViewById(R.id.goBackPic);
-        email = (EditText) findViewById(R.id.emailField);
-        password = (EditText) findViewById(R.id.passwordField);
-        passwordCheck = (EditText) findViewById(R.id.passwordFieldCheck);
         signUp = (Button) findViewById(R.id.signUp);
         showPW = (CheckBox) findViewById(R.id.shwoPW);
-        userName = (EditText)findViewById(R.id.userNameField);
+        //Edit Text
+
+
+
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,36 +94,39 @@ public class signupEmail extends AppCompatActivity
 
     }
 
-
-
     public void signUp(View v)
     {
-        if(!password.getText().equals(passwordCheck.getText()))
-        {
-            user = new BackendlessUser();
-            user.setEmail(email.getText().toString().toLowerCase());
-            user.setPassword(password.getText().toString().toLowerCase());
-            user.setProperty("userName", userName.getText().toString());
+        userNameInput = (EditText) findViewById(R.id.userNameFieldSignup);
+        passwordInput = (EditText) findViewById(R.id.passwordFieldSignup);
+        emailInput = (EditText) findViewById(R.id.emailFieldSignup);
+        passwordCheck = (EditText) findViewById(R.id.passwordFieldCheckSignup);
 
-            Backendless.UserService.register(user, new BackendlessCallback<BackendlessUser>() {
-                @Override
-                public void handleResponse(BackendlessUser backendlessUser) {
-                    Toast.makeText(getApplicationContext(), "Account created, returning to login screen", Toast.LENGTH_SHORT).show();
-                }
-            });
-            startActivity(new Intent(signupEmail.this, MainActivity.class));
-
-        }
-        else
+        CharSequence email = emailInput.getText();
+        CharSequence password = passwordInput.getText();
+        CharSequence userName = userNameInput.getText();
+        boolean isValidEmail = fbla.com.fbla_app_src.Validator.isEmailValid(getApplicationContext(), email);
+        boolean isValidPassword = fbla.com.fbla_app_src.Validator.isPasswordValid(getApplicationContext(), password);
+        boolean isValidName = fbla.com.fbla_app_src.Validator.isNameValid(getApplicationContext(), userName);
+        if(isValidEmail && isValidPassword && isValidName)
         {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-            email.setText("");
-            password.setText("");
+            registerUser(userName.toString(), email.toString(), password.toString());
+
 
         }
 
 
     }
+    public void registerUser( String name, String email, String password, AsyncCallback<BackendlessUser> registrationCallback )
+    {
+        BackendlessUser user = new BackendlessUser();
+        user.setEmail( email );
+        user.setPassword( password );
+        user.setProperty( "name", name );
+
+        //Backendless handles password hashing by itself, so we don't need to send hash instead of plain text
+        Backendless.UserService.register( user, registrationCallback );
+    }
+
 
 
 
