@@ -40,7 +40,7 @@
     <EditText
         android:layout_width="265dp"
         android:layout_height="35dp"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:hint="Password"
         android:textColorHint="#ffffff"
         android:ems="10"
