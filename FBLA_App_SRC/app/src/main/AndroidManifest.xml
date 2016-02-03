@@ -32,6 +32,14 @@
         <activity
             android:name=".profilePage"
             android:label="@string/title_activity_profile_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".extrainfo"
+            android:label="@string/title_activity_extrainfo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".findingfriends"
+            android:label="@string/title_activity_findingfriends"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

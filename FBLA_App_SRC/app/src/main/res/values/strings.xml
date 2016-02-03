@@ -4,4 +4,6 @@
     <string name="title_activity_login">login</string>
     <string name="title_activity_sign_in">signIn</string>
     <string name="title_activity_profile_page">profilePage</string>
+    <string name="title_activity_extrainfo">extra info</string>
+    <string name="title_activity_findingfriends">finding friends</string>
 </resources>
