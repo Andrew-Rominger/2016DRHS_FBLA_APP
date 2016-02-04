@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".signupEmail"
     tools:showIn="@layout/activity_login"
-    android:background="@drawable/bckg_2">
+    android:background="@drawable/emailsignup_bckg">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
     <EditText
     android:layout_width="300dp"
     android:layout_height="40dp"
-    android:id="@+id/emailField"
+    android:id="@+id/emailFieldSignup"
     android:gravity="center"
     android:inputType="textEmailAddress"
     android:hint="Email"
@@ -33,42 +33,42 @@
     android:textColor="#ffffff"
     android:background="@drawable/mybutton2"
     android:layout_centerVertical="true"
-    android:layout_alignLeft="@+id/passwordField"
-    android:layout_alignStart="@+id/passwordField" />
+    android:layout_alignLeft="@+id/passwordFieldSignup"
+    android:layout_alignStart="@+id/passwordFieldSignup" />
 
     <EditText
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:id="@+id/userNameField"
+        android:id="@+id/userNameFieldSignup"
         android:gravity="center"
         android:inputType="text"
-        android:layout_below="@id/emailField"
+        android:layout_below="@id/emailFieldSignup"
         android:hint="Username"
         android:layout_marginTop="20dp"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
         android:background="@drawable/mybutton2"
         android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/passwordField"
-        android:layout_alignStart="@+id/passwordField" />
+        android:layout_alignLeft="@+id/passwordFieldSignup"
+        android:layout_alignStart="@+id/passwordFieldSignup" />
     <EditText
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:inputType="textPassword"
-        android:id="@+id/passwordField"
+        android:id="@+id/passwordFieldSignup"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:hint="Password"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
         android:background="@drawable/mybutton2"
-        android:layout_below="@+id/userNameField"
-        android:layout_alignLeft="@+id/passwordFieldCheck"
-        android:layout_alignStart="@+id/passwordFieldCheck" />
+        android:layout_below="@+id/userNameFieldSignup"
+        android:layout_alignLeft="@+id/passwordFieldCheckSignup"
+        android:layout_alignStart="@+id/passwordFieldCheckSignup" />
     <EditText
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:id="@+id/passwordFieldCheck"
+        android:id="@+id/passwordFieldCheckSignup"
         android:inputType="textPassword"
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -76,7 +76,7 @@
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
         android:background="@drawable/mybutton2"
-        android:layout_below="@+id/passwordField"
+        android:layout_below="@+id/passwordFieldSignup"
         android:layout_centerHorizontal="true" />
 
 
@@ -87,7 +87,7 @@
         android:text="Sign Up"
         android:id="@+id/signUp"
         android:background="@drawable/mybutton"
-        android:layout_below="@+id/passwordFieldCheck"
+        android:layout_below="@+id/passwordFieldCheckSignup"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
@@ -105,7 +105,6 @@
         android:layout_height="wrap_content"
         android:text="Show password"
         android:id="@+id/shwoPW"
-        android:hapticFeedbackEnabled="true"
 
         android:checked="false"
         android:textSize="13sp"
