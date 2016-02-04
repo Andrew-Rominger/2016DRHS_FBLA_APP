@@ -12,7 +12,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main"
     tools:context="fbla.com.fbla_app_src.MainActivity"
-    android:background="@drawable/bckg_3">
+    android:background="@drawable/main_bckg">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign in here."
-        android:id="@+id/moveToSignIn"
+        android:id="@+id/main_SignInEmail"
         android:textColor="#60C6C7"
         android:layout_below="@+id/account"
         android:layout_centerHorizontal="true" />

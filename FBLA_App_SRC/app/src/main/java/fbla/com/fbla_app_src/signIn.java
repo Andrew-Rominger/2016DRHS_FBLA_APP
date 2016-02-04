@@ -20,17 +20,19 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-public class signIn extends AppCompatActivity implements Serializable {
+public class signIn extends AppCompatActivity {
+    //Declare variables
     public EditText enterUsername;
     public EditText enterPassword;
     public Button signinButton;
-    BackendlessUser user;
     Intent moveTo;
 
-
+    //Called when activity is created
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         enterUsername = (EditText) findViewById(R.id.userNameLogin);
@@ -43,15 +45,30 @@ public class signIn extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View v)
             {
-                Backendless.UserService.login( enterUsername.getText().toString(), enterPassword.getText().toString(), new AsyncCallback<BackendlessUser>()
+                Backendless.UserService.login(enterUsername.getText().toString(), enterPassword.getText().toString(), new AsyncCallback<BackendlessUser>()
                 {
                     public void handleResponse( BackendlessUser user )
                     {
                         // user has been logged in
                         user = Backendless.UserService.CurrentUser();
+                        Boolean isFirstTime = (Boolean) user.getProperty("firstTimeLogin");
+
                         Toast.makeText(signIn.this, "User " + user.getProperty("userName") + " logged in.", Toast.LENGTH_LONG).show();
-                        if((Boolean) user.getProperty("firstTimeLogin"))
+                        if(isFirstTime)
                         {
+                            user.setProperty("firstTimeLogin", false);
+                            Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
+                                @Override
+                                public void handleResponse(BackendlessUser backendlessUser)
+                                {
+
+                                }
+
+                                @Override
+                                public void handleFault(BackendlessFault backendlessFault) {
+
+                                }
+                            });
                             moveTo = new Intent(signIn.this, extrainfo.class);
                         }
                         else
@@ -65,9 +82,13 @@ public class signIn extends AppCompatActivity implements Serializable {
                     {
                        Toast.makeText(signIn.this,"Code: " + fault.getCode(),Toast.LENGTH_LONG ).show();
                     }
-                });
+                }, true);
             }
         });
+    }
+    public void signIn()
+    {
+
     }
 
 

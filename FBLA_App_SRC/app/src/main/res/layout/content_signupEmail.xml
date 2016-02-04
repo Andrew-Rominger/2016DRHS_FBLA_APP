@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".signupEmail"
     tools:showIn="@layout/activity_login"
-    android:background="@drawable/bckg_2">
+    android:background="@drawable/emailsignup_bckg">
 
     <ImageView
         android:layout_width="wrap_content"

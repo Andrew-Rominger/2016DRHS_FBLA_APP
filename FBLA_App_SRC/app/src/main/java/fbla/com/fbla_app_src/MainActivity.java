@@ -16,41 +16,49 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 
+public class MainActivity extends AppCompatActivity
+{
 
-public class MainActivity extends AppCompatActivity {
-    private Button EmailSU;
-    private TextView moveToSignIn;
+    //Declare variables
+    private Button EmailSignUpButton;
+    private TextView moveToSignInButton;
 
-    Window window;
-
-    BackendlessUser user;
+    //Called when activity is created
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Sets the app version for Backendless
         String appVersion = "v1";
+        //Initializes Backendless
         Backendless.initApp(this, "67BF989E-7E10-5DB8-FFD7-C9147CA4F200", "12F047DB-382A-F6DA-FF16-C6A0A1F0CE00", appVersion);
-        window = getWindow();
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {window.setStatusBarColor(Color.TRANSPARENT);window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);}
+        //Initialize variables and assign views
+        EmailSignUpButton = (Button) findViewById(R.id.signupEmailButton);
+        moveToSignInButton = (TextView) findViewById(R.id.main_SignInEmail);
 
-        EmailSU = (Button) findViewById(R.id.signupEmailButton);
-        EmailSU.setOnClickListener(new View.OnClickListener() {
+        //Declare a function that is called when the EmailSignUpButton is clicked
+        EmailSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                //Call a function that starts a new EmailSignUp activity and switches to it
                 moveToEmailSignUp();
             }
         });
-        moveToSignIn = (TextView) findViewById(R.id.moveToSignIn);
-        moveToSignIn.setOnClickListener(new View.OnClickListener()
+
+
+        //Declare a function that is called when the MoveToSignIn button is clicked
+        moveToSignInButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v) {
-                Intent movetosignIn = new Intent(MainActivity.this, signIn.class);
-                startActivity(movetosignIn);
+            public void onClick(View v)
+            {
+                //Call a function that starts a new signIn activity and switches to it
+                moveToSignIn();
             }
         });
 
@@ -59,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent moveToSU = new Intent(MainActivity.this, signupEmail.class);
         startActivity(moveToSU);
+    }
+    public void moveToSignIn()
+    {
+        //declares a new intent and initialize it
+        Intent movetosignIn = new Intent(MainActivity.this, signIn.class);
+        //Starts and switches to the email sigin
+        startActivity(movetosignIn);
     }
 
 
