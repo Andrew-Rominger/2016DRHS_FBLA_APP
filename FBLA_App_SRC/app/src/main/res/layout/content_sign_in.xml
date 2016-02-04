@@ -20,6 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/colorsuit"
+
         android:layout_marginTop="25dp" />
 
     <EditText
@@ -117,6 +118,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="13dp"
         android:background="@drawable/mybutton"/>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/signIn_moveBackButton"
+        android:src="@drawable/movebackarrow"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

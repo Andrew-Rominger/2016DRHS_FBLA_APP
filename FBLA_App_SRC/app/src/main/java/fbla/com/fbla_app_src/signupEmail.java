@@ -1,14 +1,17 @@
 package fbla.com.fbla_app_src;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
@@ -17,7 +20,7 @@ import com.backendless.exceptions.BackendlessFault;
 
 public class signupEmail extends AppCompatActivity
 {
-    ImageView goBack;
+    Button goBack;
     EditText emailInput;
     EditText passwordInput;
     Button signUp;
@@ -31,9 +34,10 @@ public class signupEmail extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         //Buttons, images
-        goBack = (ImageView) findViewById(R.id.goBackPic);
+        goBack = (Button) findViewById(R.id.signupEmail_gobackButton);
         signUp = (Button) findViewById(R.id.signUp);
         showPW = (CheckBox) findViewById(R.id.shwoPW);
+        emailInput = (EditText) findViewById(R.id.signupEmail_emailField);
         //Edit Text
 
 
@@ -51,11 +55,26 @@ public class signupEmail extends AppCompatActivity
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
+                Toast.makeText(signupEmail.this, "Creating user...", Toast.LENGTH_SHORT).show();
                 signUp(v);
             }
         });
+        /*
+        emailInput.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+
+                if (emailInput.getText().toString().length() >= 20)
+                {
+                    emailInput.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                    return true;
+                }
+                return false;
+            }
+        });
+        */
+    }
         /*
         showPW.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -66,10 +85,6 @@ public class signupEmail extends AppCompatActivity
         });
         */
 
-
-
-
-    }
     public void onCheckBoxClicked(View view)
     {
         boolean checked = ((CheckBox) view).isChecked();
@@ -90,7 +105,7 @@ public class signupEmail extends AppCompatActivity
     {
         userNameInput = (EditText) findViewById(R.id.userNameFieldSignup);
         passwordInput = (EditText) findViewById(R.id.passwordFieldSignup);
-        emailInput = (EditText) findViewById(R.id.emailFieldSignup);
+        emailInput = (EditText) findViewById(R.id.signupEmail_emailField);
         passwordCheck = (EditText) findViewById(R.id.passwordFieldCheckSignup);
 
         CharSequence email = emailInput.getText();
@@ -110,7 +125,7 @@ public class signupEmail extends AppCompatActivity
 
                 @Override
                 public void handleFault(BackendlessFault backendlessFault) {
-                    Toast.makeText(signupEmail.this, backendlessFault.getCode().toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(signupEmail.this, backendlessFault.getCode(), Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -123,8 +138,8 @@ public class signupEmail extends AppCompatActivity
     {
         BackendlessUser user = new BackendlessUser();
         user.setEmail( email );
-        user.setPassword( password );
-        user.setProperty( "userName", userName );
+        user.setPassword(password);
+        user.setProperty("userName", userName);
         user.setProperty("firstTimeLogin", true);
 
         //Backendless handles password hashing by itself, so we don't need to send hash instead of plain text

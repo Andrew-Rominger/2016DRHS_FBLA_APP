@@ -91,11 +91,6 @@ public class extrainfo extends AppCompatActivity {
         });
         skipToProf();
     }
-    public void skipToFriends()
-    {
-        Intent i = new Intent(extrainfo.this, findingfriends.class);
-        startActivity(i);
-    }
     public void skipToProf()
     {
         Intent i = new Intent(extrainfo.this, profilePage.class);
