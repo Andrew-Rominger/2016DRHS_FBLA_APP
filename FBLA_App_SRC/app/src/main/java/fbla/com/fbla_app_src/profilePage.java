@@ -37,29 +37,28 @@ public class profilePage extends AppCompatActivity {
         Utility = new util();
         user = Backendless.UserService.CurrentUser();
 
-        unameField = (TextView) findViewById(R.id.profilePageUserNameField);
-        emailField = (TextView) findViewById(R.id.profilePageEmailField);
-        phoneNumField = (TextView) findViewById(R.id.profilePagePhoneNumberField);
-        nameField = (TextView) findViewById(R.id.profilePageFullName);
+        unameField = (TextView) findViewById(R.id.profilePage_userNameContent);
+        emailField = (TextView) findViewById(R.id.profilePage_emailContnent);
+        phoneNumField = (TextView) findViewById(R.id.profilePage_phoneNumberContent);
+        nameField = (TextView) findViewById(R.id.profilePage_nameContent);
         loggoutButton = (Button) findViewById(R.id.profilePageLogoutButton);
 
 
 
 
-        unameField.setText("User Name: " + user.getProperty("userName").toString());
-        phoneNumField.setText("Phone number: " + Utility.convertPhone(user.getProperty("phoneNumber").toString()));
-        emailField.setText("Email: " + user.getEmail());
-        nameField.setText("Full Name: " + user.getProperty("name"));
+        unameField.setText(user.getProperty("userName").toString());
+        phoneNumField.setText(Utility.convertPhone(user.getProperty("phoneNumber").toString()));
+        emailField.setText(user.getEmail());
+        nameField.setText(user.getProperty("name").toString());
         loggoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
+                Toast.makeText(profilePage.this, "Logging out...", Toast.LENGTH_LONG).show();
                 Backendless.UserService.logout(new AsyncCallback<Void>() {
                     @Override
-                    public void handleResponse(Void aVoid)
-                    {
+                    public void handleResponse(Void aVoid) {
                         //logged out
-                        Toast.makeText(profilePage.this, "Logging out...",Toast.LENGTH_LONG).show();
+
                         startActivity(new Intent(profilePage.this, MainActivity.class));
                     }
 
