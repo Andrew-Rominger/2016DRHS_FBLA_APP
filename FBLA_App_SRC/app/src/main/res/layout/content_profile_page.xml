@@ -181,7 +181,7 @@
                 <FrameLayout
                     android:layout_width="70dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/frameLayout">
+                    android:id="@+id/profilepage_homeNav">
 
                     <ImageView
                         android:layout_width="50dp"
@@ -195,8 +195,9 @@
                     android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true">
+                    android:layout_toRightOf="@+id/profilepage_homeNav"
+                    android:layout_toEndOf="@+id/profilepage_homeNav"
+                    android:id="@+id/profilepage_searchNav">
 
                 <ImageView
                     android:layout_width="50dp"
@@ -211,9 +212,9 @@
                     android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/frameLayout3"
-                    android:layout_toEndOf="@+id/frameLayout3"
-                    android:id="@+id/frameLayout4">
+                    android:layout_toRightOf="@+id/profilepage_searchNav"
+                    android:layout_toEndOf="@+id/profilepage_searchNav"
+                    android:id="@+id/profilepage_addNav">
 
                 <ImageView
                     android:layout_width="50dp"
@@ -227,10 +228,10 @@
                 <FrameLayout
                     android:layout_width="70dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/frameLayout3"
+                    android:id="@+id/profilepage_notifyNav"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/frameLayout2"
-                    android:layout_toEndOf="@+id/frameLayout2">
+                    android:layout_toRightOf="@+id/profilepage_addNav"
+                    android:layout_toEndOf="@+id/profilepage_addNav">
 
                 <ImageView
                     android:layout_width="50dp"
@@ -243,9 +244,9 @@
                     android:layout_width="70dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/frameLayout"
-                    android:layout_toEndOf="@+id/frameLayout"
-                    android:id="@+id/frameLayout2">
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/profilepage_profileNav">
 
                 <ImageView
                     android:layout_width="50dp"
