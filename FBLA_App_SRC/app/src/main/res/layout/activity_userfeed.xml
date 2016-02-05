@@ -5,10 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="fbla.com.fbla_app_src.profilePage">
+    tools:context="fbla.com.fbla_app_src.userfeed">
 
-    <include layout="@layout/content_profile_page" />
-
-
+    <include layout="@layout/content_userfeed" />
 
 </android.support.design.widget.CoordinatorLayout>

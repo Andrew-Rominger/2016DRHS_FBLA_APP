@@ -54,4 +54,5 @@
     <string name="loading_empty">Loading…</string>
 
     <string name="loading_register">Sending registration request…</string>
+    <string name="title_activity_userfeed">user feed</string>
 </resources>

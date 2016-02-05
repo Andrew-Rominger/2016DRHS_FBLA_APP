@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -41,6 +44,10 @@
         <activity
             android:name=".findingfriends"
             android:label="@string/title_activity_findingfriends"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".userfeed"
+            android:label="@string/title_activity_userfeed"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
