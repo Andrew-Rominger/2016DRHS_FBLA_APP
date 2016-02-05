@@ -50,6 +50,7 @@
             android:name=".userfeed"
             android:label="@string/title_activity_userfeed"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>
