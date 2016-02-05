@@ -1,5 +1,6 @@
 package fbla.com.fbla_app_src;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -16,12 +17,19 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class MainActivity extends AppCompatActivity
 {
 
     //Declare variables
     private Button EmailSignUpButton;
     private TextView moveToSignInButton;
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     //Called when activity is created
     @Override
@@ -35,6 +43,13 @@ public class MainActivity extends AppCompatActivity
         String appVersion = "v1";
         //Initializes Backendless
         Backendless.initApp(this, "67BF989E-7E10-5DB8-FFD7-C9147CA4F200", "12F047DB-382A-F6DA-FF16-C6A0A1F0CE00", appVersion);
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/raleway.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+
+
 
         //Initialize variables and assign views
         EmailSignUpButton = (Button) findViewById(R.id.signupEmailButton);
@@ -63,6 +78,8 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+
+
     public void moveToEmailSignUp()
     {
         Intent moveToSU = new Intent(MainActivity.this, signupEmail.class);

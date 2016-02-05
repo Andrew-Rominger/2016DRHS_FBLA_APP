@@ -15,6 +15,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:src="@drawable/whitenotagline"
@@ -25,6 +26,7 @@
     <EditText
     android:layout_width="wrap_content"
         android:minWidth="300dp"
+        android:textAppearance="@style/TextAppearance.FontPath"
     android:layout_height="40dp"
     android:id="@+id/signupEmail_emailField"
     android:gravity="center"
@@ -41,6 +43,7 @@
         android:layout_height="40dp"
         android:id="@+id/userNameFieldSignup"
         android:gravity="center"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:inputType="text"
         android:layout_below="@id/signupEmail_emailField"
         android:hint="Username"
@@ -58,6 +61,7 @@
         android:id="@+id/passwordFieldSignup"
         android:layout_marginTop="20dp"
         android:gravity="center"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:hint="Password"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
@@ -69,6 +73,7 @@
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:id="@+id/passwordFieldCheckSignup"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:inputType="textPassword"
         android:layout_marginTop="20dp"
         android:gravity="center"
@@ -84,6 +89,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:text="Sign Up"
         android:id="@+id/signUp"
         android:background="@drawable/mybutton"
@@ -97,6 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show password"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:id="@+id/shwoPW"
         android:visibility="invisible"
 
@@ -111,6 +118,7 @@
         android:layout_height="40dp"
         android:id="@+id/signupEmail_gobackButton"
         android:layout_alignParentTop="true"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:foregroundGravity="top"
         android:background="@drawable/movebackarrow"
         android:layout_alignParentLeft="true"

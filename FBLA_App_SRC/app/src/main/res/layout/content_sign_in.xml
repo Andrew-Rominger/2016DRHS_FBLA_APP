@@ -20,6 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/colorsuit"
+        android:textAppearance="@style/TextAppearance.FontPath"
 
         android:layout_marginTop="25dp" />
 
@@ -29,6 +30,7 @@
         android:inputType="textPersonName"
         android:hint="User Name"
         android:textColorHint="#ffffff"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:ems="10"
         android:id="@+id/userNameLogin"
         android:layout_below="@+id/logoLogin"
@@ -43,6 +45,7 @@
         android:layout_height="35dp"
         android:inputType="textPassword"
         android:hint="Password"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:textColorHint="#ffffff"
         android:ems="10"
         android:id="@+id/passwordLogin"
@@ -60,6 +63,7 @@
         android:text="Sign in"
         android:textColor="#ffffff"
         android:textSize="20sp"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:id="@+id/signInButton"
         android:textAllCaps="false"
         android:layout_below="@+id/passwordLogin"
@@ -87,9 +91,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:text="OR"
         android:textColor="#ffffff"
+
         android:layout_marginTop="56dp"
         android:id="@+id/textView2"
         android:layout_alignTop="@id/signInButton"
@@ -99,6 +104,7 @@
         android:layout_height="35dp"
         android:text="Sign in with Twitter"
         android:textColor="#ffffff"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:textSize="20sp"
         android:id="@+id/facebookSignIn"
         android:textAllCaps="false"
@@ -111,6 +117,7 @@
         android:layout_height="35dp"
         android:text="Sign in with Facebook"
         android:textColor="#ffffff"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:textSize="20sp"
         android:id="@+id/twitterSignIn"
         android:textAllCaps="false"
@@ -122,6 +129,7 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:id="@+id/signIn_moveBackButton"
         android:src="@drawable/movebackarrow"
         android:layout_alignParentTop="true"

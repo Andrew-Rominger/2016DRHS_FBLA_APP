@@ -25,7 +25,9 @@ public class signupEmail extends AppCompatActivity
     EditText passwordInput;
     Button signUp;
     CharSequence userName;
+    BackendlessUser user;
     EditText passwordCheck;
+    Intent moveTo;
     CheckBox showPW;
     EditText userNameInput;
     @Override
@@ -109,23 +111,78 @@ public class signupEmail extends AppCompatActivity
         passwordCheck = (EditText) findViewById(R.id.passwordFieldCheckSignup);
 
         CharSequence email = emailInput.getText();
-        CharSequence password = passwordInput.getText();
+        final CharSequence password = passwordInput.getText();
         userName = userNameInput.getText();
         boolean isValidEmail = fbla.com.fbla_app_src.Validator.isEmailValid(getApplicationContext(), email);
         boolean isValidPassword = fbla.com.fbla_app_src.Validator.isPasswordValid(getApplicationContext(), password);
-        boolean isValidName = fbla.com.fbla_app_src.Validator.isNameValid(getApplicationContext(), userName);
-        if(isValidEmail && isValidPassword && isValidName)
+
+        if(isValidEmail && isValidPassword)
         {
             registerUser(userName.toString(), email.toString(), password.toString(), new AsyncCallback<BackendlessUser>() {
                 @Override
                 public void handleResponse(BackendlessUser backendlessUser) {
-                    Toast.makeText(signupEmail.this, "User " + userName.toString() + " created. Retuning to login screen.", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(signupEmail.this, MainActivity.class));
+                    Toast.makeText(signupEmail.this, "User " + userName.toString() + " created.", Toast.LENGTH_LONG).show();
+                    Backendless.UserService.login(userName.toString(), password.toString(), new AsyncCallback<BackendlessUser>()
+                    {
+                        @Override
+                        public void handleResponse(BackendlessUser backendlessUser) {
+                            if((Boolean) backendlessUser.getProperty("firstTimeLogin") == true)
+                            {
+                                backendlessUser.setProperty("firstTimeLogin", false);
+                                moveTo = new Intent(signupEmail.this, extrainfo.class);
+
+                            }
+                            else
+                            {
+                                moveTo = new Intent(signupEmail.this, extrainfo.class);
+                            }
+                            startActivity(moveTo);
+
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault backendlessFault) {
+
+                        }
+                    }, true);
+
+                    Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
+                        @Override
+                        public void handleResponse(BackendlessUser backendlessUser) {
+
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault backendlessFault) {
+
+                        }
+                    });
+
+
+
+
                 }
 
                 @Override
                 public void handleFault(BackendlessFault backendlessFault) {
-                    Toast.makeText(signupEmail.this, backendlessFault.getCode(), Toast.LENGTH_LONG).show();
+                    String errorHandle;
+                    switch(backendlessFault.getCode())
+                    {
+                        case "3033":
+                            errorHandle = "User Name Taken!";
+                            break;
+                        case "3040":
+                            errorHandle = "Email is in the wrong formay";
+                            break;
+                        default:
+                            errorHandle = "Unknown error.";
+                            break;
+
+
+                    }
+                    passwordInput.setText("");
+                    passwordCheck.setText("");
+                    Toast.makeText(signupEmail.this, errorHandle, Toast.LENGTH_LONG).show();
                 }
             });
 

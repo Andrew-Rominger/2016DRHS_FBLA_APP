@@ -1,7 +1,16 @@
 package fbla.com.fbla_app_src;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +25,12 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.files.BackendlessFile;
 
 import org.w3c.dom.Text;
+
+import java.io.File;
+import java.net.URI;
 
 public class profilePage extends AppCompatActivity {
 
@@ -27,7 +40,11 @@ public class profilePage extends AppCompatActivity {
     TextView phoneNumField;
     TextView nameField;
     Button loggoutButton;
+    Button uploadPhoto;
     util Utility;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
+
 
 
     @Override
@@ -42,6 +59,8 @@ public class profilePage extends AppCompatActivity {
         phoneNumField = (TextView) findViewById(R.id.profilePage_phoneNumberContent);
         nameField = (TextView) findViewById(R.id.profilePage_nameContent);
         loggoutButton = (Button) findViewById(R.id.profilePageLogoutButton);
+        uploadPhoto = (Button) findViewById(R.id.profilePage_uploadButton);
+
 
 
 
@@ -69,10 +88,63 @@ public class profilePage extends AppCompatActivity {
                 });
             }
         });
+        uploadPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                moveToCamera();
+            }
+        });
+
+        }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        String realPath;
+
+            if (resultCode == Activity.RESULT_OK) {
+                // Image captured and saved to fileUri specified in the Intent
+                Toast.makeText(this, "Image saved to:\n" +
+                        data.getData(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // User cancelled the image capture
+                Toast.makeText(this, "Cancled", Toast.LENGTH_LONG).show();
+            } else {
+                // Image capture failed, advise user
+                Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show();
+            }
+            if(Build.VERSION.SDK_INT < 11) {
+                realPath = Utility.getRealPathFromURI_BelowAPI11(this, data.getData());
+            }
+            else if(Build.VERSION.SDK_INT < 19)
+            {
+                realPath = Utility.getRealPathFromURI_API11to18(this, data.getData());
+            }
+            else
+            {
+                realPath = Utility.getRealPathFromURI_API19(this, data.getData());
+            }
+
+            try{
+                Backendless.Files.upload(new File(realPath, user.getProperty("userName").toString() + "_" + user.getProperty("picNum")),"root\\media\\userpics");
+            }
+            catch(Exception e)
+            {
+                System.out.println(e);
+            }
+
+
 
 
 
 
     }
+    public void moveToCamera()
+    {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 1);
+    }
+
+
 
 }

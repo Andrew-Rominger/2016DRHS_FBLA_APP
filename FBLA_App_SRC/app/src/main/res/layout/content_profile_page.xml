@@ -15,11 +15,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:textAppearance="@style/TextAppearance.FontPath"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="@style/TextAppearance.FontPath"
             android:text="User Name: "
             android:textSize="15sp"
             android:id="@+id/profilePageUserNameField" />
@@ -27,7 +28,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+
+            android:textAppearance="@style/TextAppearance.FontPath"
             android:text="Email: "
             android:textSize="15sp"
             android:id="@+id/profilePageEmailField"
@@ -37,7 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="@style/TextAppearance.FontPath"
             android:text="Phone Number:"
             android:textSize="15sp"
             android:id="@+id/profilePagePhoneNumberField"
@@ -47,7 +49,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="@style/TextAppearance.FontPath"
             android:text="Full Name: "
             android:textSize="15sp"
             android:id="@+id/profilePageFullName"
@@ -56,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Logout"
+            android:textAppearance="@style/TextAppearance.FontPath"
             android:layout_marginTop="10dp"
             android:background="@drawable/mybutton2"
             android:id="@+id/profilePageLogoutButton" />
@@ -72,14 +75,14 @@
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="@style/TextAppearance.FontPath"
         android:text="Large Text"
             android:textSize="15sp"
         android:id="@+id/profilePage_userNameContent" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="@style/TextAppearance.FontPath"
             android:text="Large Text"
             android:textSize="15sp"
             android:layout_marginTop="25dp"
@@ -88,7 +91,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="@style/TextAppearance.FontPath"
             android:text="Large Text"
             android:textSize="15sp"
             android:layout_marginTop="25dp"
@@ -97,7 +100,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="@style/TextAppearance.FontPath"
             android:text="Large Text"
             android:textSize="15sp"
             android:layout_marginTop="25dp"
@@ -110,7 +113,8 @@
             android:text="Upload Picture"
             android:layout_marginTop="10dp"
             android:layout_gravity="bottom"
-            android:id="@+id/button" />
+            android:textAppearance="@style/TextAppearance.FontPath"
+            android:id="@+id/profilePage_uploadButton" />
 
 
     </LinearLayout>
