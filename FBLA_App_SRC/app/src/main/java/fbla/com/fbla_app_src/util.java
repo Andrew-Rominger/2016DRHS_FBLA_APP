@@ -1,12 +1,16 @@
 package fbla.com.fbla_app_src;
 
 import android.annotation.SuppressLint;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -34,7 +38,7 @@ public class util
     }
     @SuppressLint("NewApi")
     public static String getRealPathFromURI_API19(Context context, Uri uri){
-        String filePath = "";
+        String filePath;
         String wholeID = DocumentsContract.getDocumentId(uri);
 
         // Split at colon, use second item in the array
@@ -52,6 +56,10 @@ public class util
 
         if (cursor.moveToFirst()) {
             filePath = cursor.getString(columnIndex);
+        }
+        else
+        {
+            filePath = null;
         }
         cursor.close();
         return filePath;
@@ -85,4 +93,6 @@ public class util
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
+
+
 }

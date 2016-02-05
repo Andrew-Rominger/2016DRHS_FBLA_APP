@@ -58,15 +58,9 @@ public class extrainfo extends AppCompatActivity {
         });
         saveData.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                convtPhoneNum = convertNumber(phoneNumber.getText().toString());
-                if (convtPhoneNum == null || convtPhoneNum.equals("-1")) {
-                    errorNum();
-                    phoneNumber.setText("");
-                } else {
-                    setProperties();
-
-                }
+            public void onClick(View v)
+            {
+                setProperties();
 
             }
         });
@@ -74,8 +68,15 @@ public class extrainfo extends AppCompatActivity {
     }
     public void setProperties()
     {
-        user.setProperty("name", fullName.getText().toString());
-        user.setProperty("phoneNumber", convtPhoneNum);
+        if(Integer.parseInt(convertNumber(phoneNumber.getText().toString())) != -1)
+        {
+            user.setProperty("phoneNumber", convertNumber(phoneNumber.getText().toString()));
+        }
+        if(!fullName.getText().toString().equals(""))
+        {
+            user.setProperty("name", fullName.getText().toString());
+        }
+
         Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
             @Override
             public void handleResponse(BackendlessUser backendlessUser) {
