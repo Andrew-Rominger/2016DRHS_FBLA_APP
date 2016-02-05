@@ -188,8 +188,8 @@
                     android:id="@+id/profilepage_homeNav">
 
                     <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:id="@+id/profilepage_home"
                         android:src="@drawable/homenavicon"
                         android:foregroundGravity="center"
@@ -207,8 +207,8 @@
                     android:id="@+id/profilepage_searchNav">
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:maxWidth="60dp"
                     android:maxHeight="10dp"
                     android:id="@+id/profilepage_search"
@@ -244,8 +244,8 @@
                     android:foregroundGravity="left">
 
                     <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:id="@+id/profilepage_notify"
                         android:layout_gravity="center"
 
@@ -261,8 +261,8 @@
                     android:id="@+id/profilepage_profileNav">
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/profilepage_profile"
                     android:layout_gravity="center"
                     android:src="@drawable/profilenavicon" />
@@ -277,7 +277,7 @@
             android:id="@+id/profilePage_addPic"
             android:src="@drawable/profilepicadd"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="80dp" />
 
         <TextView
             android:layout_width="280dp"
