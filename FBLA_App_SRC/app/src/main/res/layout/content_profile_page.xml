@@ -32,7 +32,7 @@
             >
 
             <FrameLayout
-                android:layout_width="96dp"
+                android:layout_width="90dp"
                 android:layout_height="match_parent"
                 android:background="#7D8C93"
                 android:id="@+id/profilepage_post"
@@ -64,7 +64,7 @@
 
             </FrameLayout>
             <FrameLayout
-                android:layout_width="96dp"
+                android:layout_width="90dp"
                 android:layout_height="match_parent"
                 android:background="#EA6C55"
                 android:id="@+id/profilepage_saves"
@@ -96,7 +96,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="96dp"
+                android:layout_width="90dp"
                 android:layout_height="match_parent"
                 android:background="#60C6C7"
                 android:id="@+id/followers"
@@ -128,7 +128,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="96dp"
+                android:layout_width="90dp"
                 android:layout_height="match_parent"
                 android:background="#1DBCBA"
                 android:id="@+id/friends"
