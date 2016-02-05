@@ -21,7 +21,7 @@ import com.backendless.exceptions.BackendlessFault;
 public class extrainfo extends AppCompatActivity {
 
     private TextView skip;
-    private BackendlessUser user;
+    BackendlessUser user;
     private Button saveData;
     String convtPhoneNum;
     EditText fullName;
@@ -35,7 +35,7 @@ public class extrainfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extrainfo);
         user = Backendless.UserService.CurrentUser();
-        user.setProperty("firstTimeLogin", false);
+        Toast.makeText(extrainfo.this, user.getProperty("userName").toString() + " logged in", Toast.LENGTH_LONG).show();
         skip = (TextView) findViewById(R.id.skipToFriends);
         saveData = (Button) findViewById(R.id.saveExtra);
         fullName = (EditText) findViewById(R.id.nameField);
@@ -63,9 +63,7 @@ public class extrainfo extends AppCompatActivity {
                 if (convtPhoneNum == null || convtPhoneNum.equals("-1")) {
                     errorNum();
                     phoneNumber.setText("");
-                }
-                else
-                {
+                } else {
                     setProperties();
 
                 }

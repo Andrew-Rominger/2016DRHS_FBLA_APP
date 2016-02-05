@@ -21,7 +21,8 @@
         android:src="@drawable/whitewithtagline"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="69dp" />
+        android:layout_marginTop="50dp"
+        />
 
     <Button
         android:layout_marginTop="20dp"
@@ -33,6 +34,7 @@
         android:background="@drawable/mybutton"
         android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
+        android:textAppearance="@style/TextAppearance.FontPath"
 
         />
 
@@ -46,9 +48,14 @@
         android:layout_marginTop="43dp"
         android:layout_below="@+id/signupEmailButton"
         android:layout_centerHorizontal="true"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        ></Button>
+        
+
     <Button
         android:layout_width="300dp"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:layout_height="40dp"
         android:text="Sign up with facebook"
         android:id="@+id/buttonFacebook"
@@ -61,11 +68,13 @@
 
     <TextView
         android:layout_width="wrap_content"
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:layout_height="wrap_content"
         android:text="Already have an account?"
         android:id="@+id/account"
         android:textSize="20dp"
         android:textColor="#ffffff"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/buttonFacebook"
         android:layout_centerHorizontal="true" />
 
@@ -73,6 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign in here."
+        android:textAppearance="@style/TextAppearance.FontPath"
         android:id="@+id/main_SignInEmail"
         android:textColor="#60C6C7"
         android:layout_below="@+id/account"
