@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fbla.com.fbla_app_src.extrainfo"
+    tools:showIn="@layout/activity_extrainfo"
+    android:background="@drawable/extrainfo_bckg"
+    android:textAppearance="@style/TextAppearance.FontPath">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/whitesuit"
+        android:paddingTop="10dp"
+        android:textAppearance="@style/TextAppearance.FontPath"/>
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        android:text="Want to make it easy for friends to find you?"
+        android:id="@+id/textView"
+        android:paddingTop="5dp"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignLeft="@+id/imageView2"
+        android:layout_alignStart="@+id/imageView2"
+        />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:id="@+id/phoneNumberField"
+        android:gravity="center"
+        android:inputType="phone"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        android:hint="Phone number with area code"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton2"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:id="@+id/nameField"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        android:gravity="center"
+        android:inputType="text"
+        android:hint="Full name"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton2"
+        android:layout_below="@+id/phoneNumberField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        android:text="Skip"
+        android:id="@+id/skipToFriends"
+
+        android:layout_below="@+id/saveExtra"
+        android:layout_centerHorizontal="true"
+        android:textColor="#60C6C7"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        android:background="@drawable/mybutton"
+        android:id="@+id/saveExtra"
+        android:layout_below="@id/nameField"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

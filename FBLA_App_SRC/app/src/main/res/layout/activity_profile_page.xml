@@ -5,11 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".signupEmail">
+    tools:context="fbla.com.fbla_app_src.profilePage">
+    <include layout="@layout/content_profile_page" />
 
-
-
-    <include layout="@layout/content_signupemail" />
 
 
 </android.support.design.widget.CoordinatorLayout>

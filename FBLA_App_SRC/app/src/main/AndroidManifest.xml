@@ -4,13 +4,21 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    
+
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:exported="false"
+        android:grantUriPermissions="true"
+
         android:label="Suit"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:label="Suit"
@@ -22,8 +30,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login_activity"
+            android:name=".signupEmail"
             android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".signIn"
+            android:label="@string/title_activity_sign_in"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".profilePage"
+            android:label="@string/title_activity_profile_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".extrainfo"
+            android:label="@string/title_activity_extrainfo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".findingfriends"
+            android:label="@string/title_activity_findingfriends"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
