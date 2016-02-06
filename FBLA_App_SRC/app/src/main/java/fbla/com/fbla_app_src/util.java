@@ -1,17 +1,19 @@
 package fbla.com.fbla_app_src;
 
-import android.annotation.SuppressLint;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.CursorLoader;
-import android.database.Cursor;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.util.Log;
+import android.widget.Toast;
 
+import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+import com.backendless.files.BackendlessFile;
+import com.backendless.io.BackendlessUserWriter;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -36,63 +38,50 @@ public class util
         }
         return listString;
     }
-    @SuppressLint("NewApi")
-    public static String getRealPathFromURI_API19(Context context, Uri uri){
-        String filePath;
-        String wholeID = DocumentsContract.getDocumentId(uri);
 
-        // Split at colon, use second item in the array
-        String id = wholeID.split(":")[1];
+    public void uploadImage(Intent data, Context context)
+    {
+        final Context thisContext = context;
+        final BackendlessUser user = Backendless.UserService.CurrentUser();
+        final Intent datathis = data;
+        Picture image = new Picture();
+        image.setparams("", user.getObjectId());
+        Backendless.Data.save(image, new AsyncCallback<Picture>() {
+            @Override
+            public void handleResponse(Picture picture)
+            {
+                Backendless.Files.Android.upload(getBitmapFromData(datathis), Bitmap.CompressFormat.PNG, 100, picture.getObjectId(), "/media/userpics", new AsyncCallback<BackendlessFile>() {
+                    @Override
+                    public void handleResponse(final BackendlessFile backendlessFile) {
+                    }
 
-        String[] column = { MediaStore.Images.Media.DATA };
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault) {
+                        Toast.makeText(thisContext, backendlessFault.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
-        // where id is equal to
-        String sel = MediaStore.Images.Media._ID + "=?";
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+                Toast.makeText(thisContext, backendlessFault.getDetail(), Toast.LENGTH_LONG).show();
+                Toast.makeText(thisContext, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
 
-        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                column, sel, new String[]{ id }, null);
 
-        int columnIndex = cursor.getColumnIndex(column[0]);
-
-        if (cursor.moveToFirst()) {
-            filePath = cursor.getString(columnIndex);
-        }
-        else
-        {
-            filePath = null;
-        }
-        cursor.close();
-        return filePath;
     }
 
+    public Bitmap getBitmapFromData(Intent data)
+    {
+        Bitmap photo = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] bitmapdata = bos.toByteArray();
+        photo.compress(Bitmap.CompressFormat.PNG, 100 /*ignord for PNG*/, bos);
 
-    @SuppressLint("NewApi")
-    public static String getRealPathFromURI_API11to18(Context context, Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        String result = null;
-
-        CursorLoader cursorLoader = new CursorLoader(
-                context,
-                contentUri, proj, null, null, null);
-        Cursor cursor = cursorLoader.loadInBackground();
-
-        if(cursor != null){
-            int column_index =
-                    cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            result = cursor.getString(column_index);
-        }
-        return result;
+        return photo;
     }
 
-    public static String getRealPathFromURI_BelowAPI11(Context context, Uri contentUri){
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-        int column_index
-                = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
 
 
 }

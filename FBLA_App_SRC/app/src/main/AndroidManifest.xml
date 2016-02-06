@@ -49,6 +49,7 @@
             android:name=".findingfriends"
             android:label="@string/title_activity_findingfriends"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>
