@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +35,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-public class profilePage extends AppCompatActivity {
+public class profilePage extends AppCompatActivity{
 
     BackendlessUser user;
     util Utility;
 
 
     Button loggoutButton;
-    ImageView uploadPhoto;
+    Button uploadPhoto;
+    RelativeLayout layout;
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
@@ -49,7 +51,7 @@ public class profilePage extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        util.cleanHouse();
+
         System.exit(0);
     }
 
@@ -63,53 +65,26 @@ public class profilePage extends AppCompatActivity {
         Utility = new util();
         user = Backendless.UserService.CurrentUser();
 
-        uploadPhoto = (ImageView) findViewById(R.id.profilePage_addPic);
+        uploadPhoto = (Button) findViewById(R.id.profilePage_addPic);
 
-
-        /*
-        loggoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(profilePage.this, "Logging out...", Toast.LENGTH_LONG).show();
-                Backendless.UserService.logout(new AsyncCallback<Void>() {
-                    @Override
-                    public void handleResponse(Void aVoid) {
-                        //logged out
-
-                        startActivity(new Intent(profilePage.this, MainActivity.class));
-                    }
-
-                    @Override
-                    public void handleFault(BackendlessFault backendlessFault) {
-
-                    }
-                });
-            }
-        });
-        */
         uploadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 moveToCamera();
+
+                //uploadPhoto.setBackground();
+
             }
         });
+
 
         }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-
-        String name = user.getObjectId().toString() + "_" + user.getProperty("picNum");
-        String location = "/media/userpics";
-
-        Toast.makeText(this, "File uploaded to " + location + " as " + name, Toast.LENGTH_LONG).show();
-
-
-
-
-
+        Utility.uploadImage(data, profilePage.this);
     }
 
     public void moveToCamera()
@@ -117,38 +92,23 @@ public class profilePage extends AppCompatActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 1);
     }
-    public void uploadImage(Intent data, String fileName, String location)
-    {
-        Bitmap photo = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.WEBP, 100 /*ignored for PNG*/, bos);
-        byte[] bitmapdata = bos.toByteArray();
-        Backendless.Files.saveFile(location, fileName + ".webp", bitmapdata, new AsyncCallback<String>() {
-            @Override
-            public void handleResponse(String s) {
-                Toast.makeText(profilePage.this, s, Toast.LENGTH_LONG).show();
-                user.setProperty("picNum", ((Integer) user.getProperty("picNum") + 1));
-                Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
-                    @Override
-                    public void handleResponse(BackendlessUser backendlessUser) {
 
-                    }
-
-                    @Override
-                    public void handleFault(BackendlessFault backendlessFault) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-                Toast.makeText(profilePage.this, backendlessFault.getCode(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

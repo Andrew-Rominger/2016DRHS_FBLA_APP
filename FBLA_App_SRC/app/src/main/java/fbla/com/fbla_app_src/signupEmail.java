@@ -120,13 +120,14 @@ public class signupEmail extends AppCompatActivity
         {
             registerUser(userName.toString(), email.toString(), password.toString(), new AsyncCallback<BackendlessUser>() {
                 @Override
-                public void handleResponse(BackendlessUser backendlessUser) {
+                public void handleResponse(BackendlessUser backendlessUser)
+                {
                     Toast.makeText(signupEmail.this, "User " + userName.toString() + " created.", Toast.LENGTH_LONG).show();
                     Backendless.UserService.login(userName.toString(), password.toString(), new AsyncCallback<BackendlessUser>()
                     {
                         @Override
                         public void handleResponse(BackendlessUser backendlessUser) {
-                            if((Boolean) backendlessUser.getProperty("firstTimeLogin") == true)
+                            if((Boolean) backendlessUser.getProperty("firstTimeLogin"))
                             {
                                 backendlessUser.setProperty("firstTimeLogin", false);
                                 moveTo = new Intent(signupEmail.this, extrainfo.class);
