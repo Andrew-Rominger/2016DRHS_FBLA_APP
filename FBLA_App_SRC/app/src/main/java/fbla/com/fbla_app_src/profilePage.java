@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +35,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-public class profilePage extends AppCompatActivity {
+public class profilePage extends AppCompatActivity{
 
     BackendlessUser user;
     util Utility;
 
 
     Button loggoutButton;
-    ImageView uploadPhoto;
+    Button uploadPhoto;
+    RelativeLayout layout;
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
@@ -49,24 +51,47 @@ public class profilePage extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        util.cleanHouse();
+
         System.exit(0);
     }
 
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
         Utility = new util();
         user = Backendless.UserService.CurrentUser();
 
-        uploadPhoto = (ImageView) findViewById(R.id.profilePage_addPic);
+        unameField = (TextView) findViewById(R.id.profilePage_userNameContent);
+        emailField = (TextView) findViewById(R.id.profilePage_emailContnent);
+        phoneNumField = (TextView) findViewById(R.id.profilePage_phoneNumberContent);
+        nameField = (TextView) findViewById(R.id.profilePage_nameContent);
+        loggoutButton = (Button) findViewById(R.id.profilePageLogoutButton);
+        uploadPhoto = (Button) findViewById(R.id.profilePage_uploadButton);
 
 
-        /*
+
+
+
+        unameField.setText(user.getProperty("userName").toString());
+        if(user.getProperty("phoneNumber") == null)
+        {
+            phoneNumField.setText("No Phone number set");
+        }
+        else
+        {
+            phoneNumField.setText(Utility.convertPhone(user.getProperty("phoneNumber").toString()));
+        }
+        if(user.getProperty("name") == null)
+        {
+            nameField.setText("No name set");
+        }
+        else
+        {
+            nameField.setText(user.getProperty("name").toString());
+        }
+        emailField.setText(user.getEmail());
+
         loggoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +111,6 @@ public class profilePage extends AppCompatActivity {
                 });
             }
         });
-        */
         uploadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,28 +128,14 @@ public class profilePage extends AppCompatActivity {
         String name = user.getObjectId().toString() + "_" + user.getProperty("picNum");
         String location = "/media/userpics";
 
-        Toast.makeText(this, "File uploaded to " + location + " as " + name, Toast.LENGTH_LONG).show();
-
-
-
-
-
-    }
-
-    public void moveToCamera()
-    {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 1);
-    }
-    public void uploadImage(Intent data, String fileName, String location)
-    {
         Bitmap photo = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.WEBP, 100 /*ignored for PNG*/, bos);
         byte[] bitmapdata = bos.toByteArray();
-        Backendless.Files.saveFile(location, fileName + ".webp", bitmapdata, new AsyncCallback<String>() {
+        Backendless.Files.saveFile(location, name + ".webp", bitmapdata, new AsyncCallback<String>() {
             @Override
-            public void handleResponse(String s) {
+            public void handleResponse(String s)
+            {
                 Toast.makeText(profilePage.this, s, Toast.LENGTH_LONG).show();
                 user.setProperty("picNum", ((Integer) user.getProperty("picNum") + 1));
                 Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
@@ -142,11 +152,23 @@ public class profilePage extends AppCompatActivity {
             }
 
             @Override
-            public void handleFault(BackendlessFault backendlessFault) {
+            public void handleFault(BackendlessFault backendlessFault)
+            {
                 Toast.makeText(profilePage.this, backendlessFault.getCode(), Toast.LENGTH_LONG).show();
             }
         });
+        Toast.makeText(this, "File uploaded to " + location + " as " + name, Toast.LENGTH_LONG).show();
 
+
+
+
+
+    }
+
+    public void moveToCamera()
+    {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 1);
     }
 
 
