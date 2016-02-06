@@ -62,36 +62,12 @@ public class profilePage extends AppCompatActivity{
         Utility = new util();
         user = Backendless.UserService.CurrentUser();
 
-        unameField = (TextView) findViewById(R.id.profilePage_userNameContent);
-        emailField = (TextView) findViewById(R.id.profilePage_emailContnent);
-        phoneNumField = (TextView) findViewById(R.id.profilePage_phoneNumberContent);
-        nameField = (TextView) findViewById(R.id.profilePage_nameContent);
+
         loggoutButton = (Button) findViewById(R.id.profilePageLogoutButton);
         uploadPhoto = (Button) findViewById(R.id.profilePage_uploadButton);
 
 
-
-
-
-        unameField.setText(user.getProperty("userName").toString());
-        if(user.getProperty("phoneNumber") == null)
-        {
-            phoneNumField.setText("No Phone number set");
-        }
-        else
-        {
-            phoneNumField.setText(Utility.convertPhone(user.getProperty("phoneNumber").toString()));
-        }
-        if(user.getProperty("name") == null)
-        {
-            nameField.setText("No name set");
-        }
-        else
-        {
-            nameField.setText(user.getProperty("name").toString());
-        }
-        emailField.setText(user.getEmail());
-
+        /*
         loggoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +87,7 @@ public class profilePage extends AppCompatActivity{
                 });
             }
         });
+        */
         uploadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

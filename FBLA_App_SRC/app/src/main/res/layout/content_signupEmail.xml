@@ -60,13 +60,12 @@
         android:inputType="textPassword"
         android:id="@+id/passwordFieldSignup"
         android:layout_marginTop="20dp"
+        android:textColorHint="#ffffff"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.FontPath"
         android:hint="Password"
-        android:textColorHint="#ffffff"
-        android:textColor="#ffffff"
-        android:background="@drawable/mybutton2"
         android:layout_below="@+id/userNameFieldSignup"
+        android:background="@drawable/mybutton2"
         android:layout_alignLeft="@+id/passwordFieldCheckSignup"
         android:layout_alignStart="@+id/passwordFieldCheckSignup" />
     <EditText

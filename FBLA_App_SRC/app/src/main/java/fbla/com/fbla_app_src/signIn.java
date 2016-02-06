@@ -47,7 +47,7 @@ public class signIn extends AppCompatActivity {
         signinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(signIn.this, "Signing in...", Toast.LENGTH_SHORT);
+                Toast.makeText(signIn.this, "Signing in...", Toast.LENGTH_LONG);
                 Backendless.UserService.login(enterUsername.getText().toString(), enterPassword.getText().toString(), new AsyncCallback<BackendlessUser>() {
                     public void handleResponse(BackendlessUser user)
                     {
