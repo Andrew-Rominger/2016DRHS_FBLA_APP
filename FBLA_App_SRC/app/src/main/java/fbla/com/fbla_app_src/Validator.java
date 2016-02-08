@@ -67,17 +67,40 @@ public class Validator
    *
    * @param currentContext context, in which validation occurs
    * @param password       password to be validated
+   * @param passwordCheck  second password login to check
    * @return true if password is valid, false if validation failed
    */
-  public static boolean isPasswordValid( Context currentContext, CharSequence password )
+  public static boolean isPasswordValid( Context currentContext, CharSequence password , CharSequence passwordCheck)
   {
-    if( password.toString().isEmpty() )
+    if (password.equals(passwordCheck))
     {
-      Toast.makeText( currentContext, currentContext.getString( R.string.warning_password_empty ), Toast.LENGTH_LONG ).show();
+      return true;
+    } else if (!password.equals(passwordCheck))
+    {
+      Toast.makeText(currentContext, "Passwords do not match", Toast.LENGTH_LONG).show();
+      return false;
+    } else if (password.length() == 0)
+    {
+      Toast.makeText(currentContext, "Password can not be empty", Toast.LENGTH_LONG).show();
       return false;
     }
-
-    return true;
+      else{
+        Toast.makeText(currentContext, "Unexpected password error, please try again", Toast.LENGTH_LONG).show();
+        return false;
+    }
   }
+    public static boolean isUserNameValid(String userName)
+    {
+        if(userName.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+
 
 }

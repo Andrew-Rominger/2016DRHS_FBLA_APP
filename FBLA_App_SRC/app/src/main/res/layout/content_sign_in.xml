@@ -19,7 +19,7 @@
         android:id="@+id/logoLogin"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/colorsuit"
+        android:src="@drawable/whitesuit"
         android:textAppearance="@style/TextAppearance.FontPath"
 
         android:layout_marginTop="25dp" />
@@ -39,6 +39,7 @@
         android:gravity="center"
         android:layout_marginTop="30dp"
         android:textSize="20sp"
+
         />
     <EditText
         android:layout_width="265dp"

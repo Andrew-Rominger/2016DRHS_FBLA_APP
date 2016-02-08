@@ -10,8 +10,29 @@ public class Picture
 {
     //public String Caption;
     public String originalFileName;
-    private String objectId;
-    private String userID;
+    public String objectId;
+    public String userID;
+    public String fileLocation;
+    public boolean isProf;
+
+    public boolean isProf()
+    {
+        return isProf;
+    }
+
+    public void setIsProf(boolean isProf) {
+        this.isProf = isProf;
+    }
+    //public String ownerID;
+    /*
+    public String getOwnerID() {
+        return ownerID;
+    }
+
+    public void setOwnerID(String ownerID) {
+        this.ownerID = ownerID;
+    }
+    */
 
     public String getObjectId()
     {
@@ -51,10 +72,12 @@ public class Picture
     {
         this.originalFileName = originalFileName;
     }
-    public void setparams(String originalFilename, String userIDPass)
-    {
-        //setCaption(caption);
-        setUserID(userIDPass);
-        setOriginalFileName(originalFilename);
+
+    public String getFileLocation() {
+        return fileLocation;
+    }
+
+    public void setFileLocation(String fileLocation) {
+        this.fileLocation = fileLocation;
     }
 }

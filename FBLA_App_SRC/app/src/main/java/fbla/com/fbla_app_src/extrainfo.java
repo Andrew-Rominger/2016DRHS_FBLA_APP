@@ -1,5 +1,6 @@
 package fbla.com.fbla_app_src;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.facebook.internal.Utility;
 
 public class extrainfo extends AppCompatActivity {
 
@@ -27,90 +29,51 @@ public class extrainfo extends AppCompatActivity {
     EditText fullName;
     PopupMenu popup;
     EditText phoneNumber;
+    util Utility;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_extrainfo);
+
         user = Backendless.UserService.CurrentUser();
-        Toast.makeText(extrainfo.this, user.getProperty("userName").toString() + " logged in", Toast.LENGTH_LONG).show();
+
         skip = (TextView) findViewById(R.id.skipToFriends);
         saveData = (Button) findViewById(R.id.saveExtra);
         fullName = (EditText) findViewById(R.id.nameField);
         phoneNumber = (EditText) findViewById(R.id.phoneNumberField);
+        Utility = new util();
 
-        /*skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                skipToFriends();
-            }
-        });
-        */
+
 
 
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                skipToProf();
+                moveToProf(user);
             }
         });
         saveData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                setProperties();
+                String pn = phoneNumber.getText().toString();
+                String fn = fullName.getText().toString();
+                util.setProperties(pn,fn,user, extrainfo.this);
+                moveToProf(user);
 
             }
         });
 
     }
-    public void setProperties()
+
+    public void moveToProf(BackendlessUser user)
     {
-        if(Integer.parseInt(convertNumber(phoneNumber.getText().toString())) != -1)
-        {
-            user.setProperty("phoneNumber", convertNumber(phoneNumber.getText().toString()));
-        }
-        if(!fullName.getText().toString().equals(""))
-        {
-            user.setProperty("name", fullName.getText().toString());
-        }
-
-        Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
-            @Override
-            public void handleResponse(BackendlessUser backendlessUser) {
-
-            }
-
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-
-            }
-        });
-        skipToProf();
+        startActivity(new Intent(extrainfo.this, profilePage.class));
     }
-    public void skipToProf()
-    {
-        Intent i = new Intent(extrainfo.this, profilePage.class);
-        startActivity(i);
-    }
-    public String convertNumber(String numIn)
-    {
 
-        if(numIn.length() == 10)
-        {
-         return numIn;
-        }
-        else
-        {
-         return Integer.toString(errorNum());
-        }
-    }
-    public int errorNum()
-    {
-        Toast.makeText(extrainfo.this, "Hmm I was not able to read your phone number. Please try again. You dont need to add dashes or a country code. Ex 7755551234", Toast.LENGTH_LONG).show();
-        return -1;
-    }
 
 }

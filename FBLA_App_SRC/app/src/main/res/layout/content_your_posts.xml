@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fbla.com.fbla_app_src.yourPosts"
+    tools:showIn="@layout/activity_your_posts"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#C2C6C1"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        android:text="Your Posts"
+        android:textSize="30sp"
+
+        android:textStyle="bold"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:id="@+id/textView3" />
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal">
+            <View
+                android:layout_width="90dp"
+                android:layout_height="20dp"
+                android:background="@android:color/darker_gray"
+                android:id="@+id/colorView"
+                />
+
+            <View
+                android:layout_width="90dp"
+                android:layout_height="20dp"
+                android:background="#EA6C55"
+                android:id="@+id/colorView3"
+                />
+            <View
+                android:layout_width="90dp"
+                android:layout_height="20dp"
+                android:background="#60C6C7"
+                android:id="@+id/colorView4"
+                />
+            <View
+                android:layout_width="90dp"
+                android:layout_height="20dp"
+                android:background="#1DBCBA"
+                android:id="@+id/colorView5"
+                />
+
+
+        </LinearLayout>
+
+    </TableRow>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/colorView2"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_addMore"
+        android:background="@drawable/currentlynoposts"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+
+        android:src="@drawable/currentlynoposts"
+        />
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:background="#7d8c93">
+
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+
+            android:id="@+id/profilepage_homeNav">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/profilepage_home"
+                android:src="@drawable/homenavicon"
+                android:foregroundGravity="center"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/profilepage_addNav"
+
+            android:foregroundGravity="right"
+            android:layout_toRightOf="@id/profilepage_homeNav"
+            android:id="@+id/profilepage_searchNav">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:maxWidth="60dp"
+                android:maxHeight="10dp"
+                android:id="@+id/profilepage_search"
+                android:layout_gravity="center"
+                android:src="@drawable/explorenavicon" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/profilepage_addNav">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/profilepage_add"
+                android:layout_gravity="center"
+                android:src="@drawable/addpostnavicon" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:id="@+id/profilepage_notifyNav"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/profilepage_addNav"
+            android:foregroundGravity="left">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/profilepage_notify"
+                android:layout_gravity="center"
+
+                android:src="@drawable/notificationsnavicon"
+                />
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/profilepage_notifyNav"
+            android:id="@+id/profilepage_profileNav">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/profilepage_profile"
+                android:layout_gravity="center"
+                android:src="@drawable/profilenavicon" />
+        </FrameLayout>
+    </RelativeLayout>
+    </TableRow>
+
+
+</LinearLayout>
