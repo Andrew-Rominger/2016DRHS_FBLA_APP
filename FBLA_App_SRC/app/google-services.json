@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_id": "suit-3488",
+    "project_number": "1099464625673",
+    "name": "Suit"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1099464625673:android:5504aa17d63b02c5",
+        "client_id": "android:fbla.com.fbla_app_src",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "fbla.com.fbla_app_src"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1099464625673-3n1bmjho2t7s7iebh2s86fpg9f1khtos.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbla.com.fbla_app_src",
+            "certificate_hash": "C9A19C2508249D42CA5A2D2B8C6559907625D32C"
+          }
+        },
+        {
+          "client_id": "1099464625673-v8cb4lkoefca4nueqkm04ijlng2f0ltt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
