@@ -102,11 +102,11 @@
     <Button
         android:layout_width="265dp"
         android:layout_height="35dp"
-        android:text="Sign in with Twitter"
+        android:text="Sign in with Google"
         android:textColor="#ffffff"
         android:textAppearance="@style/TextAppearance.FontPath"
         android:textSize="20sp"
-        android:id="@+id/facebookSignIn"
+        android:id="@+id/googleSignIn"
         android:textAllCaps="false"
         android:layout_below="@+id/twitterSignIn"
         android:layout_centerHorizontal="true"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,290 +12,224 @@
     android:fillViewport="true"
     >
 
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="35dp"
+        android:id="@+id/usernameId"
+        android:background="#7D8C93">
 
-
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="70dp"
-        android:id="@+id/profilepage_tableRow"
-
-        >
-
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            >
+            android:text="User_Name"
+            android:id="@+id/userNameTextField"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:layout_alignParentStart="false" />
+    </RelativeLayout>
 
-            <FrameLayout
-                android:layout_width="90dp"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:id="@+id/profilepage_tableRow"
+        android:layout_below="@+id/usernameId"
+
+        >
+
+
+        <FrameLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="#7D8C93"
-                android:id="@+id/profilepage_post"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="false"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentEnd="false">
+                android:background="#60C6C7"
+                android:id="@+id/followers"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/profilepage_saves"
+                android:layout_toEndOf="@+id/profilepage_saves"
+                android:layout_weight=".25">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Posts"
-                    android:id="@+id/profilepage_postText"
+                    android:id="@+id/profilepage_postsText"
                     android:textColor="#ffffff"
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_marginBottom="5dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:id="@+id/profilepage_postNum"
-                    android:layout_gravity="center_horizontal|top"
-                    android:layout_marginTop="10dp"
-                    android:textSize="30dp"
-                    android:textColor="#ffffff" />
 
-
-
-            </FrameLayout>
-            <FrameLayout
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:background="#EA6C55"
-                android:id="@+id/profilepage_saves"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/profilepage_post"
-                android:layout_toEndOf="@+id/profilepage_post">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Saves"
-                    android:id="@+id/profilepage_savesText"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:layout_marginBottom="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:id="@+id/profilepage_savesNum"
-                    android:layout_gravity="center|top"
-                    android:layout_marginTop="10dp"
-                    android:textSize="30dp"
-                    android:textColor="#ffffff" />
-
-
-
-            </FrameLayout>
+        </FrameLayout>
 
             <FrameLayout
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:background="#60C6C7"
-                android:id="@+id/followers"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/friends"
-                android:layout_toStartOf="@+id/friends">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Followers"
-                    android:id="@+id/profilepage_followersText"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:layout_marginBottom="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:id="@+id/profilepage_followersNum"
-                    android:layout_gravity="center_horizontal|top"
-                    android:layout_marginTop="10dp"
-                    android:textSize="30dp"
-                    android:textColor="#ffffff" />
-
-
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="90dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="#1DBCBA"
                 android:id="@+id/friends"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
+                android:layout_toRightOf="@+id/followers"
+                android:layout_toEndOf="@+id/followers"
+                android:layout_weight=".25">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Friends"
-                    android:id="@+id/profilepage_friendsText"
+                    android:text="Likes"
+                    android:id="@+id/profilepage_likesText"
                     android:textColor="#ffffff"
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_marginBottom="5dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:id="@+id/profilepage_friendsNum"
-                    android:layout_gravity="center_horizontal|top"
-                    android:layout_marginTop="10dp"
-                    android:textSize="30dp"
-                    android:textColor="#ffffff" />
-
-
 
             </FrameLayout>
 
-        </RelativeLayout>
 
-    </TableRow>
+
+    </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/profilepage_tableRow"
-        android:layout_marginTop="10dp">
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/profilepage_botTableRow"
+
+            android:background="#7D8C93">
 
 
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_weight=".20"
+                android:id="@+id/frameLayout2" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_gravity="bottom"
-                android:background="#7d8c93">
-
-                <FrameLayout
-                    android:layout_width="70dp"
+            <FrameLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/profilepage_addNav"
+                    android:layout_weight=".20"
+                    android:foregroundGravity="right"
 
-                    android:id="@+id/profilepage_homeNav">
+                    android:id="@+id/profilepage_searchNav">
 
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:id="@+id/profilepage_home"
-                        android:src="@drawable/homenavicon"
-                        android:foregroundGravity="center"
-                        android:layout_gravity="center" />
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@+id/profilepage_addNav"
-
-                    android:foregroundGravity="right"
-                    android:layout_toRightOf="@id/profilepage_homeNav"
-                    android:id="@+id/profilepage_searchNav">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:maxWidth="60dp"
-                    android:maxHeight="10dp"
-                    android:id="@+id/profilepage_search"
-                    android:layout_gravity="center"
-                    android:src="@drawable/explorenavicon" />
+                        android:maxWidth="60dp"
+                        android:maxHeight="10dp"
+                        android:id="@+id/profilepage_search"
+                        android:layout_gravity="center"
+                        android:src="@drawable/explorenavicon" />
 
                 </FrameLayout>
 
                 <FrameLayout
-                    android:layout_width="70dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
                     android:layout_centerVertical="true"
                     android:layout_centerInParent="true"
                     android:layout_centerHorizontal="true"
+                    android:layout_weight=".20"
                     android:id="@+id/profilepage_addNav">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profilepage_add"
-                    android:layout_gravity="center"
-                    android:src="@drawable/addpostnavicon" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/profilepage_notifyNav"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/profilepage_addNav"
-                    android:foregroundGravity="left">
 
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:id="@+id/profilepage_notify"
+                        android:id="@+id/profilepage_add"
                         android:layout_gravity="center"
+                        android:src="@drawable/addpostnavicon" />
 
-                        android:src="@drawable/notificationsnavicon"
-                        />
                 </FrameLayout>
-                <FrameLayout
-                    android:layout_width="70dp"
+
+            <FrameLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@id/profilepage_notifyNav"
+
+                    android:layout_weight=".20"
                     android:id="@+id/profilepage_profileNav">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/profilepage_profile"
-                    android:layout_gravity="center"
-                    android:src="@drawable/profilenavicon" />
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/profilepage_profile"
+                        android:layout_gravity="center"
+                        android:src="@drawable/profilenavicon" />
                 </FrameLayout>
-            </RelativeLayout>
 
-        </TableRow>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profilePage_addPic"
-            android:src="@drawable/profilepicadd"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="80dp" />
+                android:layout_weight=".20"
+                android:id="@+id/frameLayout" >
 
-        <TextView
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="You currently have no bio."
-            android:id="@+id/profilepage_bio"
-            android:layout_below="@+id/profilePage_addPic"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="30dp"
-            android:textSize="31dp"
-            android:textColor="#7D8C93"
-            android:textAlignment="center"
-            android:textStyle="normal" />
+            </FrameLayout>
+
+
+        </LinearLayout>
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/profilepage_tableRow"
+        android:layout_above="@+id/relativeLayout">
+
+
+        <RelativeLayout
+            android:layout_width="270dp"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profilePage_addPic"
+                android:src="@drawable/profilepicadd"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="91dp" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="You currently have no bio."
+                    android:id="@+id/profilepage_bio"
+                    android:textSize="31dp"
+                    android:textColor="#7D8C93"
+                    android:textAlignment="center"
+                    android:textStyle="normal"
+                android:layout_below="@+id/profilePage_addPic"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+
     </RelativeLayout>
 
-</LinearLayout>
+
+</RelativeLayout>
+
+
 
