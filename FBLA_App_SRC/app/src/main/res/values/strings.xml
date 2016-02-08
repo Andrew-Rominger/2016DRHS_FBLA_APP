@@ -55,4 +55,7 @@
 
     <string name="loading_register">Sending registration request…</string>
     <string name="title_activity_userfeed">user feed</string>
+    <string name="title_activity_add_post">addPost</string>
+    <string name="title_activity_your_posts">yourPosts</string>
+    <string name="title_activity_upload_post">uploadPostActivity</string>
 </resources>
