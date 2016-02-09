@@ -71,11 +71,10 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/content_addMore"
+        android:id="@+id/yourPosts_addPosts"
         android:background="@drawable/currentlynoposts"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-
         android:src="@drawable/currentlynoposts"
         />
     <TableRow

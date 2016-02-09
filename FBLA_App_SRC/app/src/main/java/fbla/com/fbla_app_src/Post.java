@@ -13,6 +13,15 @@ public class Post
     private String Caption;
     private BackendlessUser userUploaded;
     private Picture PictureOnPost;
+    private String objectId;
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
 
     public int getNumFavorites() {
         return NumFavorites;
