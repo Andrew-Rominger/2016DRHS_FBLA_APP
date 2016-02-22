@@ -17,6 +17,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class util
     static Picture image;
     static String URL;
     static Bitmap imageBmap;
+    static Picture savedPic;
 
     public String convertPhone(String preCon)
     {
@@ -68,11 +70,12 @@ public class util
         saveImage(data, context, true);
     }
 
-    public void saveImage(Intent data, Context context, Boolean isProfile)
+    public static Picture saveImage(Intent data, Context context, Boolean isProfile)
     {
         final boolean isProfP = isProfile;
         final Context thisContext = context;
         final Intent datathis = data;
+        String toReturn;
 
         final BackendlessUser user = Backendless.UserService.CurrentUser();
         final Picture image = new Picture();
@@ -105,7 +108,9 @@ public class util
                         }
                     });
                 }
+                savedPic = imagePassed;
                 uploadImage(getBitmapFromData(datathis), imagePassed, thisContext);
+
             }
 
             @Override
@@ -114,11 +119,12 @@ public class util
                 Toast.makeText(thisContext, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        return savedPic;
 
 
 
     }
-    public void uploadImage(Bitmap bMap, Picture p, Context thisContextp)
+    public static void uploadImage(Bitmap bMap, Picture p, Context thisContextp)
     {
         final String OID = p.getObjectId()+".png";
 
@@ -137,10 +143,16 @@ public class util
 
     }
 
-    public Bitmap getBitmapFromData(Intent data)
+    public static Bitmap getBitmapFromData(Intent data)
     {
-        Bitmap photo = (Bitmap) data.getExtras().get("data");
-        return photo;
+        byte[] bArr = data.getByteArrayExtra("data");
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeByteArray(bArr,0,bArr.length,options);
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+        return null;
+
     }
     public static Drawable getPictureFromPOID(final String PictureOID, final Context thisContext)
     {
@@ -161,7 +173,7 @@ public class util
                 Toast.makeText(thisContext, backendlessFault.getCode(), Toast.LENGTH_LONG).show();
             }
         });
-        return new BitmapDrawable(thisContext.getResources(), imageBmap);
+        return getDrawablleFromBMap(imageBmap, thisContext);
 
     }
     public static Bitmap getBitmapFromURL(String src) {
@@ -179,6 +191,11 @@ public class util
             return null;
         }
     }
+    public static Drawable getDrawablleFromBMap(Bitmap bmap, Context context)
+    {
+        return new BitmapDrawable(context.getResources(), imageBmap);
+    }
+
     public static void signInUser(final String userName, String password,Context c)
     {
             final Context context = c;
@@ -244,7 +261,7 @@ public class util
         }
 
     }
-    public String convertNumber(String numIn, Context c)
+    public static String convertNumber(String numIn, Context c)
     {
 
         if(numIn.length() == 10)
@@ -256,7 +273,7 @@ public class util
             return Integer.toString(errorNum(c));
         }
     }
-    public int errorNum(Context context)
+    public static int errorNum(Context context)
     {
         Toast.makeText(context, "Hmm I was not able to read your phone number. Please try again. You dont need to add dashes or a country code. Ex 7755551234", Toast.LENGTH_LONG).show();
         return -1;
@@ -268,6 +285,22 @@ public class util
         post.setPictureOnPost(imageFromCamera);
         post.setUserUploaded(user);
         
+    }
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        if(ratio >= 1.0F)
+        {
+            return  realImage;
+        }
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
     }
 
 }

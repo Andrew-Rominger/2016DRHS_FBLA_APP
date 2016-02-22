@@ -37,6 +37,7 @@ public class signupEmail extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         //Buttons, images
         goBack = (Button) findViewById(R.id.signupEmail_gobackButton);
         signUp = (Button) findViewById(R.id.signUp);
@@ -84,9 +85,10 @@ public class signupEmail extends AppCompatActivity
                         @Override
                         public void handleResponse(BackendlessUser backendlessUser)
                         {
-                            Backendless.UserService.login(backendlessUser.getProperty("userName").toString(), backendlessUser.getPassword(), new AsyncCallback<BackendlessUser>() {
+                            Backendless.UserService.login(user.getProperty("userName").toString(), user.getPassword(), new AsyncCallback<BackendlessUser>() {
                                 @Override
-                                public void handleResponse(BackendlessUser backendlessUser) {
+                                public void handleResponse(BackendlessUser backendlessUser)
+                                {
                                     startActivity(new Intent(signupEmail.this, extrainfo.class));
                                 }
 
