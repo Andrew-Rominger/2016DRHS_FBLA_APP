@@ -19,7 +19,7 @@ public class yourPosts extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_posts);
 
-        addPostPic = (ImageView) findViewById(R.id.yourPosts_addPosts);
+        addPostPic = (ImageView) findViewById(R.id.content_addMore);
         addPostPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
