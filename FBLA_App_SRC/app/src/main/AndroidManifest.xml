@@ -67,6 +67,22 @@
         <activity
             android:name=".uploadPostActivity"
             android:label="@string/title_activity_upload_post"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".yourupvotes"
+            android:label="@string/title_activity_yourupvotes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".accountsettings"
+            android:label="@string/title_activity_accountsettings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".editprofilesettings"
+            android:label="@string/title_activity_editprofilesettings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".passwordsettings"
+            android:label="@string/title_activity_passwordsettings"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

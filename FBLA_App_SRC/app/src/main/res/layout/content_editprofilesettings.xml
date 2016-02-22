@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fbla.com.fbla_app_src.editprofilesettings"
+    tools:showIn="@layout/activity_editprofilesettings">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight=".075"
+            android:background="#EA6C55">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="edit profile"
+                android:id="@+id/editprofiletextview"
+                android:layout_gravity="center"
+                android:textColor="#fff"
+                android:textSize="35sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/imageView11"
+                android:layout_gravity="left|center_vertical"
+                android:src="@drawable/x"
+                android:soundEffectsEnabled="false"
+                android:layout_marginLeft="20dp" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".2">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imageView14"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circlebg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:id="@+id/textView13"
+                android:layout_below="@+id/imageView14"
+                android:layout_centerHorizontal="true"
+                android:textColor="#EA6C55" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".05"
+            android:background="@drawable/customborder">
+
+            <FrameLayout
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="#EA6C55"
+                android:id="@+id/frameLayout8">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:id="@+id/textView8"
+                    android:layout_gravity="center"
+                    android:textColor="#fff" />
+            </FrameLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/editText"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/frameLayout8"
+                android:layout_toEndOf="@+id/frameLayout8"
+                android:background="@android:color/transparent" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:id="@+id/imageView12"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight=".025" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".05"
+            android:background="@drawable/customborder"
+            android:layout_gravity="center_horizontal">
+
+            <FrameLayout
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="#EA6C55"
+                android:id="@+id/frameLayout9" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Handle"
+                    android:id="@+id/textView11"
+                    android:layout_gravity="center"
+                    android:textColor="#fff" />
+            </FrameLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/editText3"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/frameLayout9"
+                android:layout_toEndOf="@+id/frameLayout9"
+                android:background="@android:color/transparent" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/imageView13"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight=".025"
+            android:layout_gravity="center_horizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:background="@drawable/customborder"
+            android:layout_gravity="center_horizontal" >
+
+            <FrameLayout
+                android:layout_width="75dp"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="#EA6C55"
+                android:id="@+id/frameLayout10" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bio"
+                    android:id="@+id/textView12"
+                    android:layout_gravity="center"
+                    android:textColor="#fff" />
+            </FrameLayout>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editText4"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/frameLayout10"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@android:color/transparent" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Done"
+                android:textColor="#ffffff"
+                android:textAppearance="@style/TextAppearance.FontPath"
+                android:textSize="20sp"
+                android:id="@+id/donebutton"
+                android:textAllCaps="false"
+                android:background="@drawable/mybutton"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
