@@ -48,7 +48,7 @@ public class uploadPostActivity extends AppCompatActivity {
         shareButton = (Button) findViewById(R.id.uploadPost_shareButton);
 
         extras = getIntent().getExtras();
-        if(extras!=null)
+        if(extras.get("passedPictureData")!=null)
         {
             data = (Intent) extras.get("passedPictureData");
             handleImage(data);
@@ -104,6 +104,7 @@ public class uploadPostActivity extends AppCompatActivity {
         decoded.recycle();
 
         placeHolder.setBackground(dr);
+
 
     }
 
