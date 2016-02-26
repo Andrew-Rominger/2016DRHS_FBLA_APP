@@ -58,7 +58,8 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight=".33"
-                android:background="#60C6C7">
+                android:background="#60C6C7"
+                android:id="@+id/trending">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -73,7 +74,8 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight=".33"
-                android:background="#1DBCBA">
+                android:background="#1DBCBA"
+                android:id="@+id/recent">
 
                 <ImageView
                     android:layout_width="wrap_content"
