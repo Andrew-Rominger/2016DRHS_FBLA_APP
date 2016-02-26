@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     private Button EmailSignUpButton;
     private TextView moveToSignInButton;
     private Button facebookSignIn;
+    private Button googleSignIn;
     CallbackManager callbackManager;
 
     @Override
@@ -59,7 +60,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //FacebookSdk.sdkInitialize(getApplicationContext());
         //Sets the app version for Backendless
         String appVersion = "v1";
         //Initializes Backendless
@@ -70,28 +70,11 @@ public class MainActivity extends AppCompatActivity
                         .build()
         );
 
-
-
-        //callbackManager = CallbackManager.Factory.create();
-        /*
-        Backendless.UserService.loginWithFacebook(MainActivity.this, new AsyncCallback<BackendlessUser>() {
-            @Override
-            public void handleResponse(BackendlessUser backendlessUser) {
-
-            }
-
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-
-            }
-        });
-*/
-
         //Initialize variables and assign views
         EmailSignUpButton = (Button) findViewById(R.id.signupEmailButton);
         moveToSignInButton = (TextView) findViewById(R.id.main_SignInEmail);
         facebookSignIn = (Button) findViewById(R.id.buttonFacebook);
-
+        googleSignIn = (Button) findViewById(R.id.buttonGoogle);
         //Declare a function that is called when the EmailSignUpButton is clicked
         EmailSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,12 +103,29 @@ public class MainActivity extends AppCompatActivity
                 Backendless.UserService.loginWithFacebook(MainActivity.this, new AsyncCallback<BackendlessUser>() {
                     @Override
                     public void handleResponse(BackendlessUser backendlessUser) {
-
+                        startActivity(new Intent(MainActivity.this, extrainfo.class));
                     }
 
                     @Override
                     public void handleFault(BackendlessFault backendlessFault) {
+                        Toast.makeText(MainActivity.this, backendlessFault.toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
 
+        googleSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Backendless.UserService.loginWithGooglePlus(MainActivity.this, new AsyncCallback<BackendlessUser>() {
+                    @Override
+                    public void handleResponse(BackendlessUser backendlessUser) {
+                        startActivity(new Intent(MainActivity.this, extrainfo.class));
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault) {
+                        Toast.makeText(MainActivity.this, backendlessFault.toString(), Toast.LENGTH_LONG).show();
                     }
                 });
             }

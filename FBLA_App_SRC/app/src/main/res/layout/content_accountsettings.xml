@@ -36,7 +36,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:id="@+id/imageView11"
+                android:id="@+id/backArrowImageView"
                 android:layout_gravity="left|center_vertical"
                 android:src="@drawable/movebackarrowtwo"
                 android:soundEffectsEnabled="false"
@@ -64,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".05"
-            android:background="@drawable/customborder">
+            android:background="@drawable/customborder"
+            android:id="@+id/editProfile">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -88,7 +89,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".05">
+            android:layout_weight=".05"
+            android:id="@+id/changePassword">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -130,7 +132,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".05">
+            android:layout_weight=".05"
+            android:id="@+id/privatePolicy">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -155,7 +158,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".05"
-            android:background="@drawable/customborder" >
+            android:background="@drawable/customborder"
+            android:id="@+id/terms">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -188,12 +192,12 @@
                 android:textColor="#ffffff"
                 android:textAppearance="@style/TextAppearance.FontPath"
                 android:textSize="20sp"
-                android:id="@+id/deleteaccount"
+                android:id="@+id/deleteAccountButton"
                 android:textAllCaps="false"
                 android:background="@drawable/mybutton"
                 android:layout_below="@+id/spaceview"
-                android:layout_alignLeft="@+id/logoutbutton"
-                android:layout_alignStart="@+id/logoutbutton" />
+                android:layout_alignLeft="@+id/logoutButton"
+                android:layout_alignStart="@+id/logoutButton" />
 
             <Button
                 android:layout_width="265dp"
@@ -202,7 +206,7 @@
                 android:textColor="#ffffff"
                 android:textAppearance="@style/TextAppearance.FontPath"
                 android:textSize="20sp"
-                android:id="@+id/logoutbutton"
+                android:id="@+id/logoutButton"
                 android:textAllCaps="false"
                 android:background="@drawable/mybutton"
                 android:layout_above="@+id/spaceview"

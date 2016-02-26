@@ -62,4 +62,7 @@
     <string name="title_activity_accountsettings">account settings</string>
     <string name="title_activity_editprofilesettings">edit profile settings</string>
     <string name="title_activity_passwordsettings">passwordsettings</string>
+    <string name="title_activity_mostupvotessearch">most up votes search</string>
+    <string name="title_activity_trendingsearch">trending search</string>
+    <string name="title_activity_recentsearch">recent search</string>
 </resources>

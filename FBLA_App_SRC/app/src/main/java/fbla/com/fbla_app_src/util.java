@@ -196,9 +196,8 @@ public class util
         return new BitmapDrawable(context.getResources(), imageBmap);
     }
 
-    public static void signInUser(final String userName, String password,Context c)
-    {
-            final Context context = c;
+    public static void signInUser(final String userName, final String password, Context c) {
+        final Context context = c;
             Backendless.UserService.login(userName, password, new AsyncCallback<BackendlessUser>() {
                 @Override
                 public void handleResponse(BackendlessUser backendlessUser) {
@@ -209,7 +208,9 @@ public class util
                 public void handleFault(BackendlessFault backendlessFault) {
                     Toast.makeText(context, userName + " did not login", Toast.LENGTH_LONG).show();
                 }
-            }, true);
+            });
+
+
     }
     public static boolean checkForFirstTime(BackendlessUser user)
     {
@@ -302,5 +303,18 @@ public class util
                 height, filter);
         return newBitmap;
     }
+    public static boolean isPassword(String string)
+    {
 
+        String currentPassword = Backendless.UserService.CurrentUser().getPassword().toString();
+        if(currentPassword == string)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
 }
