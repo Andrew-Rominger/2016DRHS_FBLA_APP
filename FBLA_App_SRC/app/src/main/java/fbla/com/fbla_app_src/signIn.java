@@ -33,7 +33,7 @@ public class signIn extends AppCompatActivity {
     String Password;
     public Button signinButton;
     public ImageView goBackButton;
-    Intent moveTo;
+    static Intent moveTo;
     BackendlessUser user;
 
     //Called when activity is created
@@ -60,12 +60,26 @@ public class signIn extends AppCompatActivity {
 
               //  user = util.signInUser(Username, Password, signIn.this);
 
+                util.signInUser(Username, Password, signIn.this);
 
+                if(util.loggedIn())
+                {
+                    if (util.extraInfo()) {
+                        Intent i = new Intent(signIn.this, extrainfo.class);
+                        startActivity(i);
+                    }
+                    if (util.moveProfilePage()) {
+                        Intent i = new Intent(signIn.this, extrainfo.class);
+                        startActivity(i);
+                    }
+                }
+                /*
                 if(user == null)
                 {
                     Toast.makeText(signIn.this, "Sign in failed.", Toast.LENGTH_LONG).show();
                     return;
                 }
+
 
                 if(util.checkForFirstTime(user))
                 {
@@ -76,7 +90,7 @@ public class signIn extends AppCompatActivity {
                     moveTo = new Intent(signIn.this, profilePage.class);
                 }
                 startActivity(moveTo);
-
+                */
             }
         });
         goBackButton.setOnClickListener(new View.OnClickListener()

@@ -47,6 +47,8 @@ public class util
     static String URL;
     static Bitmap imageBmap;
     static Picture savedPic;
+    static boolean logged;
+
 
     public String convertPhone(String preCon)
     {
@@ -196,17 +198,34 @@ public class util
         return new BitmapDrawable(context.getResources(), imageBmap);
     }
 
-    public static void signInUser(final String userName, final String password, Context c) {
+    public static void signInUser(final String userName, final String password, final Context c) {
         final Context context = c;
             Backendless.UserService.login(userName, password, new AsyncCallback<BackendlessUser>() {
                 @Override
                 public void handleResponse(BackendlessUser backendlessUser) {
                     Toast.makeText(context, userName + " logged in", Toast.LENGTH_LONG).show();
+                    //Intent moveTo;
+                    loggedIn();
+                    if(util.checkForFirstTime(backendlessUser))
+                    {
+                       // moveTo = new Intent(c, extrainfo.class);
+                        extraInfo();
+
+                    }
+                    else
+                    {
+                       // moveTo = new Intent(c, profilePage.class);
+                       moveProfilePage();
+                    }
+                   // startActivity(moveTo);
+
                 }
 
                 @Override
                 public void handleFault(BackendlessFault backendlessFault) {
                     Toast.makeText(context, userName + " did not login", Toast.LENGTH_LONG).show();
+
+
                 }
             });
 
@@ -317,4 +336,17 @@ public class util
         }
 
     }
+    public static boolean extraInfo()
+    {
+        return true;
+    }
+    public static boolean moveProfilePage()
+    {
+        return true;
+    }
+    public static boolean loggedIn()
+    {
+        return true;
+    }
+
 }

@@ -100,10 +100,10 @@ public class MainActivity extends AppCompatActivity
         facebookSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Backendless.UserService.loginWithFacebook(MainActivity.this, new AsyncCallback<BackendlessUser>() {
+                Backendless.UserService.loginWithFacebook( MainActivity.this, new AsyncCallback<BackendlessUser>() {
                     @Override
                     public void handleResponse(BackendlessUser backendlessUser) {
-                        startActivity(new Intent(MainActivity.this, extrainfo.class));
+                        startActivity(new Intent(MainActivity.this, profilePage.class));
                     }
 
                     @Override
@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity
                 });
             }
         });
-
         googleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,8 +129,6 @@ public class MainActivity extends AppCompatActivity
                 });
             }
         });
-
-
 
     }
 

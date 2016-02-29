@@ -36,7 +36,6 @@ public class extrainfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_extrainfo);
 
         user = Backendless.UserService.CurrentUser();
