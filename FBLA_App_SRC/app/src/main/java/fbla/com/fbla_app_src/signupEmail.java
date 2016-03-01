@@ -32,6 +32,9 @@ public class signupEmail extends AppCompatActivity
     Intent moveTo;
     CheckBox showPW;
     EditText userNameInput;
+    EditText fullName;
+    EditText date;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -46,6 +49,8 @@ public class signupEmail extends AppCompatActivity
         userNameInput = (EditText) findViewById(R.id.signupEmail_userName);
         passwordInput = (EditText) findViewById(R.id.signupEmail_password);
         passwordInputCheck = (EditText) findViewById(R.id.signupEmail_passwordCheck);
+        fullName = (EditText) findViewById(R.id.FandLName);
+        date = (EditText) findViewById(R.id.dob);
         user = new BackendlessUser();
         //Edit Text
 
@@ -69,6 +74,8 @@ public class signupEmail extends AppCompatActivity
             {
                 final String newUserName = userNameInput.getText().toString();
                 final String password = passwordInput.getText().toString();
+                String name = fullName.getText().toString();
+                String dateOfBirth = date.getText().toString();
                 String email = emailInput.getText().toString();
                 String passwordCheck = passwordInputCheck.getText().toString();
                 Boolean isUserNameValid = Validator.isUserNameValid(newUserName);
@@ -80,6 +87,7 @@ public class signupEmail extends AppCompatActivity
                     user.setProperty("userName", newUserName);
                     user.setPassword(password);
                     user.setEmail(email);
+                    user.setProperty("name", name);
                     Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>()
                     {
                         @Override

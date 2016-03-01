@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".signupEmail"
-    tools:showIn="@layout/content_signupEmail"
+    tools:showIn="@layout/activity_login"
     android:background="@drawable/emailsignup_bckg">
 
     <ImageView
@@ -18,10 +18,9 @@
         android:textAppearance="@style/TextAppearance.FontPath"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:src="@drawable/whitenotagline"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp" />
+        android:src="@drawable/whitesuit"
+        android:layout_below="@+id/signupEmail_gobackButton"
+        android:layout_centerHorizontal="true" />
 
     <EditText
     android:layout_width="wrap_content"
@@ -36,7 +35,8 @@
     android:textColor="#ffffff"
     android:background="@drawable/mybutton2"
     android:layout_centerVertical="true"
-    android:layout_centerHorizontal="true"/>
+    android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
 
     <EditText
         android:layout_width="300dp"
@@ -47,7 +47,7 @@
         android:inputType="text"
         android:layout_below="@id/signupEmail_emailField"
         android:hint="Username"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
         android:background="@drawable/mybutton2"
@@ -59,7 +59,7 @@
         android:layout_height="40dp"
         android:inputType="textPassword"
         android:id="@+id/signupEmail_password"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:textColorHint="#ffffff"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.FontPath"
@@ -74,7 +74,7 @@
         android:id="@+id/signupEmail_passwordCheck"
         android:textAppearance="@style/TextAppearance.FontPath"
         android:inputType="textPassword"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:hint="Password Again"
         android:textColorHint="#ffffff"
@@ -89,12 +89,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.FontPath"
-        android:text="Sign Up"
+        android:text="SIGN UP"
         android:id="@+id/signUp"
         android:background="@drawable/mybutton"
-        android:layout_below="@+id/signupEmail_passwordCheck"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        android:textColor="#fff" />
 
 
 
@@ -113,15 +113,58 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
         android:id="@+id/signupEmail_gobackButton"
-        android:layout_alignParentTop="true"
         android:textAppearance="@style/TextAppearance.FontPath"
         android:foregroundGravity="top"
         android:background="@drawable/movebackarrow"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:minWidth="300dp"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        android:layout_height="40dp"
+        android:id="@+id/FandLName"
+        android:gravity="center"
+        android:inputType="textEmailAddress"
+        android:hint="First and Last Name"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton2"
+        android:layout_above="@+id/dob"
+        android:layout_alignLeft="@+id/dob"
+        android:layout_alignStart="@+id/dob" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:minWidth="300dp"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        android:layout_height="40dp"
+        android:id="@+id/dob"
+        android:gravity="center"
+        android:inputType="date"
+        android:hint="Date of Birth"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton2"
+        android:layout_above="@+id/signupEmail_emailField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="By clicking sign up I am that I have read and agreed to Suit's Terms and Conditions"
+        android:id="@+id/textView6"
+        android:layout_above="@+id/signUp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#fff"
+        android:textAlignment="center"
+        android:textSize="13sp" />
 
 
 </RelativeLayout>

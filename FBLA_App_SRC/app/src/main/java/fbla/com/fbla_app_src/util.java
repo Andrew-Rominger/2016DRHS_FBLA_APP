@@ -47,6 +47,8 @@ public class util
     static String URL;
     static Bitmap imageBmap;
     static Picture savedPic;
+    static boolean logged;
+
 
     public String convertPhone(String preCon)
     {
@@ -201,20 +203,41 @@ public class util
         return new BitmapDrawable(context.getResources(), imageBmap);
     }
 
-    public static void signInUser(final String userName, String password,Context c)
-    {
-            final Context context = c;
+    public static void signInUser(final String userName, final String password, final Context c) {
+        final Context context = c;
             Backendless.UserService.login(userName, password, new AsyncCallback<BackendlessUser>() {
                 @Override
                 public void handleResponse(BackendlessUser backendlessUser) {
                     Toast.makeText(context, userName + " logged in", Toast.LENGTH_LONG).show();
+                    //Intent moveTo;
+                    loggedIn();
+                    Log.i("logged in","sucessful");
+                    if(util.checkForFirstTime(backendlessUser))
+                    {
+                       // moveTo = new Intent(c, extrainfo.class);
+                        extraInfo();
+                        Log.i("Move", "extra info");
+
+                    }
+                    else
+                    {
+                       // moveTo = new Intent(c, profilePage.class);
+                       moveProfilePage();
+                        Log.i("Move", "profile page");
+                    }
+                   // startActivity(moveTo);
+
                 }
 
                 @Override
                 public void handleFault(BackendlessFault backendlessFault) {
                     Toast.makeText(context, userName + " did not login", Toast.LENGTH_LONG).show();
+
+
                 }
-            }, true);
+            });
+
+
     }
     public static boolean checkForFirstTime(BackendlessUser user)
     {
@@ -334,6 +357,32 @@ public class util
         }
 
         return inSampleSize;
+    }
+    public static boolean isPassword(String string)
+    {
+
+        String currentPassword = Backendless.UserService.CurrentUser().getPassword().toString();
+        if(currentPassword == string)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+    public static boolean extraInfo()
+    {
+        return true;
+    }
+    public static boolean moveProfilePage()
+    {
+        return true;
+    }
+    public static boolean loggedIn()
+    {
+        return true;
     }
 
 }

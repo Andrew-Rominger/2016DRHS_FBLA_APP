@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,13 +31,14 @@ public class extrainfo extends AppCompatActivity {
     PopupMenu popup;
     EditText phoneNumber;
     util Utility;
+    FrameLayout Fr;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
+        //crash
         setContentView(R.layout.activity_extrainfo);
 
         user = Backendless.UserService.CurrentUser();
@@ -46,7 +48,7 @@ public class extrainfo extends AppCompatActivity {
         fullName = (EditText) findViewById(R.id.nameField);
         phoneNumber = (EditText) findViewById(R.id.phoneNumberField);
         Utility = new util();
-
+        Fr = (FrameLayout) findViewById(R.id.skipFR);
 
 
 
@@ -67,7 +69,12 @@ public class extrainfo extends AppCompatActivity {
 
             }
         });
-
+        Fr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveToProf(user);
+            }
+        });
     }
 
     public void moveToProf(BackendlessUser user)

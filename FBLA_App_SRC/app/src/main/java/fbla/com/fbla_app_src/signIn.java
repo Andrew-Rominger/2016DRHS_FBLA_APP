@@ -31,6 +31,7 @@ public class signIn extends AppCompatActivity {
     String Password;
     public Button signinButton;
     public ImageView goBackButton;
+    util Utility;
     Intent moveTo;
 
     //Called when activity is created
@@ -46,6 +47,8 @@ public class signIn extends AppCompatActivity {
         signinButton = (Button) findViewById(R.id.signInButton);
         goBackButton = (ImageView) findViewById(R.id.signIn_moveBackButton);
 
+        Utility = new util();
+
         signinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -55,6 +58,22 @@ public class signIn extends AppCompatActivity {
                 /*
                 BackendlessUser user = Utility.signInUser(Username, Password, signIn.this);
 
+              //  user = util.signInUser(Username, Password, signIn.this);
+
+                util.signInUser(Username, Password, signIn.this);
+
+                if(util.loggedIn())
+                {
+                    if (util.extraInfo()) {
+                        Intent i = new Intent(signIn.this, extrainfo.class);
+                        startActivity(i);
+                    }
+                    if (util.moveProfilePage()) {
+                        Intent i = new Intent(signIn.this, profilePage.class);
+                        startActivity(i);
+                    }
+                }
+                /*
                 if(user == null)
                 {
                     Toast.makeText(signIn.this, "Sign in failed.", Toast.LENGTH_LONG).show();
