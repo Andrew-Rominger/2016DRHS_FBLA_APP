@@ -10,26 +10,27 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-class yourPosts extends AppCompatActivity
+public class yourPosts extends AppCompatActivity
 {
     ImageView addPostPic;
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_posts);
 
         addPostPic = (ImageView) findViewById(R.id.content_addMore);
-        addPostPic.setOnClickListener(new View.OnClickListener() {
+        addPostPic.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
             {
-                moveToCamera();
+                startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 1);
             }
         });
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!data.equals(null))
         {
             Intent i = new Intent(yourPosts.this,uploadPostActivity.class);
@@ -37,9 +38,4 @@ class yourPosts extends AppCompatActivity
             startActivity(i);
         }
     }
-    public void moveToCamera()
-    {
-        startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 1);
-    }
-
 }

@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.annotation.Suppress;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,15 +47,20 @@ public class uploadPostActivity extends AppCompatActivity {
         placeHolder = (ImageView) findViewById(R.id.placeholder);
         caption = (EditText) findViewById(R.id.uploadPost_Caption);
         shareButton = (Button) findViewById(R.id.uploadPost_shareButton);
+        post = new Post();
 
         extras = getIntent().getExtras();
         if(extras.get("passedPictureData")!=null)
         {
             data = (Intent) extras.get("passedPictureData");
-            handleImage(data);
-            pObject = util.saveImage(data,uploadPostActivity.this,false);
+            //handleImage(data);
             post.setUserUploaded(user);
+            pObject = util.saveImage(data,uploadPostActivity.this,false);
             post.setPictureOnPost(pObject);
+        }
+        else
+        {
+            Log.i("ERROR:EXTRA NULL", "EXTRA WAS NULL");
         }
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override

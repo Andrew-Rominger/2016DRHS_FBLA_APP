@@ -78,7 +78,7 @@ public class util
         String toReturn;
 
         final BackendlessUser user = Backendless.UserService.CurrentUser();
-        final Picture image = new Picture();
+        Picture image = new Picture();
 
         image.setFileLocation("/media/userpics");
         image.setUserID(user.getUserId());
@@ -109,7 +109,7 @@ public class util
                     });
                 }
                 savedPic = imagePassed;
-                uploadImage(getBitmapFromData(datathis), imagePassed, thisContext);
+                uploadImage(getBitmapFromData(datathis), savedPic, thisContext);
 
             }
 
@@ -145,13 +145,18 @@ public class util
 
     public static Bitmap getBitmapFromData(Intent data)
     {
-        byte[] bArr = data.getByteArrayExtra("data");
+        Bitmap bmp = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] bArr = stream.toByteArray();
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeByteArray(bArr,0,bArr.length,options);
+        options.inSampleSize = calculateInSampleSize(options, 100, 100);
+        options.inJustDecodeBounds = false;
         int imageHeight = options.outHeight;
         int imageWidth = options.outWidth;
-        return null;
+        return BitmapFactory.decodeByteArray(bArr,0,bArr.length,options);
 
     }
     public static Drawable getPictureFromPOID(final String PictureOID, final Context thisContext)
@@ -288,7 +293,9 @@ public class util
     }
     public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
                                    boolean filter) {
-        float ratio = Math.min(
+        /*
+        float ratio = Math.min
+                (
                 (float) maxImageSize / realImage.getWidth(),
                 (float) maxImageSize / realImage.getHeight());
         if(ratio >= 1.0F)
@@ -297,10 +304,36 @@ public class util
         }
         int width = Math.round((float) ratio * realImage.getWidth());
         int height = Math.round((float) ratio * realImage.getHeight());
+        Log.i("HEIGHT", String.valueOf(height));
+        Log.i("WIDTH", String.valueOf(width));
 
         Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
                 height, filter);
         return newBitmap;
+        */
+        return Bitmap.createScaledBitmap(realImage,(int)(realImage.getWidth()*0.5), (int)(realImage.getHeight()*0.5), true);
+    }
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
 }

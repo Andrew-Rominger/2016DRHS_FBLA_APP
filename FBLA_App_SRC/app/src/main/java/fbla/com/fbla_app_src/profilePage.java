@@ -46,7 +46,6 @@ public class profilePage extends AppCompatActivity{
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
-        Utility = new util();
         user = Backendless.UserService.CurrentUser();
         userName = (TextView) findViewById(R.id.profilePage_UserNameField);
         userName.setText(user.getProperty("userName").toString());

@@ -15,7 +15,8 @@ public class Post
     private Picture PictureOnPost;
     private String objectId;
 
-    public String getObjectId() {
+    public String getObjectId()
+    {
         return objectId;
     }
 
