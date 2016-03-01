@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
+
 public class editprofilesettings extends AppCompatActivity {
 
     EditText name;
@@ -21,6 +24,7 @@ public class editprofilesettings extends AppCompatActivity {
     String newName;
     String newHanle;
     String newBio;
+    BackendlessUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,8 @@ public class editprofilesettings extends AppCompatActivity {
         handle = (EditText) findViewById(R.id.editText3);
         bio = (EditText) findViewById(R.id.editText4);
         done = (Button) findViewById(R.id.donebutton);
-        back = (ImageView) findViewById(R.id.imageView11);
+        back = (ImageView) findViewById(R.id.back);
+        user = Backendless.UserService.CurrentUser();
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +45,9 @@ public class editprofilesettings extends AppCompatActivity {
                 newName = name.getText().toString();
                 newHanle = handle.getText().toString();
                 newBio = bio.getText().toString();
+                user.setProperty("userName", newName);
+
+
 
 
             }

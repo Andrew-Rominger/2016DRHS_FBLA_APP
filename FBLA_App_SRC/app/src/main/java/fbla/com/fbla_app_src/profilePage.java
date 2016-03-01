@@ -52,6 +52,7 @@ public class profilePage extends AppCompatActivity{
         Utility = new util();
         user = Backendless.UserService.CurrentUser();
         userName = (TextView) findViewById(R.id.profilePage_UserNameField);
+        //crash below
         userName.setText(user.getProperty("userName").toString());
         uploadImage = (ImageView) findViewById(R.id.profilePage_addPic);
         settings = (ImageView) findViewById(R.id.settings);
@@ -94,7 +95,7 @@ public class profilePage extends AppCompatActivity{
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(profilePage.this, editprofilesettings.class);
+                Intent i = new Intent(profilePage.this, accountsettings.class);
                 startActivity(i);
             }
         });

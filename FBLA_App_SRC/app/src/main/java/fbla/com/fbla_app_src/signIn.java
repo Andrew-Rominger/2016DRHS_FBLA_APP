@@ -69,7 +69,7 @@ public class signIn extends AppCompatActivity {
                         startActivity(i);
                     }
                     if (util.moveProfilePage()) {
-                        Intent i = new Intent(signIn.this, extrainfo.class);
+                        Intent i = new Intent(signIn.this, profilePage.class);
                         startActivity(i);
                     }
                 }

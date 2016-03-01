@@ -206,16 +206,19 @@ public class util
                     Toast.makeText(context, userName + " logged in", Toast.LENGTH_LONG).show();
                     //Intent moveTo;
                     loggedIn();
+                    Log.i("logged in","sucessful");
                     if(util.checkForFirstTime(backendlessUser))
                     {
                        // moveTo = new Intent(c, extrainfo.class);
                         extraInfo();
+                        Log.i("Move", "extra info");
 
                     }
                     else
                     {
                        // moveTo = new Intent(c, profilePage.class);
                        moveProfilePage();
+                        Log.i("Move", "profile page");
                     }
                    // startActivity(moveTo);
 

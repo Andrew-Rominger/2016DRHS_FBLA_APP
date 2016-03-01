@@ -25,8 +25,17 @@
         android:textAppearance="@style/TextAppearance.FontPath"/>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_below="@+id/saveExtra"
+        android:layout_alignRight="@+id/saveExtra"
+        android:layout_alignEnd="@+id/saveExtra"
+        android:layout_alignLeft="@+id/saveExtra"
+        android:layout_alignStart="@+id/saveExtra"
+        android:id="@+id/skipFR">
+
+    </FrameLayout>
 
     <TextView
         android:layout_width="250dp"
