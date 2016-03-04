@@ -71,74 +71,17 @@ public class util
         }
         return listString;
     }
-    public void saveProf(Intent data, Context context)
-    {
-        saveImage(data, context, true);
-    }
-
-    public static Picture saveImage(Intent data, Context context, Boolean isProfile)
-    {
-        final boolean isProfP = isProfile;
-        final Context thisContext = context;
-        final Intent datathis = data;
-        String toReturn;
-
-        final BackendlessUser user = Backendless.UserService.CurrentUser();
-        final Picture image = new Picture();
-
-        image.setFileLocation("/media/userpics");
-        image.setUserID(user.getUserId());
-        if(isProfile)
-        {
-            image.setIsProf(true);
-        }
-        else
-        {
-            image.setIsProf(false);
-        }
-
-        Backendless.Data.save(image, new AsyncCallback<Picture>() {
-            @Override
-            public void handleResponse(Picture imagePassed) {
-                if (isProfP) {
-                    user.setProperty("profPicID", imagePassed.getObjectId());
-                    Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
-                        @Override
-                        public void handleResponse(BackendlessUser backendlessUser) {
-
-                        }
-
-                        @Override
-                        public void handleFault(BackendlessFault backendlessFault) {
-
-                        }
-                    });
-                }
-                savedPic = imagePassed;
-                uploadImage(getBitmapFromData(datathis), imagePassed, thisContext);
-
-            }
-
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-                //Toast.makeText(thisContext, backendlessFault.getDetail(), Toast.LENGTH_LONG).show();
-                Toast.makeText(thisContext, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-        return savedPic;
 
 
-
-    }
     public static void uploadImage(Bitmap bMap, Picture p, Context thisContextp)
     {
-        final String OID = p.getObjectId()+".png";
+        final String OID = p.getObjectId();
 
         final Context thisContext = thisContextp;
-        Backendless.Files.Android.upload(bMap, Bitmap.CompressFormat.PNG, 100, OID, "/media/userpics", new AsyncCallback<BackendlessFile>() {
+        Backendless.Files.Android.upload(bMap, Bitmap.CompressFormat.PNG, 100, OID + ".png", "/media/userpics", new AsyncCallback<BackendlessFile>() {
             @Override
             public void handleResponse(BackendlessFile backendlessFile) {
-                Toast.makeText(thisContext, OID + " Uploaded", Toast.LENGTH_LONG).show();
+                Toast.makeText(thisContext, OID + ".png Uploaded", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -151,13 +94,18 @@ public class util
 
     public static Bitmap getBitmapFromData(Intent data)
     {
-        byte[] bArr = data.getByteArrayExtra("data");
+        Bitmap bmp = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] bArr = stream.toByteArray();
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeByteArray(bArr,0,bArr.length,options);
+        BitmapFactory.decodeByteArray(bArr, 0, bArr.length, options);
+        options.inSampleSize = calculateInSampleSize(options, 100, 100);
+        options.inJustDecodeBounds = false;
         int imageHeight = options.outHeight;
         int imageWidth = options.outWidth;
-        return null;
+        return BitmapFactory.decodeByteArray(bArr,0,bArr.length,options);
 
     }
     public static Drawable getPictureFromPOID(final String PictureOID, final Context thisContext)
@@ -304,7 +252,9 @@ public class util
     }
     public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
                                    boolean filter) {
-        float ratio = Math.min(
+        /*
+        float ratio = Math.min
+                (
                 (float) maxImageSize / realImage.getWidth(),
                 (float) maxImageSize / realImage.getHeight());
         if(ratio >= 1.0F)
@@ -313,10 +263,36 @@ public class util
         }
         int width = Math.round((float) ratio * realImage.getWidth());
         int height = Math.round((float) ratio * realImage.getHeight());
+        Log.i("HEIGHT", String.valueOf(height));
+        Log.i("WIDTH", String.valueOf(width));
 
         Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
                 height, filter);
         return newBitmap;
+        */
+        return Bitmap.createScaledBitmap(realImage,(int)(realImage.getWidth()*0.5), (int)(realImage.getHeight()*0.5), true);
+    }
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
     public static boolean isPassword(String string)
     {

@@ -15,7 +15,8 @@ public class Post
     private Picture PictureOnPost;
     private String objectId;
 
-    public String getObjectId() {
+    public String getObjectId()
+    {
         return objectId;
     }
 
@@ -67,7 +68,7 @@ public class Post
         return PictureOnPost;
     }
 
-    public void setPictureOnPost(Picture pictureOnPost) {
-        PictureOnPost = pictureOnPost;
+    public void setPictureOnPost(Picture pop) {
+        PictureOnPost = pop;
     }
 }
