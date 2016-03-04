@@ -68,7 +68,7 @@ public class Post
         return PictureOnPost;
     }
 
-    public void setPictureOnPost(Picture pictureOnPost) {
-        PictureOnPost = pictureOnPost;
+    public void setPictureOnPost(Picture pop) {
+        PictureOnPost = pop;
     }
 }

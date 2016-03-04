@@ -67,74 +67,17 @@ public class util
         }
         return listString;
     }
-    public void saveProf(Intent data, Context context)
-    {
-        saveImage(data, context, true);
-    }
-
-    public static Picture saveImage(Intent data, Context context, Boolean isProfile)
-    {
-        final boolean isProfP = isProfile;
-        final Context thisContext = context;
-        final Intent datathis = data;
-        String toReturn;
-
-        final BackendlessUser user = Backendless.UserService.CurrentUser();
-        Picture image = new Picture();
-
-        image.setFileLocation("/media/userpics");
-        image.setUserID(user.getUserId());
-        if(isProfile)
-        {
-            image.setIsProf(true);
-        }
-        else
-        {
-            image.setIsProf(false);
-        }
-
-        Backendless.Data.save(image, new AsyncCallback<Picture>() {
-            @Override
-            public void handleResponse(Picture imagePassed) {
-                if (isProfP) {
-                    user.setProperty("profPicID", imagePassed.getObjectId());
-                    Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
-                        @Override
-                        public void handleResponse(BackendlessUser backendlessUser) {
-
-                        }
-
-                        @Override
-                        public void handleFault(BackendlessFault backendlessFault) {
-
-                        }
-                    });
-                }
-                savedPic = imagePassed;
-                uploadImage(getBitmapFromData(datathis), savedPic, thisContext);
-
-            }
-
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-                //Toast.makeText(thisContext, backendlessFault.getDetail(), Toast.LENGTH_LONG).show();
-                Toast.makeText(thisContext, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-        return savedPic;
 
 
-
-    }
     public static void uploadImage(Bitmap bMap, Picture p, Context thisContextp)
     {
-        final String OID = p.getObjectId()+".png";
+        final String OID = p.getObjectId();
 
         final Context thisContext = thisContextp;
-        Backendless.Files.Android.upload(bMap, Bitmap.CompressFormat.PNG, 100, OID, "/media/userpics", new AsyncCallback<BackendlessFile>() {
+        Backendless.Files.Android.upload(bMap, Bitmap.CompressFormat.PNG, 100, OID + ".png", "/media/userpics", new AsyncCallback<BackendlessFile>() {
             @Override
             public void handleResponse(BackendlessFile backendlessFile) {
-                Toast.makeText(thisContext, OID + " Uploaded", Toast.LENGTH_LONG).show();
+                Toast.makeText(thisContext, OID + ".png Uploaded", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -153,7 +96,7 @@ public class util
         byte[] bArr = stream.toByteArray();
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeByteArray(bArr,0,bArr.length,options);
+        BitmapFactory.decodeByteArray(bArr, 0, bArr.length, options);
         options.inSampleSize = calculateInSampleSize(options, 100, 100);
         options.inJustDecodeBounds = false;
         int imageHeight = options.outHeight;
@@ -163,11 +106,9 @@ public class util
     }
     public static Drawable getPictureFromPOID(final String PictureOID, final Context thisContext)
     {
-        Backendless.Data.of(Picture.class).findById(PictureOID, new AsyncCallback<Picture>()
-        {
+        Backendless.Data.of(Picture.class).findById(PictureOID, new AsyncCallback<Picture>() {
             @Override
-            public void handleResponse(Picture picture)
-            {
+            public void handleResponse(Picture picture) {
                 image = picture;
                 if (image != null) {
                     URL = "https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + image.getObjectId() + ".png";

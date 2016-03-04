@@ -22,6 +22,8 @@ import com.backendless.persistence.local.UserTokenStorageFactory;
 
 import java.io.Serializable;
 import java.util.Objects;
+import fbla.com.fbla_app_src.util;
+
 
 public class signIn extends AppCompatActivity {
     //Declare variables
@@ -31,8 +33,8 @@ public class signIn extends AppCompatActivity {
     String Password;
     public Button signinButton;
     public ImageView goBackButton;
-    util Utility;
-    Intent moveTo;
+    static Intent moveTo;
+    BackendlessUser user;
 
     //Called when activity is created
     @Override
@@ -47,7 +49,7 @@ public class signIn extends AppCompatActivity {
         signinButton = (Button) findViewById(R.id.signInButton);
         goBackButton = (ImageView) findViewById(R.id.signIn_moveBackButton);
 
-        Utility = new util();
+       // Utility = new util();
 
         signinButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,8 +57,6 @@ public class signIn extends AppCompatActivity {
             {
                 Username = UsernameIn.getText().toString();
                 Password = PassowrdIn.getText().toString();
-                /*
-                BackendlessUser user = Utility.signInUser(Username, Password, signIn.this);
 
               //  user = util.signInUser(Username, Password, signIn.this);
 
@@ -73,23 +73,6 @@ public class signIn extends AppCompatActivity {
                         startActivity(i);
                     }
                 }
-                /*
-                if(user == null)
-                {
-                    Toast.makeText(signIn.this, "Sign in failed.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if(Utility.checkForFirstTime(user))
-                {
-                    moveTo = new Intent(signIn.this, extrainfo.class);
-                }
-                else
-                {
-                    moveTo = new Intent(signIn.this, profilePage.class);
-                }
-                startActivity(moveTo);
-                */
             }
         });
         goBackButton.setOnClickListener(new View.OnClickListener()

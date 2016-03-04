@@ -1,6 +1,7 @@
 package fbla.com.fbla_app_src;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +35,7 @@ public class uploadPostActivity extends AppCompatActivity {
     ImageView placeHolder;
     Intent data;
     Picture pObject;
+    Picture image;
     EditText caption;
     Button shareButton;
 
@@ -48,20 +50,10 @@ public class uploadPostActivity extends AppCompatActivity {
         caption = (EditText) findViewById(R.id.uploadPost_Caption);
         shareButton = (Button) findViewById(R.id.uploadPost_shareButton);
         post = new Post();
+        image = new Picture();
 
         extras = getIntent().getExtras();
-        if(extras.get("passedPictureData")!=null)
-        {
-            data = (Intent) extras.get("passedPictureData");
-            //handleImage(data);
-            post.setUserUploaded(user);
-            pObject = util.saveImage(data,uploadPostActivity.this,false);
-            post.setPictureOnPost(pObject);
-        }
-        else
-        {
-            Log.i("ERROR:EXTRA NULL", "EXTRA WAS NULL");
-        }
+
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -93,8 +85,21 @@ public class uploadPostActivity extends AppCompatActivity {
 
             }
         });
+        if(extras.get("passedPictureData")!=null)
+        {
+            data = (Intent) extras.get("passedPictureData");
+            handleImage(data);
+            post.setUserUploaded(user);
+            pObject = saveImage(data, uploadPostActivity.this, false);
+            post.setPictureOnPost(pObject);
+        }
+        else
+        {
+            Log.i("ERROR:EXTRA NULL", "EXTRA WAS NULL");
+        }
 
     }
+
     @SuppressLint("NewApi")
     public void handleImage(Intent data)
     {
@@ -110,12 +115,60 @@ public class uploadPostActivity extends AppCompatActivity {
         decoded.recycle();
 
         placeHolder.setBackground(dr);
-
-
     }
 
+    public Picture saveImage(Intent data, Context context, Boolean isProfile)
+    {
+        final boolean isProfP = isProfile;
+        final Context thisContext = context;
+        final Intent datathis = data;
+        String toReturn;
+        final BackendlessUser user = Backendless.UserService.CurrentUser();
 
+        if(isProfile)
+        {
+            image.setIsProf(true);
+        }
+        else
+        {
+            image.setIsProf(false);
+        }
 
+        Backendless.Persistence.save(image, new AsyncCallback<Picture>() {
+            @Override
+            public void handleResponse(Picture imagePassed)
+            {
+                util.uploadImage(util.getBitmapFromData(datathis), imagePassed, thisContext);
+                if (isProfP) {
+                    user.setProperty("profPicID", imagePassed.getObjectId());
+                    Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
+                        @Override
+                        public void handleResponse(BackendlessUser backendlessUser) {
+                        }
+                        @Override
+                        public void handleFault(BackendlessFault backendlessFault) {
+                        }
+                    });
+                }
+                Log.i("imagetest", image.getObjectId());
+                image.setObjectId(imagePassed.getObjectId());
+                image.setFileLocation("/media/userpics");
+                image.setUserID(user.getUserId());
 
-
+            }
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+                //Toast.makeText(thisContext, backendlessFault.getDetail(), Toast.LENGTH_LONG).show();
+                Toast.makeText(thisContext, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        if(image!=null) {
+            return image;
+        }
+        else
+        {
+            Log.i("IMAGE IS NULL", "IMAGE IS NULL");
+            return image;
+        }
+    }
 }
