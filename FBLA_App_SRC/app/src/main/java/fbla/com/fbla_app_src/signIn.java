@@ -35,6 +35,7 @@ public class signIn extends AppCompatActivity {
     public ImageView goBackButton;
     static Intent moveTo;
     BackendlessUser user;
+    int timeTried;
 
     //Called when activity is created
     @Override
@@ -43,6 +44,7 @@ public class signIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        timeTried = 0;
         UsernameIn = (EditText) findViewById(R.id.userNameLogin);
         PassowrdIn = (EditText) findViewById(R.id.passwordLogin);
 
@@ -61,18 +63,9 @@ public class signIn extends AppCompatActivity {
               //  user = util.signInUser(Username, Password, signIn.this);
 
                 util.signInUser(Username, Password, signIn.this);
+                checkUserLoggedIn();
 
-                if(util.loggedIn())
-                {
-                    if (util.extraInfo()) {
-                        Intent i = new Intent(signIn.this, extrainfo.class);
-                        startActivity(i);
-                    }
-                    if (util.moveProfilePage()) {
-                        Intent i = new Intent(signIn.this, profilePage.class);
-                        startActivity(i);
-                    }
-                }
+
                 /*
                 if(user == null)
                 {
@@ -103,5 +96,23 @@ public class signIn extends AppCompatActivity {
         });
 
 
+    }
+    public void checkUserLoggedIn()
+    {
+        for(int i = 0; i < 10;i++)
+        {
+            if (Backendless.UserService.CurrentUser() != null)
+            {
+                startActivity(new Intent(signIn.this, profilePage.class));
+            }
+            else
+            {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

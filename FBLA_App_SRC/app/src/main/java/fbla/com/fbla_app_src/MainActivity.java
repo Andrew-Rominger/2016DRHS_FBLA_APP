@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     private Button googleSignIn;
     CallbackManager callbackManager;
 
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         //Sets the app version for Backendless
+
         String appVersion = "v1";
         //Initializes Backendless
         Backendless.initApp(this, "67BF989E-7E10-5DB8-FFD7-C9147CA4F200", "12F047DB-382A-F6DA-FF16-C6A0A1F0CE00", appVersion);
@@ -86,6 +89,8 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+
+
         //Declare a function that is called when the MoveToSignIn button is clicked
         moveToSignInButton.setOnClickListener(new View.OnClickListener()
         {
@@ -101,6 +106,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Backendless.UserService.loginWithFacebook( MainActivity.this, new AsyncCallback<BackendlessUser>() {
+
                     @Override
                     public void handleResponse(BackendlessUser backendlessUser) {
                         startActivity(new Intent(MainActivity.this, profilePage.class));
@@ -116,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         googleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Backendless.UserService.loginWithGooglePlus(MainActivity.this, new AsyncCallback<BackendlessUser>() {
+                Backendless.UserService.loginWithGooglePlus( MainActivity.this, new AsyncCallback<BackendlessUser>() {
                     @Override
                     public void handleResponse(BackendlessUser backendlessUser) {
                         startActivity(new Intent(MainActivity.this, extrainfo.class));

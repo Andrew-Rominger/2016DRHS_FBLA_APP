@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.text.method.DateTimeKeyListener;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,17 @@ import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.facebook.internal.Utility;
+
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
+import java.text.FieldPosition;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import weborb.reader.DateType;
 
 public class signupEmail extends AppCompatActivity
 {
@@ -34,6 +46,10 @@ public class signupEmail extends AppCompatActivity
     EditText userNameInput;
     EditText fullName;
     EditText date;
+    SimpleDateFormat dateFormat;
+    Date theDateOfBirth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,15 +68,13 @@ public class signupEmail extends AppCompatActivity
         fullName = (EditText) findViewById(R.id.FandLName);
         date = (EditText) findViewById(R.id.dob);
         user = new BackendlessUser();
-        //Edit Text
-
+        dateFormat = new SimpleDateFormat("MMddyyyy");
 
 
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent goBackToSignIn = new Intent(signupEmail.this, MainActivity.class);
                 startActivity(goBackToSignIn);
 
@@ -70,55 +84,61 @@ public class signupEmail extends AppCompatActivity
         signUp.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 final String newUserName = userNameInput.getText().toString();
                 final String password = passwordInput.getText().toString();
+
                 String name = fullName.getText().toString();
-                String dateOfBirth = date.getText().toString();
                 String email = emailInput.getText().toString();
                 String passwordCheck = passwordInputCheck.getText().toString();
                 Boolean isUserNameValid = Validator.isUserNameValid(newUserName);
                 Boolean validEmail = Validator.isEmailValid(signupEmail.this, email);
-                Boolean passwordValid = Validator.isPasswordValid(signupEmail.this, password,passwordCheck);
+                Boolean passwordValid = Validator.isPasswordValid(signupEmail.this, password, passwordCheck);
+                String theDate = date.getText().toString();
 
-                if(validEmail && passwordValid && isUserNameValid)
+                if (util.shave(theDate) == null)
                 {
-                    user.setProperty("userName", newUserName);
-                    user.setPassword(password);
-                    user.setEmail(email);
-                    user.setProperty("name", name);
-                    Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>()
+                Toast.makeText(signupEmail.this, "Incorrect format for your Date of Birth, please use the format mm-dd-yyyy", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    try {
+                        theDateOfBirth = dateFormat.parse(theDate);
+                    } catch (ParseException e) {
+                        Toast.makeText(signupEmail.this, "Incorrect format for your Date of Birth, please use the format mm-dd-yyyy", Toast.LENGTH_LONG).show();
+                    }
+                    if (isThirteen(theDateOfBirth))
                     {
-                        @Override
-                        public void handleResponse(BackendlessUser backendlessUser)
-                        {
-                            Backendless.UserService.login(user.getProperty("userName").toString(), user.getPassword(), new AsyncCallback<BackendlessUser>() {
+                        if (validEmail && passwordValid && isUserNameValid) {
+                            user.setProperty("userName", newUserName);
+                            user.setPassword(password);
+                            user.setEmail(email);
+                            user.setProperty("name", name);
+                            user.setProperty("DOB", theDateOfBirth);
+                            Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
                                 @Override
-                                public void handleResponse(BackendlessUser backendlessUser)
-                                {
-                                    startActivity(new Intent(signupEmail.this, extrainfo.class));
+                                public void handleResponse(BackendlessUser backendlessUser) {
+                                    Backendless.UserService.login(user.getProperty("userName").toString(), user.getPassword(), new AsyncCallback<BackendlessUser>() {
+                                        @Override
+                                        public void handleResponse(BackendlessUser backendlessUser) {
+                                            startActivity(new Intent(signupEmail.this, extrainfo.class));
+                                        }
+
+                                        @Override
+                                        public void handleFault(BackendlessFault backendlessFault) {
+                                            Toast.makeText(signupEmail.this, backendlessFault.toString(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+
                                 }
 
                                 @Override
-                                public void handleFault(BackendlessFault backendlessFault)
-                                {
+                                public void handleFault(BackendlessFault backendlessFault) {
                                     Toast.makeText(signupEmail.this, backendlessFault.toString(), Toast.LENGTH_LONG).show();
                                 }
                             });
-
                         }
-
-                        @Override
-                        public void handleFault(BackendlessFault backendlessFault)
-                        {
-                            Toast.makeText(signupEmail.this, backendlessFault.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    }
                 }
-
-
-
             }
         });
         /*
@@ -136,6 +156,26 @@ public class signupEmail extends AppCompatActivity
         });
         */
     }
+    public static boolean isThirteen(Date date)
+    {
+        Calendar c = Calendar.getInstance();
+        int current;
+        int thirteen;
+        thirteen = c.YEAR - 13;
+        thirteen = c.MONTH;
+        thirteen = c.DAY_OF_MONTH;
+        current = date.getYear();
+        if(thirteen > current )
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+
         /*
         showPW.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -160,14 +200,5 @@ public class signupEmail extends AppCompatActivity
         }
     }
     */
-
-
-
-
-
-
-
-
-
 
 }

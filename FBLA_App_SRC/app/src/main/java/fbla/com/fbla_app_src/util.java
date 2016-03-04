@@ -37,6 +37,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import static android.support.v4.content.ContextCompat.startActivities;
 
 /**
  * Created by Andrew on 2/3/2016.
@@ -158,11 +162,9 @@ public class util
     }
     public static Drawable getPictureFromPOID(final String PictureOID, final Context thisContext)
     {
-        Backendless.Data.of(Picture.class).findById(PictureOID, new AsyncCallback<Picture>()
-        {
+        Backendless.Data.of(Picture.class).findById(PictureOID, new AsyncCallback<Picture>() {
             @Override
-            public void handleResponse(Picture picture)
-            {
+            public void handleResponse(Picture picture) {
                 image = picture;
                 if (image != null) {
                     URL = "https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + image.getObjectId() + ".png";
@@ -200,27 +202,16 @@ public class util
 
     public static void signInUser(final String userName, final String password, final Context c) {
         final Context context = c;
+        final Intent i = new Intent(c, profilePage.class);
             Backendless.UserService.login(userName, password, new AsyncCallback<BackendlessUser>() {
                 @Override
                 public void handleResponse(BackendlessUser backendlessUser) {
                     Toast.makeText(context, userName + " logged in", Toast.LENGTH_LONG).show();
-                    //Intent moveTo;
-                    loggedIn();
-                    Log.i("logged in","sucessful");
-                    if(util.checkForFirstTime(backendlessUser))
-                    {
-                       // moveTo = new Intent(c, extrainfo.class);
-                        extraInfo();
-                        Log.i("Move", "extra info");
 
-                    }
-                    else
-                    {
-                       // moveTo = new Intent(c, profilePage.class);
-                       moveProfilePage();
-                        Log.i("Move", "profile page");
-                    }
-                   // startActivity(moveTo);
+                    c.startActivity(i);
+                    //Intent moveTo;
+                    Log.i("logged in","sucessful");
+
 
                 }
 
@@ -233,6 +224,10 @@ public class util
             });
 
 
+    }
+    public void moveToActivity(Context context,  Intent i)
+    {
+       context.startActivity(i);
     }
     public static boolean checkForFirstTime(BackendlessUser user)
     {
@@ -252,11 +247,9 @@ public class util
     }
     public static void updateUser(BackendlessUser user)
     {
-         Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>()
-         {
+         Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
              @Override
-             public void handleResponse(BackendlessUser backendlessUser)
-             {
+             public void handleResponse(BackendlessUser backendlessUser) {
 
              }
 
@@ -339,17 +332,26 @@ public class util
         }
 
     }
-    public static boolean extraInfo()
+    public static String shave(String string)
     {
-        return true;
-    }
-    public static boolean moveProfilePage()
-    {
-        return true;
-    }
-    public static boolean loggedIn()
-    {
-        return true;
+        if(string.length()>8)
+        {
+            String endString = "";
+            for(int i = 0; i < 9; i++)
+            {
+                char character = string.charAt(i);
+                endString += character;
+            }
+            return endString;
+        }
+        if(string.length() == 8)
+        {
+            return string;
+        }
+        else
+        {
+            return null;
+        }
     }
 
 }

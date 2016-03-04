@@ -29,13 +29,13 @@ public class profilePage extends AppCompatActivity{
 
     BackendlessUser user;
     util Utility;
-
     TextView userName;
     ImageView uploadImage;
     ImageView settings;
     FrameLayout search;
     FrameLayout add;
     FrameLayout profile;
+    String theUserName;
 
     @Override
     public void onBackPressed()
@@ -49,10 +49,10 @@ public class profilePage extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
-        Utility = new util();
+
         user = Backendless.UserService.CurrentUser();
         userName = (TextView) findViewById(R.id.profilePage_UserNameField);
-        //crash below
+        //crash below, null pointer exception
         userName.setText(user.getProperty("userName").toString());
         uploadImage = (ImageView) findViewById(R.id.profilePage_addPic);
         settings = (ImageView) findViewById(R.id.settings);
