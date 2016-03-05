@@ -112,12 +112,11 @@ public class util
     {
         Backendless.Data.of(Picture.class).findById(PictureOID, new AsyncCallback<Picture>() {
             @Override
-            public void handleResponse(Picture picture) {
-                image = picture;
-                if (image != null) {
-                    URL = "https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + image.getObjectId() + ".png";
+            public void handleResponse(Picture picture)
+            {
+
+                    URL = "https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + picture.getObjectId() + ".png";
                     imageBmap = getBitmapFromURL(URL);
-                }
             }
 
             @Override
@@ -148,7 +147,8 @@ public class util
         return new BitmapDrawable(context.getResources(), imageBmap);
     }
 
-    public static void signInUser(final String userName, final String password, final Context c) {
+    public static void signInUser(final String userName, final String password, final Context c)
+    {
         final Context context = c;
         final Intent i = new Intent(c, profilePage.class);
             Backendless.UserService.login(userName, password, new AsyncCallback<BackendlessUser>() {

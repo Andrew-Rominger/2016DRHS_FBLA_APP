@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,14 +29,13 @@ import com.backendless.BackendlessUser;
 public class profilePage extends AppCompatActivity{
 
     BackendlessUser user;
-    util Utility;
     TextView userName;
     ImageView uploadImage;
     ImageView settings;
     FrameLayout search;
+    RelativeLayout bckg;
     FrameLayout add;
     FrameLayout profile;
-    String theUserName;
 
     @Override
     public void onBackPressed()
@@ -52,13 +52,21 @@ public class profilePage extends AppCompatActivity{
 
         user = Backendless.UserService.CurrentUser();
         userName = (TextView) findViewById(R.id.profilePage_UserNameField);
-        //crash below, null pointer exception
         userName.setText(user.getProperty("userName").toString());
         uploadImage = (ImageView) findViewById(R.id.profilePage_addPic);
         settings = (ImageView) findViewById(R.id.settings);
         search = (FrameLayout) findViewById(R.id.profilepage_searchNav);
         add = (FrameLayout) findViewById(R.id.profilepage_addNav);
         profile = (FrameLayout) findViewById(R.id.profilepage_profileNav);
+        bckg = (RelativeLayout) findViewById(R.id.mainBCKG);
+        if(!(user.getProperty("coverPhotoID") == null))
+        {
+            bckg.setBackground(util.getPictureFromPOID(user.getProperty("coverPhotoID").toString(),profilePage.this));
+        }
+        if(!(user.getProperty("profilePictureID") == null))
+        {
+            uploadImage.setImageDrawable(util.getPictureFromPOID(user.getProperty("profilePictureID").toString(),profilePage.this));
+        }
 
         uploadImage.setOnClickListener(new View.OnClickListener()
         {
@@ -69,28 +77,6 @@ public class profilePage extends AppCompatActivity{
             }
 
         });
-
-        /*
-        loggoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(profilePage.this, "Logging out...", Toast.LENGTH_LONG).show();
-                Backendless.UserService.logout(new AsyncCallback<Void>() {
-                    @Override
-                    public void handleResponse(Void aVoid) {
-                        //logged out
-
-                        startActivity(new Intent(profilePage.this, MainActivity.class));
-                    }
-
-                    @Override
-                    public void handleFault(BackendlessFault backendlessFault) {
-
-                    }
-                });
-            }
-        });
-        */
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override

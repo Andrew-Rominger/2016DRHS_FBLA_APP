@@ -43,13 +43,6 @@ public class mostupvotessearch extends AppCompatActivity {
             }
         });
         //navigaion
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(mostupvotessearch.this, mostupvotessearch.class);
-                startActivity(i);
-            }
-        });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
