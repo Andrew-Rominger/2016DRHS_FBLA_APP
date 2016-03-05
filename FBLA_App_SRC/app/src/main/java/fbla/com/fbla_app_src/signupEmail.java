@@ -7,6 +7,7 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.method.DateTimeKeyListener;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -46,7 +47,7 @@ public class signupEmail extends AppCompatActivity
     EditText userNameInput;
     EditText fullName;
     EditText date;
-    SimpleDateFormat dateFormat;
+    static SimpleDateFormat dateFormat;
     Date theDateOfBirth;
 
 
@@ -103,6 +104,7 @@ public class signupEmail extends AppCompatActivity
                 else {
                     try {
                         theDateOfBirth = dateFormat.parse(theDate);
+                        Log.i("try", "sucess");
                     } catch (ParseException e) {
                         Toast.makeText(signupEmail.this, "Incorrect format for your Date of Birth, please use the format mm-dd-yyyy", Toast.LENGTH_LONG).show();
                     }
@@ -120,7 +122,7 @@ public class signupEmail extends AppCompatActivity
                                     Backendless.UserService.login(user.getProperty("userName").toString(), user.getPassword(), new AsyncCallback<BackendlessUser>() {
                                         @Override
                                         public void handleResponse(BackendlessUser backendlessUser) {
-                                            startActivity(new Intent(signupEmail.this, extrainfo.class));
+                                            startActivity(new Intent(signupEmail.this, profilePage.class));
                                         }
 
                                         @Override
@@ -137,6 +139,10 @@ public class signupEmail extends AppCompatActivity
                                 }
                             });
                         }
+                    }
+                    else
+                    {
+                        Toast.makeText(signupEmail.this, "ur to yung kiddo", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -156,22 +162,23 @@ public class signupEmail extends AppCompatActivity
         });
         */
     }
-    public static boolean isThirteen(Date date)
+    public boolean isThirteen(Date date)
     {
+        Date currentDate;
+        dateFormat = new SimpleDateFormat("MMddyyyy");
         Calendar c = Calendar.getInstance();
-        int current;
-        int thirteen;
-        thirteen = c.YEAR - 13;
-        thirteen = c.MONTH;
-        thirteen = c.DAY_OF_MONTH;
-        current = date.getYear();
-        if(thirteen > current )
+        c.add(Calendar.YEAR, -13);
+        dateFormat.format(c.get(Calendar.YEAR));
+        currentDate = c.getTime();
+        if(currentDate.after(date))
         {
-            return false;
+            Log.i("returned ", "true");
+            return true;
         }
         else
         {
-            return true;
+            Log.i("returned", "false");
+            return false;
         }
     }
 
