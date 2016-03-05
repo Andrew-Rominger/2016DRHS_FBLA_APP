@@ -50,6 +50,7 @@ public class util
     static Picture image;
     static String URL;
     static Bitmap imageBmap;
+    static Bitmap bMAP;
     static Picture savedPic;
     static boolean logged;
 
@@ -105,7 +106,7 @@ public class util
         options.inJustDecodeBounds = false;
         int imageHeight = options.outHeight;
         int imageWidth = options.outWidth;
-        return BitmapFactory.decodeByteArray(bArr,0,bArr.length,options);
+        return BitmapFactory.decodeByteArray(bArr, 0, bArr.length, options);
 
     }
     public static Drawable getPictureFromPOID(final String PictureOID, final Context thisContext)
@@ -127,20 +128,32 @@ public class util
         return getDrawablleFromBMap(imageBmap, thisContext);
 
     }
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            java.net.URL url = new java.net.URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url
-                    .openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static Bitmap getBitmapFromURL(final String src)
+    {
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    java.net.URL url = new java.net.URL(src);
+                    HttpURLConnection connection = (HttpURLConnection) url
+                            .openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    bMAP = BitmapFactory.decodeStream(input);
+
+
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return bMAP;
+
     }
     public static Drawable getDrawablleFromBMap(Bitmap bmap, Context context)
     {
@@ -166,6 +179,7 @@ public class util
                 @Override
                 public void handleFault(BackendlessFault backendlessFault) {
                     Toast.makeText(context, userName + " did not login", Toast.LENGTH_LONG).show();
+
 
 
                 }
@@ -294,20 +308,7 @@ public class util
 
         return inSampleSize;
     }
-    public static boolean isPassword(String string)
-    {
 
-        String currentPassword = Backendless.UserService.CurrentUser().getPassword().toString();
-        if(currentPassword == string)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    }
     public static String shave(String string)
     {
         if(string.length()>8)

@@ -1,37 +1,23 @@
 package fbla.com.fbla_app_src;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
-import android.text.method.DateTimeKeyListener;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
-import com.facebook.internal.Utility;
 
-import java.text.DateFormat;
-import java.text.DateFormatSymbols;
-import java.text.FieldPosition;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import weborb.reader.DateType;
 
 public class signupEmail extends AppCompatActivity
 {
