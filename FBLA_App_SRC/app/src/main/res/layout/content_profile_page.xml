@@ -201,7 +201,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/profilepage_tableRow"
-        android:layout_above="@+id/relativeLayout">
+        android:layout_above="@+id/relativeLayout"
+        android:id="@+id/mainBCKG">
 
 
         <RelativeLayout
@@ -222,14 +223,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="You currently have no bio."
+                    android:text="You currently have no bio. Tap to edit Bio"
                     android:id="@+id/profilepage_bio"
                     android:textSize="31dp"
                     android:textColor="#7D8C93"
                     android:textAlignment="center"
                     android:textStyle="normal"
-                android:layout_below="@+id/profilePage_addPic"
-                android:layout_centerHorizontal="true" />
+                    android:layout_below="@+id/profilePage_addPic"
+                    android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Tap to add cover photo"
+                android:textStyle="italic"
+                android:id="@+id/addCoverPhoto"
+                android:layout_marginTop="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/profilePage_addPic"
+                android:layout_alignEnd="@+id/profilePage_addPic" />
         </RelativeLayout>
 
 

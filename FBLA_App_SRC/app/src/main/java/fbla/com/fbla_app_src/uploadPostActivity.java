@@ -36,6 +36,7 @@ public class uploadPostActivity extends AppCompatActivity {
     Intent data;
     Picture pObject;
     Picture image;
+    Picture image2;
     EditText caption;
     Button shareButton;
 
@@ -51,8 +52,20 @@ public class uploadPostActivity extends AppCompatActivity {
         shareButton = (Button) findViewById(R.id.uploadPost_shareButton);
         post = new Post();
         image = new Picture();
-
         extras = getIntent().getExtras();
+        if(extras.get("passedPictureData")!=null)
+        {
+            data = (Intent) extras.get("passedPictureData");
+            handleImage(data);
+            post.setUserUploaded(user);
+            saveImage(data, uploadPostActivity.this, false);
+        }
+        else
+        {
+            Log.i("ERROR:EXTRA NULL", "EXTRA WAS NULL");
+        }
+
+
 
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,42 +74,31 @@ public class uploadPostActivity extends AppCompatActivity {
                  if(caption.getText().toString().isEmpty())
                  {
                      post.setCaption("");
-
                  }
                 else
                  {
                      post.setCaption(caption.getText().toString());
                  }
-                Backendless.Data.save(post, new AsyncCallback<Post>()
+                if(post.getPictureOnPost() != null)
                 {
-                    @Override
-                    public void handleResponse(Post post)
+                    Backendless.Data.save(post, new AsyncCallback<Post>()
                     {
-                        Toast.makeText(uploadPostActivity.this, "Post " + post.getObjectId() + " uploaded succesfully!", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(uploadPostActivity.this, profilePage.class));
-                    }
+                        @Override
+                        public void handleResponse(Post postlol) {
+                            Toast.makeText(uploadPostActivity.this, "Post " + postlol.getObjectId() + " uploaded succesfully!", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(uploadPostActivity.this, profilePage.class));
+                        }
 
-                    @Override
-                    public void handleFault(BackendlessFault backendlessFault)
-                    {
+                        @Override
+                        public void handleFault(BackendlessFault backendlessFault) {
 
-                    }
-                });
+                        }
+                    });
+                }
 
             }
         });
-        if(extras.get("passedPictureData")!=null)
-        {
-            data = (Intent) extras.get("passedPictureData");
-            handleImage(data);
-            post.setUserUploaded(user);
-            pObject = saveImage(data, uploadPostActivity.this, false);
-            post.setPictureOnPost(pObject);
-        }
-        else
-        {
-            Log.i("ERROR:EXTRA NULL", "EXTRA WAS NULL");
-        }
+
 
     }
 
@@ -117,7 +119,7 @@ public class uploadPostActivity extends AppCompatActivity {
         placeHolder.setBackground(dr);
     }
 
-    public Picture saveImage(Intent data, Context context, Boolean isProfile)
+    public void saveImage(Intent data, Context context, Boolean isProfile)
     {
         final boolean isProfP = isProfile;
         final Context thisContext = context;
@@ -134,41 +136,33 @@ public class uploadPostActivity extends AppCompatActivity {
             image.setIsProf(false);
         }
 
-        Backendless.Persistence.save(image, new AsyncCallback<Picture>() {
+        Backendless.Persistence.save(image, new AsyncCallback<Picture>()
+        {
             @Override
-            public void handleResponse(Picture imagePassed)
+            public void handleResponse(final Picture imagePassed)
             {
                 util.uploadImage(util.getBitmapFromData(datathis), imagePassed, thisContext);
-                if (isProfP) {
-                    user.setProperty("profPicID", imagePassed.getObjectId());
-                    Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
-                        @Override
-                        public void handleResponse(BackendlessUser backendlessUser) {
-                        }
-                        @Override
-                        public void handleFault(BackendlessFault backendlessFault) {
-                        }
-                    });
-                }
                 Log.i("imagetest", image.getObjectId());
                 image.setObjectId(imagePassed.getObjectId());
+                Log.i("imagetest2", image.getObjectId());
                 image.setFileLocation("/media/userpics");
+                Log.i("imagetest3", image.getObjectId());
                 image.setUserID(user.getUserId());
+                Log.i("imagetest4", image.getObjectId());
+                post.setPictureOnPost(image);
+
 
             }
+
             @Override
             public void handleFault(BackendlessFault backendlessFault) {
                 //Toast.makeText(thisContext, backendlessFault.getDetail(), Toast.LENGTH_LONG).show();
                 Toast.makeText(thisContext, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-        if(image!=null) {
-            return image;
-        }
-        else
-        {
-            Log.i("IMAGE IS NULL", "IMAGE IS NULL");
-            return image;
-        }
+
+
+
     }
+
 }

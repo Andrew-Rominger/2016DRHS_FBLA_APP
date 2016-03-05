@@ -12,7 +12,7 @@ public class Post
     private int NumLikes;
     private String Caption;
     private BackendlessUser userUploaded;
-    private Picture PictureOnPost;
+    private Picture pictureOnPost;
     private String objectId;
 
     public String getObjectId()
@@ -65,10 +65,10 @@ public class Post
     }
 
     public Picture getPictureOnPost() {
-        return PictureOnPost;
+        return pictureOnPost;
     }
 
     public void setPictureOnPost(Picture pop) {
-        PictureOnPost = pop;
+        pictureOnPost = pop;
     }
 }
