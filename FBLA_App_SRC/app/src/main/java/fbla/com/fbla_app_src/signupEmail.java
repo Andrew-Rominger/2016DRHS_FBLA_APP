@@ -40,9 +40,7 @@ public class signupEmail extends AppCompatActivity
     EditText passwordInput;
     Button signUp;
     BackendlessUser user;
-    CharSequence userName;
     EditText passwordInputCheck;
-    Intent moveTo;
     CheckBox showPW;
     EditText userNameInput;
     EditText fullName;
@@ -97,6 +95,9 @@ public class signupEmail extends AppCompatActivity
                 Boolean passwordValid = Validator.isPasswordValid(signupEmail.this, password, passwordCheck);
                 String theDate = date.getText().toString();
 
+                theDate.replace("/", "");
+                theDate.replace("-", "");
+
                 if (util.shave(theDate) == null)
                 {
                 Toast.makeText(signupEmail.this, "Incorrect format for your Date of Birth, please use the format mm-dd-yyyy", Toast.LENGTH_LONG).show();
@@ -147,20 +148,6 @@ public class signupEmail extends AppCompatActivity
                 }
             }
         });
-        /*
-        emailInput.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-
-                if (emailInput.getText().toString().length() >= 20)
-                {
-                    emailInput.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                    return true;
-                }
-                return false;
-            }
-        });
-        */
     }
     public boolean isThirteen(Date date)
     {
@@ -181,31 +168,4 @@ public class signupEmail extends AppCompatActivity
             return false;
         }
     }
-
-
-        /*
-        showPW.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v)
-            {
-                onCheckBoxClicked(v);
-            }
-        });
-        */
-
-    /*
-    public void onCheckBoxClicked(View view)
-    {
-        boolean checked = ((CheckBox) view).isChecked();
-        if (checked) {
-            passwordInput.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            passwordInput.setSelection(passwordInput.getText().length());
-        } else {
-            passwordInput.setInputType(InputType.TYPE_CLASS_TEXT |
-                    InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            passwordInput.setSelection(passwordInput.getText().length());
-        }
-    }
-    */
-
 }

@@ -61,9 +61,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //Sets the app version for Backendless
-
         String appVersion = "v1";
         //Initializes Backendless
         Backendless.initApp(this, "67BF989E-7E10-5DB8-FFD7-C9147CA4F200", "12F047DB-382A-F6DA-FF16-C6A0A1F0CE00", appVersion);
@@ -72,7 +70,6 @@ public class MainActivity extends AppCompatActivity
                         .setFontAttrId(R.attr.fontPath)
                         .build()
         );
-
         //Initialize variables and assign views
         EmailSignUpButton = (Button) findViewById(R.id.signupEmailButton);
         moveToSignInButton = (TextView) findViewById(R.id.main_SignInEmail);
@@ -87,10 +84,6 @@ public class MainActivity extends AppCompatActivity
                 moveToEmailSignUp();
             }
         });
-
-
-
-
         //Declare a function that is called when the MoveToSignIn button is clicked
         moveToSignInButton.setOnClickListener(new View.OnClickListener()
         {
@@ -101,7 +94,6 @@ public class MainActivity extends AppCompatActivity
                 moveToSignIn();
             }
         });
-
         facebookSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +127,6 @@ public class MainActivity extends AppCompatActivity
                 });
             }
         });
-
     }
 
     @Override
@@ -156,15 +147,6 @@ public class MainActivity extends AppCompatActivity
         //Starts and switches to the email sigin
         startActivity(movetosignIn);
     }
-
-
-
-
-
-
-
-
-
 }
 
 

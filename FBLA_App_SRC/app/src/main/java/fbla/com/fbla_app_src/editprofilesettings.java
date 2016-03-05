@@ -10,9 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 
 public class editprofilesettings extends AppCompatActivity {
 
@@ -31,25 +34,35 @@ public class editprofilesettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editprofilesettings);
 
-        name = (EditText) findViewById(R.id.editText);
-        handle = (EditText) findViewById(R.id.editText3);
+        name = (EditText) findViewById(R.id.editTextName);
+        handle = (EditText) findViewById(R.id.editTextHandle);
         bio = (EditText) findViewById(R.id.editText4);
         done = (Button) findViewById(R.id.donebutton);
         back = (ImageView) findViewById(R.id.back);
         user = Backendless.UserService.CurrentUser();
-
+        name.setHint(user.getProperty("name").toString());
+        handle.setHint(user.getProperty("userName").toString());
+        bio.setHint(user.getProperty("Bio").toString());
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 newName = name.getText().toString();
                 newHanle = handle.getText().toString();
                 newBio = bio.getText().toString();
-                user.setProperty("userName", newName);
+                user.setProperty("name", newName);
+                user.setProperty("userName", newHanle);
+                user.setProperty("Bio", newBio);
+                Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
+                    @Override
+                    public void handleResponse(BackendlessUser backendlessUser) {
+                        startActivity(new Intent(editprofilesettings.this, profilePage.class));
+                    }
 
-
-
-
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault) {
+                        Toast.makeText(editprofilesettings.this, "Failed to update profile", Toast.LENGTH_LONG);
+                    }
+                });
             }
         });
         back.setOnClickListener(new View.OnClickListener() {

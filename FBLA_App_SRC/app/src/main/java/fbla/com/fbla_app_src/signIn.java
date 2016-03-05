@@ -78,27 +78,6 @@ public class signIn extends AppCompatActivity {
                     ViewCompat.setTranslationZ(spinner, 0);
                 }
                 util.signInUser(Username, Password, signIn.this);
-
-
-
-                /*
-                if(user == null)
-                {
-                    Toast.makeText(signIn.this, "Sign in failed.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-
-                if(util.checkForFirstTime(user))
-                {
-                    moveTo = new Intent(signIn.this, extrainfo.class);
-                }
-                else
-                {
-                    moveTo = new Intent(signIn.this, profilePage.class);
-                }
-                startActivity(moveTo);
-                */
             }
         });
         goBackButton.setOnClickListener(new View.OnClickListener()
