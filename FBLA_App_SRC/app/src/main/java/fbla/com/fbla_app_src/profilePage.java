@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 
 
 @SuppressLint("NewApi")
@@ -35,7 +37,9 @@ public class profilePage extends AppCompatActivity{
     FrameLayout search;
     RelativeLayout bckg;
     FrameLayout add;
+    Picture profPic;
     FrameLayout profile;
+
 
     @Override
     public void onBackPressed()
@@ -51,6 +55,7 @@ public class profilePage extends AppCompatActivity{
 
 
         user = Backendless.UserService.CurrentUser();
+        profPic = new Picture();
         userName = (TextView) findViewById(R.id.profilePage_UserNameField);
         userName.setText(user.getProperty("userName").toString());
         uploadImage = (ImageView) findViewById(R.id.profilePage_addPic);
@@ -73,7 +78,8 @@ public class profilePage extends AppCompatActivity{
             @Override
             public void onClick(View v)
             {
-                startActivity(new Intent(profilePage.this, yourPosts.class));
+                startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 1);
+
             }
 
         });
@@ -110,5 +116,38 @@ public class profilePage extends AppCompatActivity{
         });
 
         }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, final Intent data)
+    {
+        Backendless.Persistence.save(profPic, new AsyncCallback<Picture>()
+        {
+            @Override
+            public void handleResponse(Picture picture)
+            {
+                util.uploadImage(util.getBitmapFromData(data), picture, profilePage.this);
+                user.setProperty("profilePictureID", picture.getObjectId());
+                Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
+                    @Override
+                    public void handleResponse(BackendlessUser backendlessUser)
+                    {
+                        uploadImage.setImageDrawable(util.getDrawablleFromBMap(util.getBitmapFromData(data), profilePage.this));
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault)
+                    {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+
+            }
+        });
+    }
+
 
 }

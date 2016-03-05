@@ -1,5 +1,6 @@
 package fbla.com.fbla_app_src;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,7 +79,8 @@ public class signIn extends AppCompatActivity {
                 {
                     ViewCompat.setTranslationZ(spinner, 0);
                 }
-                util.signInUser(Username, Password, signIn.this);
+                signInUser(Username, Password, signIn.this);
+
 
 
 
@@ -133,5 +136,27 @@ public class signIn extends AppCompatActivity {
     public static void showSpinner()
     {
         spinner.setVisibility(View.VISIBLE);
+    }
+    public static void hideSpinner(){spinner.setVisibility(View.GONE);}
+    public static void signInUser(final String userName, final String password, final Context c)
+    {
+        final Context context = c;
+        final Intent i = new Intent(c, profilePage.class);
+        Backendless.UserService.login(userName, password, new AsyncCallback<BackendlessUser>() {
+            @Override
+            public void handleResponse(BackendlessUser backendlessUser) {
+                Toast.makeText(context, userName + " logged in", Toast.LENGTH_LONG).show();
+                c.startActivity(i);
+                //Intent moveTo;
+                Log.i("logged in", "sucessful");
+            }
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+                Toast.makeText(context, userName + " did not login", Toast.LENGTH_LONG).show();
+                hideSpinner();
+            }
+        });
+
+
     }
 }

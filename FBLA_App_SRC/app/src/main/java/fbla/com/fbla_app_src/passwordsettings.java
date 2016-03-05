@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,45 +45,41 @@ public class passwordsettings extends AppCompatActivity {
         anotherPassword = (EditText) findViewById(R.id.editText6);
         anotherPasswordTwo = (EditText) findViewById(R.id.editText7);
 
-        theCurrentPassword = currentPassword.getText().toString();
-        theAnotherPassword = anotherPassword.getText().toString();
-        theAnotherPasswordTwo = anotherPasswordTwo.getText().toString();
-
-        user = Backendless.UserService.CurrentUser();
-
-
-
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //calls a util method that checks if the password that is inputed by the user is his password
-                if(util.isPassword(theCurrentPassword))
-                {
-                    if(theAnotherPassword == theAnotherPasswordTwo)
-                    {
-                        user.setPassword(theAnotherPassword);
-                        Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
-                            @Override
-                            public void handleResponse(BackendlessUser backendlessUser) {
-                                Toast.makeText(passwordsettings.this, "Success", Toast.LENGTH_LONG);
-                                goBack();
-                            }
+                user = Backendless.UserService.CurrentUser();
+                theAnotherPassword = anotherPassword.getText().toString();
+                theAnotherPasswordTwo = anotherPasswordTwo.getText().toString();
+                theCurrentPassword = currentPassword.getText().toString();
 
-                            @Override
-                            public void handleFault(BackendlessFault backendlessFault) {
-                                Toast.makeText(passwordsettings.this, "Failed to reset password", Toast.LENGTH_LONG);
-                            }
-                        });
+                Log.i("MADE It", "MADE IT");
+                if (user != null) {
+                    if (user.getProperty("password") == theCurrentPassword) {
+                        if (theAnotherPassword == theAnotherPasswordTwo) {
+                            user.setPassword(theAnotherPassword);
+                            Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
+                                @Override
+                                public void handleResponse(BackendlessUser backendlessUser) {
+                                    Toast.makeText(passwordsettings.this, "Success", Toast.LENGTH_LONG).show();
+                                }
 
-                    }
-                    else
-                    {
-                        Toast.makeText(passwordsettings.this, "Passwords do not Match!", Toast.LENGTH_LONG);
+                                @Override
+                                public void handleFault(BackendlessFault backendlessFault) {
+                                    Toast.makeText(passwordsettings.this, "Failed to reset password", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        } else {
+                            Toast.makeText(passwordsettings.this, "Passwords do not Match!", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(passwordsettings.this, "Incorrect Password", Toast.LENGTH_LONG).show();
                     }
                 }
                 else
                 {
-                    Toast.makeText(passwordsettings.this, "Incorrect Password", Toast.LENGTH_LONG);
+                    Toast.makeText(passwordsettings.this, "NULL", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -99,6 +96,18 @@ public class passwordsettings extends AppCompatActivity {
     {
         Intent i = new Intent(passwordsettings.this, profilePage.class);
         startActivity(i);
+    }
+    public boolean isPassword(String string)
+    {
+        if(user.getPassword() == string)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
 }
