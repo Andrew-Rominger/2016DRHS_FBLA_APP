@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -84,8 +85,12 @@ public class uploadPostActivity extends AppCompatActivity {
                     Backendless.Data.save(post, new AsyncCallback<Post>()
                     {
                         @Override
-                        public void handleResponse(Post postlol) {
+                        public void handleResponse(Post postlol)
+                        {
                             Toast.makeText(uploadPostActivity.this, "Post " + postlol.getObjectId() + " uploaded succesfully!", Toast.LENGTH_LONG).show();
+                            int numPosts = Integer.parseInt(user.getProperty("numPosts").toString());
+                            user.setProperty("numPosts", numPosts++);
+                            util.updateUser(user);
                             startActivity(new Intent(uploadPostActivity.this, profilePage.class));
                         }
 
@@ -105,18 +110,9 @@ public class uploadPostActivity extends AppCompatActivity {
     @SuppressLint("NewApi")
     public void handleImage(Intent data)
     {
-        Bitmap bm = util.getBitmapFromData(data);
-        Bitmap newbm = util.scaleDown(bm, .5F, true);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        newbm.compress(Bitmap.CompressFormat.PNG, 100, out);
-        Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-        Drawable dr = util.getDrawablleFromBMap(decoded, uploadPostActivity.this);
-
-        newbm.recycle();
-        bm.recycle();
-        decoded.recycle();
-
-        placeHolder.setBackground(dr);
+        Bitmap newbm = util.scaleDown((Bitmap) data.getExtras().get("data"), 1.0F, true);
+        Drawable dr = new BitmapDrawable(getResources(), newbm);
+        placeHolder.setImageDrawable(dr);
     }
 
     public void saveImage(Intent data, Context context, Boolean isProfile)
