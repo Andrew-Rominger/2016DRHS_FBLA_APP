@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-class yourPosts extends AppCompatActivity
+ class yourPosts extends AppCompatActivity
 {
     ImageView addPostPic;
     @Override
