@@ -60,7 +60,7 @@ public class editprofilesettings extends AppCompatActivity {
 
                     @Override
                     public void handleFault(BackendlessFault backendlessFault) {
-                        Toast.makeText(editprofilesettings.this, "Failed to update profile", Toast.LENGTH_LONG);
+                        Toast.makeText(editprofilesettings.this, "Failed to update profile", Toast.LENGTH_LONG).show();
                     }
                 });
             }

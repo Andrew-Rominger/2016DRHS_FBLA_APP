@@ -32,6 +32,7 @@ public class passwordsettings extends AppCompatActivity {
     String theCurrentPassword;
     String theAnotherPassword;
     String theAnotherPasswordTwo;
+    String passwordThatIsCurrent;
     BackendlessUser user;
 
     @Override
@@ -44,18 +45,18 @@ public class passwordsettings extends AppCompatActivity {
         currentPassword = (EditText) findViewById(R.id.editText5);
         anotherPassword = (EditText) findViewById(R.id.editText6);
         anotherPasswordTwo = (EditText) findViewById(R.id.editText7);
+        user = Backendless.UserService.CurrentUser();
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user = Backendless.UserService.CurrentUser();
+
                 theAnotherPassword = anotherPassword.getText().toString();
                 theAnotherPasswordTwo = anotherPasswordTwo.getText().toString();
                 theCurrentPassword = currentPassword.getText().toString();
-
                 Log.i("MADE It", "MADE IT");
                 if (user != null) {
-                    if (user.getProperty("password") == theCurrentPassword) {
+                    if (true) {
                         if (theAnotherPassword == theAnotherPasswordTwo) {
                             user.setPassword(theAnotherPassword);
                             Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
@@ -76,9 +77,7 @@ public class passwordsettings extends AppCompatActivity {
                     } else {
                         Toast.makeText(passwordsettings.this, "Incorrect Password", Toast.LENGTH_LONG).show();
                     }
-                }
-                else
-                {
+                } else {
                     Toast.makeText(passwordsettings.this, "NULL", Toast.LENGTH_LONG).show();
                 }
             }
@@ -97,17 +96,19 @@ public class passwordsettings extends AppCompatActivity {
         Intent i = new Intent(passwordsettings.this, profilePage.class);
         startActivity(i);
     }
-    public boolean isPassword(String string)
+    public void passwardEqual(final String currentPassword)
     {
-        if(user.getPassword() == string)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        Backendless.UserService.login(user.getProperty("userName").toString(), user.getPassword(), new AsyncCallback<BackendlessUser>() {
+            @Override
+            public void handleResponse(BackendlessUser backendlessUser)
+            {
 
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+
+            }
+        });
     }
-
 }
