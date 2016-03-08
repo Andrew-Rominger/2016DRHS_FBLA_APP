@@ -56,6 +56,8 @@ public class passwordsettings extends AppCompatActivity {
                 theCurrentPassword = currentPassword.getText().toString();
                 Log.i("MADE It", "MADE IT");
                 if (user != null) {
+                    passwardEqual(theCurrentPassword);
+                    /*
                     if (true) {
                         if (theAnotherPassword == theAnotherPasswordTwo) {
                             user.setPassword(theAnotherPassword);
@@ -77,6 +79,7 @@ public class passwordsettings extends AppCompatActivity {
                     } else {
                         Toast.makeText(passwordsettings.this, "Incorrect Password", Toast.LENGTH_LONG).show();
                     }
+                    */
                 } else {
                     Toast.makeText(passwordsettings.this, "NULL", Toast.LENGTH_LONG).show();
                 }
@@ -98,16 +101,27 @@ public class passwordsettings extends AppCompatActivity {
     }
     public void passwardEqual(final String currentPassword)
     {
-        Backendless.UserService.login(user.getProperty("userName").toString(), user.getPassword(), new AsyncCallback<BackendlessUser>() {
+        Backendless.UserService.login(user.getProperty("userName").toString(), currentPassword, new AsyncCallback<BackendlessUser>() {
             @Override
             public void handleResponse(BackendlessUser backendlessUser)
             {
+                user.setPassword(theAnotherPassword);
+                Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
+                    @Override
+                    public void handleResponse(BackendlessUser backendlessUser) {
+                        Toast.makeText(passwordsettings.this, "Success", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(passwordsettings.this, accountsettings.class));
+                    }
 
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault) {
+                        Toast.makeText(passwordsettings.this, "Failed to reset password", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
-
             @Override
             public void handleFault(BackendlessFault backendlessFault) {
-
+                Toast.makeText(passwordsettings.this, "Incorrect passowrd", Toast.LENGTH_LONG).show();
             }
         });
     }
