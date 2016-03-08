@@ -115,24 +115,6 @@ public class signIn extends AppCompatActivity {
 
 
     }
-    public void checkUserLoggedIn()
-    {
-        for(int i = 0; i < 10;i++)
-        {
-            if (Backendless.UserService.CurrentUser() != null)
-            {
-                startActivity(new Intent(signIn.this, profilePage.class));
-            }
-            else
-            {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
     public static void showSpinner()
     {
         spinner.setVisibility(View.VISIBLE);

@@ -9,9 +9,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -30,19 +33,25 @@ public class accountsettings extends AppCompatActivity {
     FrameLayout privatePolicy;
     FrameLayout terms;
     Dialog log;
+    Intent i;
     Button logout;
+    ImageView goBack;
+    BackendlessUser user;
     Button deleteAccount;
     final IDataStore<BackendlessUser> dataStore = Backendless.Data.of( BackendlessUser.class );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        user = Backendless.UserService.CurrentUser();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accountsettings);
+
 
         editProfile = (FrameLayout) findViewById(R.id.editProfile);
         changePassword = (FrameLayout) findViewById(R.id.changePassword);
         privatePolicy = (FrameLayout) findViewById(R.id.privatePolicy);
         terms = (FrameLayout) findViewById(R.id.terms);
+        goBack = (ImageView) findViewById(R.id.backArrowImageView);
         logout = (Button) findViewById(R.id.logoutButton);
         deleteAccount = (Button) findViewById(R.id.deleteAccountButton);
 
@@ -64,6 +73,13 @@ public class accountsettings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+               startActivity(new Intent(accountsettings.this, profilePage.class));
             }
         });
         terms.setOnClickListener(new View.OnClickListener() {

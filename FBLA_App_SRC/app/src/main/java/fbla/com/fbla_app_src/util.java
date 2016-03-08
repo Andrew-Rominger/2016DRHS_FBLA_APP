@@ -1,46 +1,24 @@
 package fbla.com.fbla_app_src;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.os.StrictMode;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.files.BackendlessFile;
-import com.backendless.io.BackendlessUserWriter;
-import com.facebook.internal.Utility;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-import static android.support.v4.content.ContextCompat.startActivities;
 
 /**
  * Created by Andrew on 2/3/2016.
@@ -48,11 +26,14 @@ import static android.support.v4.content.ContextCompat.startActivities;
 public class util
 {
     static Picture image;
-    static String URL;
+    static String src;
     static Bitmap imageBmap;
+    static Drawable draw;
     static Bitmap bMAP;
     static Picture savedPic;
     static boolean logged;
+    public static DownloadImageClass dlc = new DownloadImageClass();
+
 
 
     public String convertPhone(String preCon)
@@ -79,15 +60,18 @@ public class util
         final String OID = p.getObjectId();
 
         final Context thisContext = thisContextp;
+
         Backendless.Files.Android.upload(bMap, Bitmap.CompressFormat.PNG, 100, OID + ".png", "/media/userpics", new AsyncCallback<BackendlessFile>() {
             @Override
-            public void handleResponse(BackendlessFile backendlessFile) {
+            public void handleResponse(BackendlessFile backendlessFile)
+            {
                 Toast.makeText(thisContext, OID + ".png Uploaded", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void handleFault(BackendlessFault backendlessFault) {
-                Toast.makeText(thisContext, backendlessFault.getCode(), Toast.LENGTH_LONG).show();
+                Toast.makeText(thisContext, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -96,64 +80,46 @@ public class util
     public static Bitmap getBitmapFromData(Intent data)
     {
         Bitmap bmp = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] bArr = stream.toByteArray();
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeByteArray(bArr, 0, bArr.length, options);
-        options.inSampleSize = calculateInSampleSize(options, 100, 100);
-        options.inJustDecodeBounds = false;
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-        return BitmapFactory.decodeByteArray(bArr, 0, bArr.length, options);
+        return bmp;
 
     }
     public static Drawable getPictureFromPOID(final String PictureOID, final Context thisContext)
     {
-        Backendless.Data.of(Picture.class).findById(PictureOID, new AsyncCallback<Picture>() {
+        Backendless.Data.of(Picture.class).findById(PictureOID, new AsyncCallback<Picture>()
+        {
             @Override
             public void handleResponse(Picture picture)
             {
-
-                    URL = "https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + picture.getObjectId() + ".png";
-                    imageBmap = getBitmapFromURL(URL);
+                src = "https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + picture.getObjectId() + ".png";
+                dlc.execute(src);
+                draw = dlc.getDrawAble();
             }
 
             @Override
-            public void handleFault(BackendlessFault backendlessFault) {
+            public void handleFault(BackendlessFault backendlessFault)
+            {
                 Toast.makeText(thisContext, backendlessFault.getCode(), Toast.LENGTH_LONG).show();
             }
         });
-        return getDrawablleFromBMap(imageBmap, thisContext);
+        return draw;
 
     }
     public static Bitmap getBitmapFromURL(final String src)
     {
-        new Thread(new Runnable()
+        try
         {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    java.net.URL url = new java.net.URL(src);
-                    HttpURLConnection connection = (HttpURLConnection) url
-                            .openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    bMAP = BitmapFactory.decodeStream(input);
+            java.net.URL url = new java.net.URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            bMAP = BitmapFactory.decodeStream(input);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
-
-                } catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
         return bMAP;
-
     }
     public static Drawable getDrawablleFromBMap(Bitmap bmap, Context context)
     {
@@ -171,7 +137,7 @@ public class util
 
                     c.startActivity(i);
                     //Intent moveTo;
-                    Log.i("logged in","sucessful");
+                    Log.i("logged in", "sucessful");
 
 
                 }
@@ -179,7 +145,6 @@ public class util
                 @Override
                 public void handleFault(BackendlessFault backendlessFault) {
                     Toast.makeText(context, userName + " did not login", Toast.LENGTH_LONG).show();
-
 
 
                 }
@@ -284,7 +249,7 @@ public class util
                 height, filter);
         return newBitmap;
         */
-        return Bitmap.createScaledBitmap(realImage,(int)(realImage.getWidth()*0.5), (int)(realImage.getHeight()*0.5), true);
+        return Bitmap.createScaledBitmap(realImage,(int)(realImage.getWidth()*maxImageSize), (int)(realImage.getHeight()*maxImageSize), true);
     }
     public static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -330,5 +295,11 @@ public class util
             return null;
         }
     }
+    public static void setProfPic()
+    {
+
+    }
+
 
 }
+

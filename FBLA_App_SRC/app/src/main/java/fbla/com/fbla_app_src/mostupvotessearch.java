@@ -23,7 +23,7 @@ public class mostupvotessearch extends AppCompatActivity {
         setContentView(R.layout.activity_mostupvotessearch);
 
         search = (FrameLayout) findViewById(R.id.profilepage_searchNav);
-        add = (FrameLayout) findViewById(R.id.profilepage_addNav);
+        add = (FrameLayout) findViewById(R.id.searchAdd);
         profile = (FrameLayout) findViewById(R.id.profilepage_profileNav);
         recent = (RelativeLayout) findViewById(R.id.recent);
         trending = (RelativeLayout) findViewById(R.id.trending);
