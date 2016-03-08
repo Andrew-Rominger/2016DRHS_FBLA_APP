@@ -1,49 +1,24 @@
 package fbla.com.fbla_app_src;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Environment;
-import android.os.StrictMode;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.files.BackendlessFile;
-import com.backendless.io.BackendlessUserWriter;
-import com.facebook.internal.Utility;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-import static android.support.v4.content.ContextCompat.startActivities;
 
 /**
  * Created by Andrew on 2/3/2016.
@@ -85,15 +60,18 @@ public class util
         final String OID = p.getObjectId();
 
         final Context thisContext = thisContextp;
+
         Backendless.Files.Android.upload(bMap, Bitmap.CompressFormat.PNG, 100, OID + ".png", "/media/userpics", new AsyncCallback<BackendlessFile>() {
             @Override
-            public void handleResponse(BackendlessFile backendlessFile) {
+            public void handleResponse(BackendlessFile backendlessFile)
+            {
                 Toast.makeText(thisContext, OID + ".png Uploaded", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void handleFault(BackendlessFault backendlessFault) {
-                Toast.makeText(thisContext, backendlessFault.getCode(), Toast.LENGTH_LONG).show();
+                Toast.makeText(thisContext, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
+
             }
         });
 

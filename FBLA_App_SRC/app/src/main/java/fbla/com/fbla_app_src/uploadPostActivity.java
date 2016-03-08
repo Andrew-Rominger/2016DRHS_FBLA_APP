@@ -5,14 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.test.suitebuilder.annotation.Suppress;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,10 +21,7 @@ import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.File;
 
 public class uploadPostActivity extends AppCompatActivity {
     Post post;
@@ -57,6 +50,8 @@ public class uploadPostActivity extends AppCompatActivity {
         if(extras.get("passedPictureData")!=null)
         {
             data = (Intent) extras.get("passedPictureData");
+            pictureImagePath = (String) extras.get("IP");
+
             handleImage(data);
             post.setUserUploaded(user);
             saveImage(data, uploadPostActivity.this, false);
@@ -106,13 +101,20 @@ public class uploadPostActivity extends AppCompatActivity {
 
 
     }
+    private String pictureImagePath = "";
 
     @SuppressLint("NewApi")
     public void handleImage(Intent data)
     {
-        Bitmap newbm = util.scaleDown((Bitmap) data.getExtras().get("data"), 1.0F, true);
-        Drawable dr = new BitmapDrawable(getResources(), newbm);
-        placeHolder.setImageDrawable(dr);
+        File imgFile = new  File(pictureImagePath);
+        Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+        final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+        placeHolder.setImageDrawable(new BitmapDrawable(getResources(),result));
     }
 
     public void saveImage(Intent data, Context context, Boolean isProfile)
