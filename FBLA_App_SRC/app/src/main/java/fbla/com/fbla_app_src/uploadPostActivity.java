@@ -60,9 +60,6 @@ public class uploadPostActivity extends AppCompatActivity {
         {
             Log.i("ERROR:EXTRA NULL", "EXTRA WAS NULL");
         }
-
-
-
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -124,7 +121,6 @@ public class uploadPostActivity extends AppCompatActivity {
         final Intent datathis = data;
         String toReturn;
         final BackendlessUser user = Backendless.UserService.CurrentUser();
-
         if(isProfile)
         {
             image.setIsProf(true);

@@ -32,6 +32,7 @@ public class mostupvotessearch extends AppCompatActivity {
     FrameLayout profile;
     RelativeLayout recent;
     RelativeLayout trending;
+    Post[] postsToBeLoaded = new Post[10];
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -99,11 +100,12 @@ public class mostupvotessearch extends AppCompatActivity {
     {
         BackendlessDataQuery dataQuery = new BackendlessDataQuery();
         QueryOptions qo = new QueryOptions();
-        qo.addSortByOption("created ASC");
-        Post[] postsToBeLoaded = new Post[10];
+        qo.addSortByOption("created DSC");
+
         final ArrayList<Post> arPost = new ArrayList<Post>();
         qo.setPageSize(10);
         dataQuery.setQueryOptions(qo);
+
         Backendless.Data.of(Post.class).find(dataQuery, new AsyncCallback<BackendlessCollection<Post>>() {
             @Override
             public void handleResponse(BackendlessCollection<Post> postBackendlessCollection)
@@ -115,6 +117,11 @@ public class mostupvotessearch extends AppCompatActivity {
                     Post post = it.next();
                     arPost.add(post);
                 }
+                for(int i = 0;i < arPost.size();i++)
+                {
+                    postsToBeLoaded[i] = arPost.get(i);
+                }
+                postBackendlessCollection = postBackendlessCollection.nextPage();
             }
 
             @Override
@@ -122,10 +129,7 @@ public class mostupvotessearch extends AppCompatActivity {
 
             }
         });
-        for(int i = 0;i < arPost.size();i++)
-        {
-            postsToBeLoaded[i] = arPost.get(i);
-        }
+
 
 
 
