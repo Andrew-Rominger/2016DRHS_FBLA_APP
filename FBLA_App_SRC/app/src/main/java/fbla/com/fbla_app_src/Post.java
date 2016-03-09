@@ -2,6 +2,8 @@ package fbla.com.fbla_app_src;
 
 import com.backendless.BackendlessUser;
 
+import java.util.Date;
+
 /**
  * Created by AromAdmin on 2/8/2016.
  */
@@ -14,6 +16,15 @@ public class Post
     private BackendlessUser userUploaded;
     private Picture pictureOnPost;
     private String objectId;
+    private Date created;
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
     public String getObjectId()
     {

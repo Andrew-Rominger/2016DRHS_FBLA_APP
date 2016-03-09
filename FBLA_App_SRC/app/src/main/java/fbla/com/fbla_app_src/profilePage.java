@@ -1,6 +1,7 @@
 package fbla.com.fbla_app_src;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -50,7 +51,7 @@ public class profilePage extends AppCompatActivity{
     TextView uploadCoverPhoto;
     DownloadImageClass downloadProf = new DownloadImageClass();
     DownloadImageClass downloadCover = new DownloadImageClass();
-    private String pictureImagePath = "";
+
 
 
     @Override
@@ -92,6 +93,10 @@ public class profilePage extends AppCompatActivity{
             uploadCoverPhoto.setText("");
             showSpinner();
         }
+        else
+        {
+            hideSpinner();
+        }
         if(!(user.getProperty("profilePictureID") == null))
         {
             showSpinner();
@@ -105,6 +110,7 @@ public class profilePage extends AppCompatActivity{
         {
             hideSpinner();
         }
+
 
         if(!user.getProperty("Bio").equals("No Bio Set"))
         {
@@ -128,7 +134,7 @@ public class profilePage extends AppCompatActivity{
         {
             @Override
             public void onClick(View v) {
-                openBackCamera(1);
+                openBackCamera(1,profilePage.this);
             }
         });
 
@@ -137,7 +143,7 @@ public class profilePage extends AppCompatActivity{
             @Override
             public void onClick(View v)
             {
-                openBackCamera(2);
+                openBackCamera(2,profilePage.this);
             }
         });
 
@@ -271,12 +277,11 @@ public class profilePage extends AppCompatActivity{
     public static void showSpinner(){loadingSpinner.setVisibility(View.VISIBLE);}
     public static void hideSpinner(){loadingSpinner.setVisibility(View.INVISIBLE);}
 
-
-    private void openBackCamera(int numCode)
+    private String pictureImagePath = "";
+    public void openBackCamera(int numCode, Context context)
     {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = timeStamp + ".png";
-
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         pictureImagePath = storageDir.getAbsolutePath() + "/" + imageFileName;
