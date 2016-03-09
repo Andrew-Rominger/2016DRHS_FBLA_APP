@@ -24,7 +24,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:text="Sign up with Email"
+        android:text="Sign up "
         android:id="@+id/signupEmailButton"
         android:layout_below="@+id/logo"
         android:background="@drawable/mybutton"
@@ -33,35 +33,6 @@
         android:textAppearance="@style/TextAppearance.FontPath"
 
         />
-
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:text="Sign up with Google"
-        android:id="@+id/buttonGoogle"
-        android:background="@drawable/mybutton"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="43dp"
-        android:layout_below="@+id/signupEmailButton"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ffffff"
-        android:textAppearance="@style/TextAppearance.FontPath"
-        ></Button>
-        
-
-
-    <Button
-        android:layout_width="300dp"
-        android:textAppearance="@style/TextAppearance.FontPath"
-        android:layout_height="40dp"
-        android:text="Sign up with facebook"
-        android:id="@+id/buttonFacebook"
-        android:background="@drawable/mybutton"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="43dp"
-        android:layout_below="@+id/buttonGoogle"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ffffff"/>
 
 
     <TextView
@@ -73,8 +44,9 @@
         android:textSize="20dp"
         android:textColor="#ffffff"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/buttonFacebook"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/signupEmailButton" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity
     //Declare variables
     private Button EmailSignUpButton;
     private TextView moveToSignInButton;
-    private Button facebookSignIn;
-    private Button googleSignIn;
     CallbackManager callbackManager;
 
 
@@ -53,8 +51,6 @@ public class MainActivity extends AppCompatActivity
         //Initialize variables and assign views
         EmailSignUpButton = (Button) findViewById(R.id.signupEmailButton);
         moveToSignInButton = (TextView) findViewById(R.id.main_SignInEmail);
-        facebookSignIn = (Button) findViewById(R.id.buttonFacebook);
-        googleSignIn = (Button) findViewById(R.id.buttonGoogle);
         //Declare a function that is called when the EmailSignUpButton is clicked
         EmailSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,39 +68,6 @@ public class MainActivity extends AppCompatActivity
             {
                 //Call a function that starts a new signIn activity and switches to it
                 moveToSignIn();
-            }
-        });
-        facebookSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Backendless.UserService.loginWithFacebook( MainActivity.this, new AsyncCallback<BackendlessUser>() {
-
-                    @Override
-                    public void handleResponse(BackendlessUser backendlessUser) {
-                        startActivity(new Intent(MainActivity.this, profilePage.class));
-                    }
-
-                    @Override
-                    public void handleFault(BackendlessFault backendlessFault) {
-                        Toast.makeText(MainActivity.this, backendlessFault.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
-        googleSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Backendless.UserService.loginWithGooglePlus( MainActivity.this, new AsyncCallback<BackendlessUser>() {
-                    @Override
-                    public void handleResponse(BackendlessUser backendlessUser) {
-                        startActivity(new Intent(MainActivity.this, extrainfo.class));
-                    }
-
-                    @Override
-                    public void handleFault(BackendlessFault backendlessFault) {
-                        Toast.makeText(MainActivity.this, backendlessFault.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
             }
         });
     }

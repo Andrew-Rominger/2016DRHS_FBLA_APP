@@ -82,61 +82,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="13dp"
         android:background="@drawable/mybutton"/>
-    <View
-        android:layout_width="115dp"
-        android:layout_height="4dp"
-        android:background="@android:color/darker_gray"
-        android:id="@+id/view"
-        android:layout_alignLeft="@+id/signInButton"
-        android:layout_alignStart="@+id/signInButton"
-        android:layout_alignTop="@+id/view2" />
-    <View
-        android:layout_width="115dp"
-        android:layout_height="4dp"
-        android:background="@android:color/darker_gray"
-        android:layout_below="@+id/signInButton"
-        android:layout_alignRight="@+id/signInButton"
-        android:layout_marginTop="31dp"
-        android:id="@+id/view2" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.FontPath"
-        android:text="OR"
-        android:textColor="#ffffff"
-        android:layout_marginTop="56dp"
-        android:id="@+id/textView2"
-        android:layout_alignTop="@id/signInButton"
-        android:layout_centerHorizontal="true" />
-    <Button
-        android:layout_width="265dp"
-        android:layout_height="35dp"
-        android:text="Sign in with Google"
-        android:textColor="#ffffff"
-        android:textAppearance="@style/TextAppearance.FontPath"
-        android:textSize="20sp"
-        android:id="@+id/googleSignIn"
-        android:textAllCaps="false"
-        android:layout_below="@+id/twitterSignIn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
-        android:background="@drawable/mybutton"/>
-    <Button
-        android:layout_width="265dp"
-        android:layout_height="35dp"
-        android:text="Sign in with Facebook"
-        android:textColor="#ffffff"
-        android:textAppearance="@style/TextAppearance.FontPath"
-        android:textSize="20sp"
-        android:id="@+id/twitterSignIn"
-        android:textAllCaps="false"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
-        android:background="@drawable/mybutton"/>
-
-    <ImageView
+        <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:textAppearance="@style/TextAppearance.FontPath"

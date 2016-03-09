@@ -81,8 +81,6 @@ public class signupEmail extends AppCompatActivity
                 Boolean passwordValid = Validator.isPasswordValid(signupEmail.this, password, passwordCheck);
                 String theDate = date.getText().toString();
 
-                theDate.replace("/", "");
-                theDate.replace("-", "");
 
                 if (util.shave(theDate) == null)
                 {
