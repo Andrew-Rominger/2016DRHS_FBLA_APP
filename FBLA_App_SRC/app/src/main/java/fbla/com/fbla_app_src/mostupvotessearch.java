@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.backendless.Backendless;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class mostupvotessearch extends AppCompatActivity {
 
@@ -32,16 +36,25 @@ public class mostupvotessearch extends AppCompatActivity {
     FrameLayout profile;
     RelativeLayout recent;
     RelativeLayout trending;
-    Post[] postsToBeLoaded = new Post[10];
+    ArrayList<Post> postsToBeDisplayed = new ArrayList<>();
+    ListView mainList;
+    ArrayAdapter<Post> adapter;
+    BackendlessDataQuery dataQuery = new BackendlessDataQuery();
+    QueryOptions qo = new QueryOptions();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        qo.addSortByOption("created DSC");
+        qo.setPageSize(10);
+        dataQuery.setQueryOptions(qo);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostupvotessearch);
 
         search = (FrameLayout) findViewById(R.id.profilepage_searchNav);
         add = (FrameLayout) findViewById(R.id.searchAdd);
         profile = (FrameLayout) findViewById(R.id.profilepage_profileNav);
+        mainList = (ListView) findViewById(R.id.upvoteListView);
         recent = (RelativeLayout) findViewById(R.id.recentFromUpvote);
         trending = (RelativeLayout) findViewById(R.id.trendingFromUpvote);
 
@@ -75,6 +88,7 @@ public class mostupvotessearch extends AppCompatActivity {
             }
         });
     }
+
     private String pictureImagePath = "";
     public void openBackCamera(int numCode, Context context)
     {
@@ -96,45 +110,20 @@ public class mostupvotessearch extends AppCompatActivity {
         i.putExtra("IP", pictureImagePath);
         startActivity(i);
     }
-    private void populateListView(int offset)
+
+    private void populateListView() throws InterruptedException
     {
-        BackendlessDataQuery dataQuery = new BackendlessDataQuery();
-        QueryOptions qo = new QueryOptions();
-        qo.addSortByOption("created DSC");
 
-        final ArrayList<Post> arPost = new ArrayList<Post>();
-        qo.setPageSize(10);
-        dataQuery.setQueryOptions(qo);
-
-        Backendless.Data.of(Post.class).find(dataQuery, new AsyncCallback<BackendlessCollection<Post>>() {
-            @Override
-            public void handleResponse(BackendlessCollection<Post> postBackendlessCollection)
-            {
-                List<Post> firstPage = postBackendlessCollection.getCurrentPage();
-                Iterator<Post> it = firstPage.iterator();
-                while(it.hasNext())
-                {
-                    Post post = it.next();
-                    arPost.add(post);
-                }
-                for(int i = 0;i < arPost.size();i++)
-                {
-                    postsToBeLoaded[i] = arPost.get(i);
-                }
-                postBackendlessCollection = postBackendlessCollection.nextPage();
-            }
-
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-
-            }
-        });
-
-
-
-
+        mainList.setAdapter(adapter);
 
     }
+    private void updateList()
+    {
+        adapter.notifyDataSetChanged();
+    }
+
+
+
 
 
 }
