@@ -93,6 +93,10 @@ public class profilePage extends AppCompatActivity{
             uploadCoverPhoto.setText("");
             showSpinner();
         }
+        else
+        {
+            hideSpinner();
+        }
         if(!(user.getProperty("profilePictureID") == null))
         {
             showSpinner();
@@ -106,6 +110,7 @@ public class profilePage extends AppCompatActivity{
         {
             hideSpinner();
         }
+
 
         if(!user.getProperty("Bio").equals("No Bio Set"))
         {

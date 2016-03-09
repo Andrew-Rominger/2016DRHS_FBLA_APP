@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 public class mostupvotessearch extends AppCompatActivity {
 
@@ -39,14 +37,9 @@ public class mostupvotessearch extends AppCompatActivity {
     ArrayList<Post> postsToBeDisplayed = new ArrayList<>();
     ListView mainList;
     ArrayAdapter<Post> adapter;
-    BackendlessDataQuery dataQuery = new BackendlessDataQuery();
-    QueryOptions qo = new QueryOptions();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        qo.addSortByOption("created DSC");
-        qo.setPageSize(10);
-        dataQuery.setQueryOptions(qo);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostupvotessearch);
@@ -57,6 +50,7 @@ public class mostupvotessearch extends AppCompatActivity {
         mainList = (ListView) findViewById(R.id.upvoteListView);
         recent = (RelativeLayout) findViewById(R.id.recentFromUpvote);
         trending = (RelativeLayout) findViewById(R.id.trendingFromUpvote);
+        adapter = new ArrayAdapter<Post>(this, R.layout.layout_listview, postsToBeDisplayed);
 
         recent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +114,33 @@ public class mostupvotessearch extends AppCompatActivity {
     private void updateList()
     {
         adapter.notifyDataSetChanged();
+    }
+    public void getFirstPage()
+    {
+        AsyncCallback<BackendlessCollection<Post>> callback = new AsyncCallback<BackendlessCollection<Post>>() {
+            @Override
+            public void handleResponse(BackendlessCollection<Post> postBackendlessCollection)
+            {
+                List<Post> firstPage = postBackendlessCollection.getCurrentPage();
+                Iterator<Post> it = firstPage.iterator();
+                while (it.hasNext())
+                {
+                    Post post = it.next();
+                    postsToBeDisplayed.add(post);
+                }
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+
+            }
+        };
+        int pageSize = 10;
+        BackendlessDataQuery query = new BackendlessDataQuery();
+        QueryOptions qo = new QueryOptions();
+        qo.addSortByOption("upvotes DSC");
+        query.setPageSize(pageSize);
+        Backendless.Data.of(Post.class).find(query,callback);
     }
 
 
