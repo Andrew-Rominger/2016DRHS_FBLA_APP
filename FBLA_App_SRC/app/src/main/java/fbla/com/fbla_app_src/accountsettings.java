@@ -72,7 +72,7 @@ public class accountsettings extends AppCompatActivity {
         privatePolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(accountsettings.this, privatepolicy.class));
             }
         });
         goBack.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +85,7 @@ public class accountsettings extends AppCompatActivity {
         terms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(accountsettings.this, termsandconditions.class));
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

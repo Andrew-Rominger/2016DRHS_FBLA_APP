@@ -28,7 +28,8 @@
             android:layout_centerHorizontal="true"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:layout_alignParentStart="false" />
+            android:layout_alignParentStart="false"
+            android:textAppearance="@style/TextAppearance.FontPath"/>
 
         <ImageView
             android:layout_width="50dp"
@@ -66,7 +67,8 @@
                     android:text="Posts"
                     android:id="@+id/profilepage_postsText"
                     android:textColor="#ffffff"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:textAppearance="@style/TextAppearance.FontPath"/>
 
 
         </FrameLayout>
@@ -87,7 +89,8 @@
                     android:text="Likes"
                     android:id="@+id/profilepage_likesText"
                     android:textColor="#ffffff"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:textAppearance="@style/TextAppearance.FontPath"/>
 
 
             </FrameLayout>
@@ -238,7 +241,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="@style/TextAppearance.FontPath"
                     android:text="You currently have no bio. Tap to edit Bio"
                     android:id="@+id/profilepage_bio"
                     android:textSize="31dp"
@@ -251,7 +254,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="@style/TextAppearance.FontPath"
                 android:text="Tap to add cover photo"
                 android:textStyle="italic"
                 android:id="@+id/addCoverPhoto"

@@ -63,7 +63,8 @@
                 android:layout_alignTop="@+id/upVoteTvNum"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,7 +75,8 @@
                 android:layout_toLeftOf="@+id/upVoteTv"
                 android:layout_toStartOf="@+id/upVoteTv"
                 android:layout_marginRight="5dp"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
         </RelativeLayout>
         <Space
             android:layout_width="0dp"
@@ -98,7 +100,8 @@
                 android:layout_alignTop="@+id/downVoteTvNum"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="5dp"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,7 +112,8 @@
                 android:layout_toLeftOf="@+id/downVoteTv"
                 android:layout_toStartOf="@+id/downVoteTv"
                 android:layout_marginRight="5dp"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
         </RelativeLayout>
         <Space
             android:layout_width="0dp"
@@ -133,7 +137,8 @@
                 android:layout_alignTop="@+id/commentsTvNum"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="5dp"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -144,7 +149,8 @@
                 android:layout_toLeftOf="@+id/commentsTv"
                 android:layout_toStartOf="@+id/commentsTv"
                 android:layout_marginRight="5dp"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
         </RelativeLayout>
         <Space
             android:layout_width="0dp"
@@ -302,7 +308,8 @@
                         android:layout_alignParentStart="true"
                         android:textColor="#EA6C55"
                         android:textSize="15sp"
-                        android:layout_marginTop="5dp" />
+                        android:layout_marginTop="5dp"
+                        android:textAppearance="@style/TextAppearance.FontPath"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -314,7 +321,8 @@
                         android:layout_alignParentStart="true"
                         android:textColor="#000000"
                         android:textSize="15sp"
-                        android:layout_marginTop="5dp" />
+                        android:layout_marginTop="5dp"
+                        android:textAppearance="@style/TextAppearance.FontPath"/>
 
                     <ImageView
                         android:layout_width="wrap_content"

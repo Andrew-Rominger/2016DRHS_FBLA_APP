@@ -26,12 +26,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="edit profile"
                 android:id="@+id/editprofiletextview"
                 android:layout_gravity="center"
                 android:textColor="#fff"
-                android:textSize="35sp" />
+                android:textSize="35sp"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
 
             <ImageView
                 android:layout_width="20dp"
@@ -62,7 +62,8 @@
                 app:riv_oval="false"
                 android:layout_below="@+id/addCoverPhoto"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="34dp" />
+                android:layout_marginTop="34dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +72,8 @@
                 android:id="@+id/textView13"
                 android:layout_below="@+id/imageView14"
                 android:layout_centerHorizontal="true"
-                android:textColor="#EA6C55" />
+                android:textColor="#EA6C55"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -95,7 +97,8 @@
                     android:text="Name"
                     android:id="@+id/textView8"
                     android:layout_gravity="center"
-                    android:textColor="#fff" />
+                    android:textColor="#fff"
+                    android:textAppearance="@style/TextAppearance.FontPath"/>
             </FrameLayout>
 
             <EditText
@@ -105,7 +108,8 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/frameLayout8"
                 android:layout_toEndOf="@+id/frameLayout8"
-                android:background="@android:color/transparent" />
+                android:background="@android:color/transparent"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
 
         </RelativeLayout>
 
@@ -140,7 +144,8 @@
                     android:text="Handle"
                     android:id="@+id/textView11"
                     android:layout_gravity="center"
-                    android:textColor="#fff" />
+                    android:textColor="#fff"
+                    android:textAppearance="@style/TextAppearance.FontPath"/>
             </FrameLayout>
 
             <EditText
@@ -150,7 +155,8 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/frameLayout9"
                 android:layout_toEndOf="@+id/frameLayout9"
-                android:background="@android:color/transparent" />
+                android:background="@android:color/transparent"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
         </RelativeLayout>
 
         <ImageView
@@ -184,7 +190,8 @@
                     android:text="Bio"
                     android:id="@+id/textView12"
                     android:layout_gravity="center"
-                    android:textColor="#fff" />
+                    android:textColor="#fff"
+                    android:textAppearance="@style/TextAppearance.FontPath"/>
             </FrameLayout>
 
             <EditText
@@ -197,7 +204,8 @@
                 android:layout_toRightOf="@+id/frameLayout10"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:background="@android:color/transparent" />
+                android:background="@android:color/transparent"
+                android:textAppearance="@style/TextAppearance.FontPath"/>
 
         </RelativeLayout>
 
