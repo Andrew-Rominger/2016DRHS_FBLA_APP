@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This code represents everything included within this xml file -->
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".signupEmail">
-
-
-
+    <!--This code initiates the content from the main layout file to include its content inside this layout file -->
     <include layout="@layout/content_signupemail" />
-
-
 </android.support.design.widget.CoordinatorLayout>

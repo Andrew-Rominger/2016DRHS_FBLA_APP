@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This code represents everything included within this xml file -->
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,14 +7,12 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="fbla.com.fbla_app_src.privatepolicy">
-
+    <!--Initiates the theme of the xml layout file -->
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
     </android.support.design.widget.AppBarLayout>
-
+    <!--This code initiates the content from the main layout file to include its content inside this layout file -->
     <include layout="@layout/content_privatepolicy" />
-
 </android.support.design.widget.CoordinatorLayout>

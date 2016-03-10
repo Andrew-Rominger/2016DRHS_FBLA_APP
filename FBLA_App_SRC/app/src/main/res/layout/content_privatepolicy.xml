@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This initiates the overall layout of the page -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +9,7 @@
     tools:context="fbla.com.fbla_app_src.privatepolicy"
     tools:showIn="@layout/activity_privatepolicy"
     android:orientation="vertical">
-
+    <!--This section of code represents the heading of the page as well as include the button to take the user back to the account settings page -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -35,7 +36,7 @@
         android:soundEffectsEnabled="false"
         android:layout_marginLeft="20dp" />
     </FrameLayout>
-
+    <!--This section displays the private policy of the application -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"

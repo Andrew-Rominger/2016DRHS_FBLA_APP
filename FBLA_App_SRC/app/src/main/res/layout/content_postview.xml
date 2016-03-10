@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This initiates the overall layout of the page -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,11 +9,9 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="fbla.com.fbla_app_src.profilePage"
     tools:showIn="@layout/activity_postview"
-    android:fillViewport="true"
-    >
+    android:fillViewport="true">
 
-
-
+    <!--This section of code represents the title of the page and sets it to the username of the user that posted the picture displayed on the page  -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -31,15 +30,13 @@
             android:layout_alignParentStart="false" />
 
     </RelativeLayout>
-
+    <!--This section of code represents the amount of upvotes, downvotes and comments on the post -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:id="@+id/profilepage_tableRow"
-        android:layout_below="@+id/usernameId"
-
-        >
+        android:layout_below="@+id/usernameId">
 
         <Space
             android:layout_width="0dp"
@@ -158,8 +155,7 @@
             android:layout_weight=".05"
             />
     </LinearLayout>
-
-
+    <!--This section of code represents the navigation of the page -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -174,9 +170,7 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:id="@+id/profilepage_botTableRow"
-
             android:background="#7D8C93">
-
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -259,7 +253,7 @@
         </LinearLayout>
 
     </RelativeLayout>
-
+    <!--This section of code represents the picture as well as gives the user the ability to either upvote, downvote, report, or comment on the post -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This initiates the overall layout of the page -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
+    <!--This section of code represents the Text that asks if the user wants to delete their account -->
     <TextView
         android:id="@+id/dialog_info"
         android:layout_width="match_parent"
@@ -11,12 +12,11 @@
         android:padding="10dp"
         android:text="Are You sure you wish to delete your account?"
         android:textAppearance="@style/TextAppearance.FontPath"/>
-
+    <!--This section of code represents two buttons that, when pressed, lets the user delete his account or cancel the request -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/dialog_info">
-
         <Button
             android:id="@+id/dialog_cancel"
             android:layout_width="0dp"

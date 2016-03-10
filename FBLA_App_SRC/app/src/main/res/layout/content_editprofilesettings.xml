@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This initiates the overall layout of the page -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +8,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="fbla.com.fbla_app_src.editprofilesettings"
     tools:showIn="@layout/activity_editprofilesettings">
-
+    <!--This surrounds the content in a vertical style layout -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -15,14 +16,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
+        <!--This section of code represent the top section of the page  -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight=".075"
             android:background="#EA6C55">
-
+            <!--This section of code repersent the edit Profile heading  -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
                 android:textColor="#fff"
                 android:textSize="35sp"
                 android:textAppearance="@style/TextAppearance.FontPath"/>
-
+            <!--This section of code represents the Images that, when clicked, takes you to back to the account settings page  -->
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -42,12 +43,12 @@
                 android:soundEffectsEnabled="false"
                 android:layout_marginLeft="20dp" />
         </FrameLayout>
-
+        <!--This section of code represent the layout of the rounded image and the Text that allows you to edit your profile photo  -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".2">
-
+            <!--  -->
             <com.makeramen.roundedimageview.RoundedImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/editProfPage_Picture"
@@ -64,7 +65,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="34dp"
                 />
-
+            <!--  -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,7 +76,7 @@
                 android:textColor="#EA6C55"
                 android:textAppearance="@style/TextAppearance.FontPath"/>
         </RelativeLayout>
-
+        <!--This section is a text field that allows the user to edit his/her name  -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -112,7 +113,7 @@
                 android:textAppearance="@style/TextAppearance.FontPath"/>
 
         </RelativeLayout>
-
+        <!--This section of code represents space on the app  -->
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
@@ -121,7 +122,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_weight=".025" />
-
+        <!--This section of code allows the user to edit his/her username  -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -158,7 +159,7 @@
                 android:background="@android:color/transparent"
                 android:textAppearance="@style/TextAppearance.FontPath"/>
         </RelativeLayout>
-
+        <!--This section of code represents space on the app  -->
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -168,7 +169,7 @@
             android:layout_alignParentStart="true"
             android:layout_weight=".025"
             android:layout_gravity="center_horizontal" />
-
+        <!--This section of code allows the user to edit his/her bio  -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -208,7 +209,7 @@
                 android:textAppearance="@style/TextAppearance.FontPath"/>
 
         </RelativeLayout>
-
+        <!--This section of code contains the button that updates the user profile with text inside each text field. The user is then taken to the profile page  -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -228,7 +229,5 @@
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
-
     </LinearLayout>
-
 </RelativeLayout>

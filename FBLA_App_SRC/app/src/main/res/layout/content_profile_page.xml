@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This initiates the overall layout of the page -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,11 +9,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="fbla.com.fbla_app_src.profilePage"
     tools:showIn="@layout/activity_profile_page"
-    android:fillViewport="true"
-    >
-
-
-
+    android:fillViewport="true">
+    <!--This section of code represents the title of the page as well as includes the Image View that, when pressed, takes the user to the account settings page -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -40,16 +38,13 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
-
+    <!--This section of code represents the amount of saves and followers that the user has -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:id="@+id/profilepage_tableRow"
-        android:layout_below="@+id/usernameId"
-
-        >
-
+        android:layout_below="@+id/usernameId">
 
         <FrameLayout
                 android:layout_width="0dp"
@@ -73,7 +68,7 @@
 
         </FrameLayout>
 
-            <FrameLayout
+        <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="#1DBCBA"
@@ -98,8 +93,7 @@
 
 
     </LinearLayout>
-
-
+    <!--This section of code represents the navigation of the page -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -199,7 +193,7 @@
         </LinearLayout>
 
     </RelativeLayout>
-
+    <!--This section of code represents user's profile picture and back ground -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -264,7 +258,6 @@
 
 
     </RelativeLayout>
-
 
 </RelativeLayout>
 
