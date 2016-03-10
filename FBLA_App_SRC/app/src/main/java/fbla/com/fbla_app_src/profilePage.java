@@ -51,6 +51,7 @@ public class profilePage extends AppCompatActivity{
     TextView uploadCoverPhoto;
     DownloadImageClass downloadProf = new DownloadImageClass();
     DownloadImageClass downloadCover = new DownloadImageClass();
+    String pictureImagePath = "";
 
 
 
@@ -97,6 +98,7 @@ public class profilePage extends AppCompatActivity{
         {
             hideSpinner();
         }
+
         if(!(user.getProperty("profilePictureID") == null))
         {
             showSpinner();
@@ -169,7 +171,7 @@ public class profilePage extends AppCompatActivity{
         {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 3);
+                openBackCamera(3,profilePage.this);
             }
         });
         profile.setOnClickListener(new View.OnClickListener() {
@@ -182,109 +184,104 @@ public class profilePage extends AppCompatActivity{
         }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, final Intent data)
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == 1) {
-            File imgFile = new  File(pictureImagePath);
-            //Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
-            Matrix matrix = new Matrix();
-            matrix.setRotate(90);
+            if (requestCode == 1) {
+                File imgFile = new File(pictureImagePath);
+                //Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
+                Matrix matrix = new Matrix();
+                matrix.setRotate(90);
 
-            final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
-            uploadImage.setImageDrawable(new BitmapDrawable(getResources(), result));
-            Backendless.Persistence.save(profPic, new AsyncCallback<Picture>() {
-                @Override
-                public void handleResponse(Picture picture)
-                {
-                    util.uploadImage(result, picture, profilePage.this);
-                    user.setProperty("profilePictureID", picture.getObjectId());
+                final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+                uploadImage.setImageDrawable(new BitmapDrawable(getResources(), result));
+                Backendless.Persistence.save(profPic, new AsyncCallback<Picture>() {
+                    @Override
+                    public void handleResponse(Picture picture) {
+                        util.uploadImage(result, picture, profilePage.this);
+                        user.setProperty("profilePictureID", picture.getObjectId());
 
-                    Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>()
-                    {
-                        @Override
-                        public void handleResponse(BackendlessUser backendlessUser) {
-                            Log.i("setImageD", "SetD");
-                        }
+                        Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
+                            @Override
+                            public void handleResponse(BackendlessUser backendlessUser)
+                            {
+                                Log.i("setImageD", "SetD");
+                            }
 
-                        @Override
-                        public void handleFault(BackendlessFault backendlessFault) {
+                            @Override
+                            public void handleFault(BackendlessFault backendlessFault) {
 
-                        }
-                    });
+                            }
+                        });
 
-                }
+                    }
 
-                @Override
-                public void handleFault(BackendlessFault backendlessFault) {
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault) {
 
-                }
-            });
-        }
-        else if(requestCode == 2)
-        {
-            File imgFile = new  File(pictureImagePath);
-            Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
-            Matrix matrix = new Matrix();
-            matrix.setRotate(90);
-            final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+                    }
+                });
+            } else if (requestCode == 2) {
+                File imgFile = new File(pictureImagePath);
+                Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
+                Matrix matrix = new Matrix();
+                matrix.setRotate(90);
+                final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
 
-            bckg.setBackground(new BitmapDrawable(getResources(), result));
+                bckg.setBackground(new BitmapDrawable(getResources(), result));
 
-            Backendless.Persistence.save(coverPhoto, new AsyncCallback<Picture>()
+                Backendless.Persistence.save(coverPhoto, new AsyncCallback<Picture>() {
+                    @Override
+                    public void handleResponse(Picture picture) {
+                        Log.i("LOL", "MADE IT BRO");
+                        util.uploadImage(result, picture, profilePage.this);
+                        user.setProperty("coverPhotoID", picture.getObjectId());
+                        Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
+                            @Override
+                            public void handleResponse(BackendlessUser backendlessUser) {
+                                Log.i("setImageD", "hjfdshjkfdhjkdfsdfsjkh");
+                            }
+
+                            @Override
+                            public void handleFault(BackendlessFault backendlessFault) {
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault) {
+
+                    }
+                });
+            } else if (requestCode == 3)
             {
-                @Override
-                public void handleResponse(Picture picture)
-                {
-                    Log.i("LOL", "MADE IT BRO");
-                    util.uploadImage(result, picture, profilePage.this);
-                    user.setProperty("coverPhotoID", picture.getObjectId());
-                    Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>()
-                    {
-                        @Override
-                        public void handleResponse(BackendlessUser backendlessUser)
-                        {
-                            Log.i("setImageD", "hjfdshjkfdhjkdfsdfsjkh");
-                        }
-
-                        @Override
-                        public void handleFault(BackendlessFault backendlessFault)
-                        {
-                        }
-                    });
-
-                }
-
-                @Override
-                public void handleFault(BackendlessFault backendlessFault) {
-
-                }
-            });
+                Intent i = new Intent(profilePage.this,uploadPostActivity.class);
+                i.putExtra("passedPictureData", data);
+                i.putExtra("IP", pictureImagePath);
+                startActivity(i);
+            }
         }
-        else if(requestCode == 3)
-        {
-            Intent i = new Intent(profilePage.this,uploadPostActivity.class);
-            i.putExtra("passedPictureData", data);
-            i.putExtra("IP", pictureImagePath);
-            startActivity(i);
-        }
-    }
+
     public static void showSpinner(){loadingSpinner.setVisibility(View.VISIBLE);}
     public static void hideSpinner(){loadingSpinner.setVisibility(View.INVISIBLE);}
 
-    private String pictureImagePath = "";
+
     public void openBackCamera(int numCode, Context context)
     {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = timeStamp + ".png";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
+        Log.i("path1",storageDir.getAbsolutePath());
+        Log.i("path2", imageFileName);
         pictureImagePath = storageDir.getAbsolutePath() + "/" + imageFileName;
+        Log.i("path3", pictureImagePath);
         File file = new File(pictureImagePath);
         Uri outputFileUri = Uri.fromFile(file);
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);

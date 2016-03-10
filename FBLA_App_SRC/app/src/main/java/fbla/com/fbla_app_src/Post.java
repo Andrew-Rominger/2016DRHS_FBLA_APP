@@ -9,14 +9,23 @@ import java.util.Date;
  */
 public class Post
 {
-    private int NumFavorites;
-    private int NumDislikes;
-    private int NumLikes;
+    private int numFavorites;
+    private int numDislikes;
+    private int numLikes;
     private String Caption;
     private BackendlessUser userUploaded;
     private Picture pictureOnPost;
     private String objectId;
     private Date created;
+    private String pictureOID;
+
+    public String getPictureOID() {
+        return pictureOID;
+    }
+
+    public void setPictureOID(String pictureOID) {
+        this.pictureOID = pictureOID;
+    }
 
     public Date getCreated() {
         return created;
@@ -36,27 +45,27 @@ public class Post
     }
 
     public int getNumFavorites() {
-        return NumFavorites;
+        return numFavorites;
     }
 
     public void setNumFavorites(int numFavorites) {
-        NumFavorites = numFavorites;
+        numFavorites = numFavorites;
     }
 
     public int getNumDislikes() {
-        return NumDislikes;
+        return numDislikes;
     }
 
     public void setNumDislikes(int numDislikes) {
-        NumDislikes = numDislikes;
+        numDislikes = numDislikes;
     }
 
     public int getNumLikes() {
-        return NumLikes;
+        return numLikes;
     }
 
     public void setNumLikes(int numLikes) {
-        NumLikes = numLikes;
+        numLikes = numLikes;
     }
 
     public String getCaption() {
