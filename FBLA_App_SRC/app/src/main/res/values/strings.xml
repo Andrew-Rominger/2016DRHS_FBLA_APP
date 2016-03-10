@@ -66,4 +66,6 @@
     <string name="title_activity_trendingsearch">trending search</string>
     <string name="title_activity_recentsearch">recent search</string>
     <string name="title_activity_postview">post view</string>
+    <string name="title_activity_privatepolicy">private policy</string>
+    <string name="title_activity_termsandconditions">termsandconditions</string>
 </resources>

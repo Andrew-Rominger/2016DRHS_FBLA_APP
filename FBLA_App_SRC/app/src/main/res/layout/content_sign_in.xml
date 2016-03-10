@@ -96,7 +96,6 @@
         android:background="@android:color/darker_gray"
         android:layout_below="@+id/signInButton"
         android:layout_alignRight="@+id/signInButton"
-
         android:layout_marginTop="31dp"
         android:id="@+id/view2" />
 
@@ -106,7 +105,6 @@
         android:textAppearance="@style/TextAppearance.FontPath"
         android:text="OR"
         android:textColor="#ffffff"
-
         android:layout_marginTop="56dp"
         android:id="@+id/textView2"
         android:layout_alignTop="@id/signInButton"

@@ -15,13 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#60C6C7"
-        android:textAppearance="@style/TextAppearance.FontPath"
         android:text="Your Upvotes"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="#fff"
         android:gravity="center"
-        android:id="@+id/textView3" />
+        android:id="@+id/textView3"
+        android:textAppearance="@style/TextAppearance.FontPath"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"

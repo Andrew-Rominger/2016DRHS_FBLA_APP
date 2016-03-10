@@ -100,6 +100,14 @@
         <activity
             android:name=".postview"
             android:label="@string/title_activity_postview"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".privatepolicy"
+            android:label="@string/title_activity_privatepolicy"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".termsandconditions"
+            android:label="@string/title_activity_termsandconditions"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

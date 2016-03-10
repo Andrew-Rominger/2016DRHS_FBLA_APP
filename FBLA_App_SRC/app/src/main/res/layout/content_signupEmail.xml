@@ -164,7 +164,8 @@
         android:layout_centerHorizontal="true"
         android:textColor="#fff"
         android:textAlignment="center"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:textAppearance="@style/TextAppearance.FontPath"/>
 
 
 </RelativeLayout>
