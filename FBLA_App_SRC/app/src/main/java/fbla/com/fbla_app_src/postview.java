@@ -1,25 +1,15 @@
 package fbla.com.fbla_app_src;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.backendless.Backendless;
-import com.backendless.BackendlessCollection;
 import com.backendless.BackendlessUser;
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
 
 public class postview extends AppCompatActivity {
     // Declared global variables
@@ -58,11 +48,6 @@ public class postview extends AppCompatActivity {
         comments = (TextView) findViewById(R.id.commentsTv);
         downVotes = (TextView) findViewById(R.id.downVoteTv);
         upVotes = (TextView) findViewById(R.id.upVoteTv);
-
-
-
-
-
         //navigaion
         search.setOnClickListener(new View.OnClickListener() {
             @Override

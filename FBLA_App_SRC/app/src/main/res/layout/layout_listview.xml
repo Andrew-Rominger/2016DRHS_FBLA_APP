@@ -1,51 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--This initiates the overall layout of the page -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp">
-    <!--This section of code represents a place holder for the image that will be displayed representing a post -->
+
     <ImageView
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:id="@+id/item_listViewImage"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/placeholder"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="22dp"
         android:layout_marginStart="22dp" />
-    <!--This section of code represents the ability for the user to downvote a post -->
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/item_listUpvot"
-        android:src="@drawable/upvotes"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/item_listViewUpVote"
-        android:layout_alignEnd="@+id/item_listViewUpVote" />
-    <!--This section of code represents the number of upvotes the post has-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="UPVOTES"
-        android:id="@+id/item_listViewUpVote"
-        android:layout_below="@+id/item_listUpvot"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-    <!--This section of code represents the ability for the user to downvote a post-->
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listViewDownVote"
-        android:src="@drawable/downvotes"
-        android:layout_below="@+id/item_listViewUpVote"
-        android:layout_alignLeft="@+id/item_listUpvot"
-        android:layout_alignStart="@+id/item_listUpvot" />
-    <!--This section of code represents the caption of the post -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,4 +24,48 @@
         android:layout_toEndOf="@+id/item_listViewImage"
         android:layout_marginLeft="33dp"
         android:layout_marginStart="33dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_listUpvot"
+            android:foregroundGravity="center"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center"
+            android:src="@drawable/upvotes"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/listViewDownVote"
+            android:layout_alignStart="@+id/listViewDownVote" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="UPVOTES"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:id="@+id/item_listViewUpVote"
+            android:layout_alignBottom="@+id/item_listViewCaption" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listViewDownVote"
+            android:src="@drawable/downvotes"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center"
+            android:layout_toLeftOf="@+id/item_listViewUpVote"
+            android:layout_toStartOf="@+id/item_listViewUpVote" />
+
+    </LinearLayout>
 </RelativeLayout>

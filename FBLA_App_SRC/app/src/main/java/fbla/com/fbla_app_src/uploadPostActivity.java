@@ -33,7 +33,9 @@ public class uploadPostActivity extends AppCompatActivity {
     Picture image;
     Picture image2;
     EditText caption;
+    ImageView goBack;
     Button shareButton;
+    private String pictureImagePath = "";
 
     Bundle extras;
     @Override
@@ -45,22 +47,29 @@ public class uploadPostActivity extends AppCompatActivity {
         placeHolder = (ImageView) findViewById(R.id.placeholder);
         caption = (EditText) findViewById(R.id.uploadPost_Caption);
         shareButton = (Button) findViewById(R.id.uploadPost_shareButton);
+        goBack  = (ImageView) findViewById(R.id.uploadPost_goBackButton);
         post = new Post();
         image = new Picture();
-        extras = getIntent().getExtras();
-        if(extras.get("passedPictureData")!=null)
+        Intent i = getIntent();
+        extras = i.getExtras();
+        if(extras.get("IP") != null)
         {
-            data = (Intent) extras.get("passedPictureData");
             pictureImagePath = (String) extras.get("IP");
-
-            handleImage(data);
+            handleImage();
             post.setUserUploaded(user);
-            saveImage(data, uploadPostActivity.this, false);
+            saveImage(pictureImagePath, uploadPostActivity.this, false);
         }
         else
         {
             Log.i("ERROR:EXTRA NULL", "EXTRA WAS NULL");
         }
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(uploadPostActivity.this, profilePage.class));
+            }
+        });
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -98,29 +107,31 @@ public class uploadPostActivity extends AppCompatActivity {
         });
 
 
+
     }
-    private String pictureImagePath = "";
+
 
     @SuppressLint("NewApi")
-    public void handleImage(Intent data)
+    public void handleImage()
     {
-        File imgFile = new  File(pictureImagePath);
+        File imgFile = new File(pictureImagePath);
         Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
         Matrix matrix = new Matrix();
         matrix.setRotate(90);
-        final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
-        placeHolder.setImageDrawable(new BitmapDrawable(getResources(),result));
+        if(myBitmap !=null)
+        {
+            final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+            placeHolder.setImageDrawable(new BitmapDrawable(getResources(),result));
+        }
+
     }
 
-    public void saveImage(Intent data, Context context, Boolean isProfile)
+    public void saveImage(String imagePath, Context context, Boolean isProfile)
     {
-        final boolean isProfP = isProfile;
         final Context thisContext = context;
-        final Intent datathis = data;
-        String toReturn;
         final BackendlessUser user = Backendless.UserService.CurrentUser();
         if(isProfile)
         {
@@ -136,7 +147,32 @@ public class uploadPostActivity extends AppCompatActivity {
             @Override
             public void handleResponse(final Picture imagePassed)
             {
-                util.uploadImage(util.getBitmapFromData(datathis), imagePassed, thisContext);
+                File imgFile = new File(pictureImagePath);
+                Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
+                Thread tr = new Thread();
+
+                for(int i = 0;i<10;i++)
+                {
+                    if(myBitmap == null)
+                    {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                Matrix matrix = new Matrix();
+                matrix.setRotate(90);
+                final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+                util.uploadImage(result, imagePassed,uploadPostActivity.this);
                 Log.i("imagetest", image.getObjectId());
                 image.setObjectId(imagePassed.getObjectId());
                 Log.i("imagetest2", image.getObjectId());
@@ -145,6 +181,7 @@ public class uploadPostActivity extends AppCompatActivity {
                 image.setUserID(user.getUserId());
                 Log.i("imagetest4", image.getObjectId());
                 post.setPictureOnPost(image);
+                post.setPictureOID(imagePassed.getObjectId());
 
 
             }

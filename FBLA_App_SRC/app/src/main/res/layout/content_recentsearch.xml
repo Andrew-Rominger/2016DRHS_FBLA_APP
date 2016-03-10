@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--This initiates the overall layout of the page -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="fbla.com.fbla_app_src.recentsearch"
     tools:showIn="@layout/activity_recentsearch">
-    <!--This section of code represents the layout for this section of the application   -->
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -16,12 +15,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-        <!--This section of code represents the title of the page to the an image -->
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
-            android:layout_weight=".2"
+            android:layout_weight=".1"
             android:background="#C2C6C1">
 
             <ImageView
@@ -32,7 +31,7 @@
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/letsfindstuff" />
         </RelativeLayout>
-        <!--This section of code represents the different tabs that, when pressed, takes the user to a new amount of posts that are ordered by most upvoted or by if the posts are trending -->
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -88,13 +87,21 @@
                     android:src="@drawable/recentactivitywithtext" />
             </RelativeLayout>
         </LinearLayout>
-        <!--This section of code represents the section of the app that displays the most recent posts -->
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
-            android:layout_weight=".3"></RelativeLayout>
-        <!--This section of code represents the navigation of the application -->
+            android:layout_weight=".3">
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView_Recent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -184,5 +191,7 @@
             </LinearLayout>
 
         </RelativeLayout>
+
     </LinearLayout>
+
 </RelativeLayout>
