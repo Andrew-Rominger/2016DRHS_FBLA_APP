@@ -37,7 +37,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/item_listUpvot"
+            android:id="@+id/item_listViewUpvoteArrow"
             android:foregroundGravity="center"
             android:layout_marginRight="5dp"
             android:layout_gravity="center"
@@ -60,7 +60,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/listViewDownVote"
+            android:id="@+id/item_listViewDownVoteArrow"
             android:src="@drawable/downvotes"
             android:layout_alignParentTop="true"
             android:layout_marginRight="5dp"

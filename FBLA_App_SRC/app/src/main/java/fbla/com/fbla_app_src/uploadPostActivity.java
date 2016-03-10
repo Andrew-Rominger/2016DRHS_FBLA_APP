@@ -181,6 +181,7 @@ public class uploadPostActivity extends AppCompatActivity {
                 image.setUserID(user.getUserId());
                 Log.i("imagetest4", image.getObjectId());
                 post.setPictureOnPost(image);
+                post.setUserUploadedS(user.getProperty("userName").toString());
                 post.setPictureOID(imagePassed.getObjectId());
 
 

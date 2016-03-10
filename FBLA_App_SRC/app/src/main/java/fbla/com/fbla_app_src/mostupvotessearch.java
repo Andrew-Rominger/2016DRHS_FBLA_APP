@@ -192,21 +192,70 @@ public class mostupvotessearch extends AppCompatActivity {
             }
             final Post post = postsToBeDisplayed.get(position);
             ImageView iv = (ImageView) itemView.findViewById(R.id.item_listViewImage);
+            TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
+            final TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
+            ImageView upvoteArrow = (ImageView) itemView.findViewById(R.id.item_listViewUpvoteArrow);
+            ImageView downvoteArrow = (ImageView) itemView.findViewById(R.id.item_listViewDownVoteArrow);
             iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
                     Intent i = new Intent(mostupvotessearch.this, postview.class);
                     i.putExtra("postID", post.getObjectId());
+                    startActivity(i);
                 }
             });
-            TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
-            TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
+            upvoteArrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Log.i("C", "CLICKED");
+                    post.setNumLikes(post.getNumLikes() + 1);
+                    Backendless.Persistence.save(post, new AsyncCallback<Post>()
+                    {
+                        @Override
+                        public void handleResponse(Post post)
+                        {
+                            numlikes.setText(Integer.toString(post.getNumLikes()));
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault backendlessFault) {
+
+                        }
+                    });
+                }
+            });
+            downvoteArrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Log.i("C", "CLICKED");
+                    if(post.getNumLikes() > 0)
+                    {
+                        post.setNumDislikes(post.getNumDislikes() + 1 );
+                        Backendless.Data.save(post, new AsyncCallback<Post>() {
+                            @Override
+                            public void handleResponse(Post post)
+                            {
+
+                            }
+
+                            @Override
+                            public void handleFault(BackendlessFault backendlessFault) {
+
+                            }
+                        });
+                    }
+                }
+            });
             iv.setImageDrawable(mostupvotessearch.draw.get(position));
             tv.setText(post.getCaption());
             numlikes.setText(Integer.toString(post.getNumLikes()));
             return itemView;
             //return super.getView(position, convertView, parent);
         }
+
     }
+
 }
