@@ -27,7 +27,7 @@ import com.backendless.exceptions.BackendlessFault;
 import fbla.com.fbla_app_src.util;
 
 public class accountsettings extends AppCompatActivity {
-
+    // Declared global variables
     FrameLayout editProfile;
     FrameLayout changePassword;
     FrameLayout privatePolicy;

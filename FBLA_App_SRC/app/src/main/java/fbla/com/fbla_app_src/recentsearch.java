@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 public class recentsearch extends AppCompatActivity {
-
+    // Declared global variables
     FrameLayout search;
     FrameLayout add;
     FrameLayout profile;

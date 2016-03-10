@@ -7,5 +7,5 @@
     android:fitsSystemWindows="true"
     tools:context=".signupEmail">
     <!--This code initiates the content from the main layout file to include its content inside this layout file -->
-    <include layout="@layout/content_signupemail" />
+    <include layout="@layout/content_signupEmail" />
 </android.support.design.widget.CoordinatorLayout>

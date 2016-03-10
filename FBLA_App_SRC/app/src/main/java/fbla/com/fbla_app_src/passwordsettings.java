@@ -23,7 +23,7 @@ import fbla.com.fbla_app_src.util;
 
 
 public class passwordsettings extends AppCompatActivity {
-
+    // Declared global variables
     ImageView back;
     Button done;
     EditText currentPassword;

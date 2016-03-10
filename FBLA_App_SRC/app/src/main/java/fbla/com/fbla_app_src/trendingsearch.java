@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 public class trendingsearch extends AppCompatActivity {
-
+    // Declared global variables
     FrameLayout search;
     FrameLayout add;
     FrameLayout profile;
@@ -42,7 +42,7 @@ public class trendingsearch extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        //navigaion
+        //navigation on click listeners
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class mostupvotessearch extends AppCompatActivity {
-
+    // Declared global variables
     FrameLayout search;
     FrameLayout add;
     FrameLayout profile;

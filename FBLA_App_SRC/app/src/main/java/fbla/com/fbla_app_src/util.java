@@ -25,6 +25,7 @@ import java.util.ArrayList;
  */
 public class util
 {
+    // Declared global variables
     static Picture image;
     static String src;
     static Bitmap imageBmap;

@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class privatepolicy extends AppCompatActivity {
-
+    // Declared global variables
     ImageView button;
 
     @Override

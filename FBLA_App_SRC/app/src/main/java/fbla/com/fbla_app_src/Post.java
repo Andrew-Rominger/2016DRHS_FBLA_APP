@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class Post
 {
+    // Declared global variables
     private int NumFavorites;
     private int NumDislikes;
     private int NumLikes;

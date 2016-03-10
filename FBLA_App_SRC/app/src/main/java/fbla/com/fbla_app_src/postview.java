@@ -22,7 +22,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
 public class postview extends AppCompatActivity {
-
+    // Declared global variables
     TextView upVotes;
     TextView downVotes;
     TextView comments;

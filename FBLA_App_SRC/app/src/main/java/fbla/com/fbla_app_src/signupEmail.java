@@ -21,6 +21,7 @@ import java.util.Date;
 
 public class signupEmail extends AppCompatActivity
 {
+    // Declared global variables
     Button goBack;
     EditText emailInput;
     EditText passwordInput;

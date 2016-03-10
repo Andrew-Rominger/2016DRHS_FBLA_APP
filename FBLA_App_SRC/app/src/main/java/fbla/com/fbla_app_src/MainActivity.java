@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
     //Called when activity is created
     @Override
     protected void onCreate(Bundle savedInstanceState)

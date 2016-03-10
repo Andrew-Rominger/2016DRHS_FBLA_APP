@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This initiates the overall layout of the page -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +13,7 @@
     tools:context=".signupEmail"
     tools:showIn="@layout/activity_login"
     android:background="@drawable/emailsignup_bckg">
-
+    <!--This section of code represents the Image view, that when pressed, takes the user back to the first page of the app -->
     <ImageView
         android:layout_width="wrap_content"
         android:textAppearance="@style/TextAppearance.FontPath"
@@ -21,7 +22,7 @@
         android:src="@drawable/whitesuit"
         android:layout_below="@+id/signupEmail_gobackButton"
         android:layout_centerHorizontal="true" />
-
+    <!--This section of code represents the name text field -->
     <EditText
         android:layout_width="wrap_content"
         android:minWidth="300dp"
@@ -37,7 +38,7 @@
         android:layout_above="@+id/dob"
         android:layout_alignLeft="@+id/dob"
         android:layout_alignStart="@+id/dob" />
-
+    <!--This section of code represents the date of birth text field -->
     <EditText
         android:layout_width="wrap_content"
         android:minWidth="300dp"
@@ -53,7 +54,7 @@
         android:layout_above="@+id/signupEmail_emailField"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp" />
-
+    <!--This section of code represents the email text field -->
     <EditText
     android:layout_width="wrap_content"
         android:minWidth="300dp"
@@ -69,7 +70,7 @@
     android:layout_centerVertical="true"
     android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp" />
-
+    <!--This section of code represents the username text field -->
     <EditText
         android:layout_width="300dp"
         android:layout_height="40dp"
@@ -86,6 +87,7 @@
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/signupEmail_emailField"
         android:layout_alignStart="@+id/signupEmail_emailField" />
+    <!--This section of code represents the password text field-->
     <EditText
         android:layout_width="300dp"
         android:layout_height="40dp"
@@ -100,6 +102,7 @@
         android:background="@drawable/mybutton2"
         android:layout_alignLeft="@+id/signupEmail_userName"
         android:layout_alignStart="@+id/signupEmail_userName" />
+    <!--This section of code represents the other password field meant to check -->
     <EditText
         android:layout_width="300dp"
         android:layout_height="40dp"
@@ -114,9 +117,7 @@
         android:background="@drawable/mybutton2"
         android:layout_below="@+id/signupEmail_password"
         android:layout_centerHorizontal="true" />
-
-
-
+    <!--This section of code represents the button that takes the text from all of the above fields and creates a user -->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -127,23 +128,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:textColor="#fff" />
-
-
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show password"
-        android:textAppearance="@style/TextAppearance.FontPath"
-        android:id="@+id/shwoPW"
-        android:visibility="invisible"
-
-        android:checked="false"
-        android:textSize="13sp"
-        android:layout_alignBottom="@+id/signUp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+    <!--This section of code represents the Button that moves the user back to the title page-->
     <Button
         android:layout_width="20dp"
         android:layout_height="30dp"
@@ -154,7 +139,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
+    <!--This section of code represents text talking about terms and conditions-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -166,6 +151,4 @@
         android:textAlignment="center"
         android:textSize="13sp"
         android:textAppearance="@style/TextAppearance.FontPath"/>
-
-
 </RelativeLayout>

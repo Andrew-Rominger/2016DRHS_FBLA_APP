@@ -24,6 +24,7 @@ import com.backendless.exceptions.BackendlessFault;
 import java.io.File;
 
 public class uploadPostActivity extends AppCompatActivity {
+    // Declared global variables
     Post post;
     BackendlessUser user;
     ImageView placeHolder;

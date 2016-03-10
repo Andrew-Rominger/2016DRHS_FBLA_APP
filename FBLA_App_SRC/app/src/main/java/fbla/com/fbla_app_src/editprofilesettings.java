@@ -17,7 +17,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 public class editprofilesettings extends AppCompatActivity {
-
+    // Declared global variables
     EditText name;
     EditText handle;
     EditText bio;

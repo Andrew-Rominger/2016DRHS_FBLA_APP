@@ -33,7 +33,7 @@ import java.util.Date;
 
 @SuppressLint("NewApi")
 public class profilePage extends AppCompatActivity{
-
+    // Declared global variables
     BackendlessUser user;
     TextView userName;
     ImageView uploadImage;

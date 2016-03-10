@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class termsandconditions extends AppCompatActivity {
-
+    // Declared global variables
     ImageView button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
