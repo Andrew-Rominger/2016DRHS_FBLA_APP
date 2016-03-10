@@ -61,11 +61,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".yourPosts"
-            android:label="@string/title_activity_your_posts"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".uploadPostActivity"
             android:label="@string/title_activity_upload_post"
             android:theme="@style/AppTheme.NoActionBar" />

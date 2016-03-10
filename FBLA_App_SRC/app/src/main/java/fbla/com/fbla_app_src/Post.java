@@ -18,9 +18,20 @@ public class Post
     private String objectId;
     private Date created;
     private String pictureOID;
+    private String userUploadedS;
 
     public String getPictureOID() {
         return pictureOID;
+    }
+
+    public String getUserUploadedS()
+    {
+        return userUploadedS;
+    }
+
+    public void setUserUploadedS(String userUploadedS)
+    {
+        this.userUploadedS = userUploadedS;
     }
 
     public void setPictureOID(String pictureOID) {
@@ -49,24 +60,28 @@ public class Post
     }
 
     public void setNumFavorites(int numFavorites) {
-        numFavorites = numFavorites;
+        this.numFavorites = numFavorites;
+    }
+
+    public void setNumDislikes(int numDislikes) {
+        this.numDislikes = numDislikes;
+    }
+
+    public void setNumLikes(int numLikes) {
+        this.numLikes = numLikes;
     }
 
     public int getNumDislikes() {
         return numDislikes;
     }
 
-    public void setNumDislikes(int numDislikes) {
-        numDislikes = numDislikes;
-    }
+
 
     public int getNumLikes() {
         return numLikes;
     }
 
-    public void setNumLikes(int numLikes) {
-        numLikes = numLikes;
-    }
+
 
     public String getCaption() {
         return Caption;

@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User_Name"
-            android:id="@+id/userNameTv"
+            android:id="@+id/postViewUserName"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:textColor="#ffffff"
@@ -57,7 +57,7 @@
                 android:text="upvotes"
                 android:id="@+id/upVoteTv"
                 android:textColor="#ffffff"
-                android:layout_alignTop="@+id/upVoteTvNum"
+                android:layout_alignTop="@+id/postViewUpvote"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="10dp"
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:id="@+id/upVoteTvNum"
+                android:id="@+id/postViewUpvote"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/upVoteTv"
                 android:layout_toStartOf="@+id/upVoteTv"
@@ -94,7 +94,7 @@
                 android:text="downvotes"
                 android:id="@+id/downVoteTv"
                 android:textColor="#ffffff"
-                android:layout_alignTop="@+id/downVoteTvNum"
+                android:layout_alignTop="@+id/postViewDownvote"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="5dp"
@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:id="@+id/downVoteTvNum"
+                android:id="@+id/postViewDownvote"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/downVoteTv"
                 android:layout_toStartOf="@+id/downVoteTv"
@@ -131,7 +131,7 @@
                 android:text="comments"
                 android:id="@+id/commentsTv"
                 android:textColor="#ffffff"
-                android:layout_alignTop="@+id/commentsTvNum"
+                android:layout_alignTop="@+id/postViewComment"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="5dp"
@@ -141,7 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:id="@+id/commentsTvNum"
+                android:id="@+id/postViewComment"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/commentsTv"
                 android:layout_toStartOf="@+id/commentsTv"
@@ -184,11 +184,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/profilepage_addNav"
+                android:layout_toLeftOf="@+id/postViewAdd"
                 android:layout_weight=".10"
                 android:foregroundGravity="right"
-
-                android:id="@+id/profilepage_searchNav">
+                android:id="@+id/postViewSearch">
 
                 <ImageView
                     android:layout_width="50dp"
@@ -209,7 +208,7 @@
                 android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
                 android:layout_weight=".10"
-                android:id="@+id/profilepage_addPosNav">
+                android:id="@+id/postViewAdd">
 
 
                 <ImageView
@@ -226,9 +225,9 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-
                 android:layout_weight=".10"
-                android:id="@+id/profilepage_profileNav">
+                android:id="@+id/postViewProfile"
+                >
 
                 <ImageView
                     android:layout_width="50dp"
@@ -296,7 +295,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="User_Name"
-                        android:id="@+id/userNameBelowTv"
+                        android:id="@+id/postViewUserPosted"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
@@ -309,8 +308,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Caption"
-                        android:id="@+id/captionTv"
-                        android:layout_below="@+id/userNameBelowTv"
+                        android:id="@+id/postViewCaption"
+                        android:layout_below="@+id/postViewUserPosted"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:textColor="#000000"
@@ -321,7 +320,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/reportIv"
+                        android:id="@+id/postViewReport"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
@@ -331,30 +330,30 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/commentsIv"
+                        android:id="@+id/postViewCommentButton"
                         android:layout_alignParentTop="true"
-                        android:layout_toLeftOf="@+id/reportIv"
-                        android:layout_toStartOf="@+id/reportIv"
+                        android:layout_toLeftOf="@+id/postViewReport"
+                        android:layout_toStartOf="@+id/postViewReport"
                         android:src="@drawable/comments"
                         android:layout_marginLeft="5dp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/downvoteIv"
+                        android:id="@+id/postViewDownvoteButton"
                         android:layout_alignParentTop="true"
-                        android:layout_toLeftOf="@+id/commentsIv"
-                        android:layout_toStartOf="@+id/commentsIv"
+                        android:layout_toLeftOf="@+id/postViewCommentButton"
+                        android:layout_toStartOf="@+id/postViewCommentButton"
                         android:src="@drawable/downvotes"
                         android:layout_marginLeft="5dp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/upvotesIv"
+                        android:id="@+id/postViewUpvoteButton"
                         android:layout_alignParentTop="true"
-                        android:layout_toLeftOf="@+id/downvoteIv"
-                        android:layout_toStartOf="@+id/downvoteIv"
+                        android:layout_toLeftOf="@+id/postViewDownvoteButton"
+                        android:layout_toStartOf="@+id/postViewDownvoteButton"
                         android:src="@drawable/upvotes" />
 
                 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
@@ -46,7 +47,6 @@ public class signupEmail extends AppCompatActivity
         //Buttons, images
         goBack = (Button) findViewById(R.id.signupEmail_gobackButton);
         signUp = (Button) findViewById(R.id.signUp);
-        showPW = (CheckBox) findViewById(R.id.shwoPW);
         emailInput = (EditText) findViewById(R.id.signupEmail_emailField);
         userNameInput = (EditText) findViewById(R.id.signupEmail_userName);
         passwordInput = (EditText) findViewById(R.id.signupEmail_password);

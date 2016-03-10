@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
@@ -212,8 +213,7 @@ public class trendingsearch extends AppCompatActivity {
         Date toLoadFrom = c.getTime();
         String toLoadFromS = toLoadFrom.toString();
         toLoadFromS = toLoadFromS.toLowerCase();
-        return toLoadFromS;
-        /*
+
         String Month = toLoadFromS.substring(4, 7);
         Log.i("LOG", toLoadFromS);
         Log.i("logging", Month);
@@ -267,7 +267,7 @@ public class trendingsearch extends AppCompatActivity {
         String str = "created > " + str1;
         Log.i("c", str);
         return str;
-        */
+
     }
 
 }
