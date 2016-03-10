@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This initiates the overall layout of the page -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp">
-
+    <!--This section of code represents a place holder for the image being used for the post -->
     <ImageView
         android:layout_width="50dp"
         android:layout_height="match_parent"
@@ -12,7 +13,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="22dp"
         android:layout_marginStart="22dp" />
-
+    <!--This section of code represents a place holder for the caption of the post-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +25,7 @@
         android:layout_toEndOf="@+id/item_listViewImage"
         android:layout_marginLeft="33dp"
         android:layout_marginStart="33dp" />
-
+    <!--This section of code represents the ability for the user to up vote or down vote as well as displays the amount of upvotes the post has -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="80dp"

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--This initiates the overall layout of the page -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +8,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="fbla.com.fbla_app_src.trendingsearch"
     tools:showIn="@layout/activity_trendingsearch">
-
+    <!--This section of code represents the layout for this section of the application   -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
+        <!--This section of code represents the search title Image view of the app  -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -31,7 +32,7 @@
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/letsfindstuff" />
         </RelativeLayout>
-
+        <!--This section of code represents the diffrent tabs that, when pressed, takes the user to a new amount of posts that are ordered by most upvoted or by if the posts are recent -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -86,7 +87,7 @@
                     android:src="@drawable/recentactivity" />
             </RelativeLayout>
         </LinearLayout>
-
+        <!--This section of code represents the section of the app that displays a number of posts ordered by the amount of upvotes it has -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -100,7 +101,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
-
+        <!--This section of code represents the navigation of the application -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
