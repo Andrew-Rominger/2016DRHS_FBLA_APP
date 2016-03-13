@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="fbla.com.fbla_app_src.trendingsearch"
-    tools:showIn="@layout/activity_trendingsearch">
-
+    tools:context="fbla.com.fbla_app_src.searchByTags"
+    tools:showIn="@layout/activity_search_by_tags">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -15,135 +14,42 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
+        <!--This section of code represents the search title Image view of the app  -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
-            android:layout_weight=".2"
+            android:layout_weight=".05"
             android:background="#C2C6C1">
 
-            <ImageView
-                android:layout_width="300dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:id="@+id/lfs"
-                android:src="@drawable/letsfindstuff"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-            <LinearLayout
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:layout_width="0px"
-                android:layout_height="0px"/>
-            <LinearLayout
-                android:id="@+id/dummmyFocus"
-                android:focusable="true"
-                android:orientation="horizontal"
-                android:focusableInTouchMode="true"
-                android:layout_width="0px"
-                android:layout_height="0px"/>
-            <EditText
-                android:layout_width="250dp"
-                android:layout_height="40dp"
+                android:id="@+id/tagTitle"
+                android:text="Posts tagged "
                 android:gravity="center"
-                android:hint="Search tags, people, #'s "
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text=""
-                android:background="@drawable/mybutton2"
-                android:id="@+id/searchView"
-                android:layout_below="@+id/lfs"
-                android:layout_centerHorizontal="true" />
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/goButton"
-                android:src="@drawable/rightarrow"
-                android:layout_alignTop="@+id/searchView"
-                android:layout_toRightOf="@+id/searchView"
-                android:layout_toEndOf="@+id/searchView" />
-
+                android:textSize="30sp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                />
         </RelativeLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".1"
-            android:background="#60C6C7">
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight=".33"
-                android:background="#EA6C55"
-                android:id="@+id/upVote">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageView21"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/upvoteswhite" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".33"
-                android:background="#60C6C7">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageView23"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/trendingwithtext" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight=".33"
-                android:background="#1DBCBA"
-                android:id="@+id/recent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageView20"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/recentactivity" />
-            </RelativeLayout>
-        </LinearLayout>
-
+        <!--This section of code represents the diffrent tabs that, when pressed, takes the user to a new amount of posts that are ordered by most recent or by if the posts are trending -->
+        <!--This section of code represents the section of the app that displays a number of posts ordered by the amount of upvotes it has -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight=".3">
-            <ProgressBar
-                android:id="@+id/loadingBarTrending"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_above="@+id/profilepage_bio"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="48dp" />
 
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:id="@+id/listView_Trending"
+                android:id="@+id/searchListView"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:headerDividersEnabled="false" />
         </RelativeLayout>
-
+        <!--This section of code represents the navigation of the application -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -151,7 +57,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_weight=".1"
+            android:layout_weight=".07"
             android:id="@+id/relativeLayout2" >
 
             <LinearLayout
@@ -159,6 +65,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/linearLayout"
+
                 android:background="#7D8C93" >
 
                 <FrameLayout
@@ -173,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@+id/frameLayout5"
+                    android:layout_toLeftOf="@+id/seachSearch"
                     android:layout_weight=".10"
                     android:foregroundGravity="right"
                     android:id="@+id/frameLayout4" >
@@ -196,7 +103,7 @@
                     android:layout_centerInParent="true"
                     android:layout_centerHorizontal="true"
                     android:layout_weight=".10"
-                    android:id="@+id/frameLayout5" >
+                    android:id="@+id/searchAdd" >
 
                     <ImageView
                         android:layout_width="50dp"
@@ -212,7 +119,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_weight=".10"
-                    android:id="@+id/frameLayout6" >
+                    android:id="@+id/searchProfile" >
 
                     <ImageView
                         android:layout_width="50dp"
@@ -235,5 +142,6 @@
         </RelativeLayout>
 
     </LinearLayout>
+
 
 </RelativeLayout>

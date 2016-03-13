@@ -103,6 +103,10 @@
         <activity
             android:name=".termsandconditions"
             android:label="@string/title_activity_termsandconditions"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".searchByTags"
+            android:label="@string/title_activity_search_by_tags"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

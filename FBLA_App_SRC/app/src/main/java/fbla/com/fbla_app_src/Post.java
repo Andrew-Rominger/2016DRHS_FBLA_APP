@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class Post
 {
+    private String tag;
     private int numFavorites;
     private int numDislikes;
     private int numLikes;
@@ -19,6 +20,14 @@ public class Post
     private Date created;
     private String pictureOID;
     private String userUploadedS;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public String getPictureOID() {
         return pictureOID;
