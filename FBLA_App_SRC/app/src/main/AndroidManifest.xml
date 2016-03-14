@@ -107,6 +107,10 @@
         <activity
             android:name=".searchByTags"
             android:label="@string/title_activity_search_by_tags"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".commentView"
+            android:label="@string/title_activity_comment_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

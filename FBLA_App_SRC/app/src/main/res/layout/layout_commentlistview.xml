@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView24"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="center_vertical" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="USERNAME"
+        android:id="@+id/commentUserName"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageView24"
+        android:layout_toEndOf="@+id/imageView24" />
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="COMMENT"
+        android:id="@+id/commentContent"
+        android:layout_gravity="center_vertical"
+        android:layout_alignLeft="@+id/commentUserName"
+        android:layout_alignStart="@+id/commentUserName"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/commentUserName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="DATE"
+        android:id="@+id/textView2"
+        android:layout_alignTop="@+id/commentUserName"
+        android:layout_toRightOf="@+id/commentUserName"
+        android:layout_toEndOf="@+id/commentUserName"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+
+</RelativeLayout>

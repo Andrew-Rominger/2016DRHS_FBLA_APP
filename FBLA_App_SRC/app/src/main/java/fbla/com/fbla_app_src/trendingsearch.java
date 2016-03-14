@@ -132,8 +132,13 @@ public class trendingsearch extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                Bundle b = new Bundle();
+                b.putString("tag", tagSearch.getText().toString());
+
                 Intent i = new Intent(trendingsearch.this, searchByTags.class);
-                i.putExtra("tag", tagSearch.getText().toString());
+                i.putExtras(b);
+                DLC.cancel(true);
+
                 startActivity(i);
             }
         });
@@ -245,8 +250,16 @@ public class trendingsearch extends AppCompatActivity {
             TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
             TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
             iv.setImageDrawable(trendingsearch.draw.get(position));
-            tv.setText(post.getCaption());
-            numlikes.setText(""+post.getNumLikes());
+            if(post.getCaption().length() > 16)
+            {
+                String newCap = post.getCaption().substring(0,12) + "...";
+                tv.setText(newCap);
+            }
+            else
+            {
+                tv.setText(post.getCaption());
+            }
+            numlikes.setText(String.valueOf(post.getNumLikes()));
             return itemView;
             //return super.getView(position, convertView, parent);
         }

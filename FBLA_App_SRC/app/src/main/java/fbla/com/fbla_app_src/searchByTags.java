@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
@@ -39,24 +40,22 @@ public class searchByTags extends AppCompatActivity
     public ArrayList<String> URLS = new ArrayList<String>();
     static ArrayList<Drawable> draw;
     ArrayAdapter adapter;
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_by_tags);
         seachBy = (TextView) findViewById(R.id.tagTitle);
         seachList = (ListView) findViewById(R.id.searchListView);
         add = (FrameLayout) findViewById(R.id.searchAdd);
         profile = (FrameLayout) findViewById(R.id.searchProfile);
-        search = (FrameLayout) findViewById(R.id.seachSearch);
+        search = (FrameLayout) findViewById(R.id.FLSearch);
         i = getIntent();
-        String tag = i.getStringExtra("tag");
+        Bundle b = i.getExtras();
+
+        tag = (String) b.get("tag");
         String str = "Posts Tagged " + tag;
-//      seachBy.setText(str);
+    //      seachBy.setText(str);
         adapter = new MyListAdapter();
 
 
@@ -97,18 +96,24 @@ public class searchByTags extends AppCompatActivity
             @Override
             public void handleResponse(BackendlessCollection<Post> postBackendlessCollection)
             {
-                Log.i("GotPosts", "GotPosts");
-                List<Post> firstPage = postBackendlessCollection.getCurrentPage();
-                Iterator<Post> it = firstPage.iterator();
-                while (it.hasNext())
+                if(postBackendlessCollection!= null)
                 {
-                    Post post = it.next();
-                    Log.i("POST ID", post.getObjectId());
-                    postsToBeDisplayed.add(post);
+                    Log.i("GotPosts", "GotPosts");
+                    List<Post> firstPage = postBackendlessCollection.getCurrentPage();
+                    Iterator<Post> it = firstPage.iterator();
+                    while (it.hasNext()) {
+                        Post post = it.next();
+                        Log.i("POST ID", post.getObjectId());
+                        postsToBeDisplayed.add(post);
+                    }
+                    DLC.setDlList(draw);
+                    DLC.setFromS(g);
+                    DLC.execute(getURLS(postsToBeDisplayed));
                 }
-                DLC.setDlList(draw);
-                DLC.setFromS(g);
-                DLC.execute(getURLS(postsToBeDisplayed));
+                else
+                {
+                    Toast.makeText(searchByTags.this,"No posts found matching" + tag, Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -120,7 +125,7 @@ public class searchByTags extends AppCompatActivity
         BackendlessDataQuery query = new BackendlessDataQuery();
         QueryOptions qo = new QueryOptions();
         qo.addSortByOption("numLikes desc");
-        String w = "tag LIKE " + tag;
+        String w = "tag LIKE '" + tag + "'";
         query.setWhereClause(w);
         query.setPageSize(pageSize);
         query.setQueryOptions(qo);
@@ -146,7 +151,17 @@ public class searchByTags extends AppCompatActivity
             ImageView iv = (ImageView) itemView.findViewById(R.id.item_listViewImage);
             TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
             TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
-            iv.setImageDrawable(trendingsearch.draw.get(position));
+            iv.setImageDrawable(draw.get(position));
+            if(post.getCaption().length() > 16)
+            {
+                String newCap = post.getCaption().substring(0,12) + "...";
+                tv.setText(newCap);
+            }
+            else
+            {
+                tv.setText(post.getCaption());
+            }
+
             tv.setText(post.getCaption());
             numlikes.setText(""+post.getNumLikes());
             return itemView;

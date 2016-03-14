@@ -189,7 +189,15 @@ public class recentsearch extends AppCompatActivity {
             TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
             TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
             iv.setImageDrawable(recentsearch.draw.get(position));
-            tv.setText(post.getCaption());
+            if(post.getCaption().length() > 16)
+            {
+                String newCap = post.getCaption().substring(0,12) + "...";
+                tv.setText(newCap);
+            }
+            else
+            {
+                tv.setText(post.getCaption());
+            }
             numlikes.setText(""+post.getNumLikes());
             return itemView;
             //return super.getView(position, convertView, parent);

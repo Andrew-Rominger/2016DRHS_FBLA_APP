@@ -18,6 +18,7 @@ public class Post
     private Picture pictureOnPost;
     private String objectId;
     private Date created;
+    private int numComments;
     private String pictureOID;
     private String userUploadedS;
 
@@ -84,7 +85,13 @@ public class Post
         return numDislikes;
     }
 
+    public int getNumComments() {
+        return numComments;
+    }
 
+    public void setNumComments(int numComments) {
+        this.numComments = numComments;
+    }
 
     public int getNumLikes() {
         return numLikes;

@@ -18,6 +18,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:id="@+id/mainTitle"
             android:layout_gravity="center_horizontal"
             android:layout_weight=".05"
             android:background="#C2C6C1">
@@ -54,9 +55,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="bottom"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_weight=".07"
             android:id="@+id/relativeLayout2" >
 
@@ -71,19 +69,15 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
                     android:layout_weight=".35"
-                    android:id="@+id/frameLayout3" />
+                    android:id="@+id/extra" />
 
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@+id/seachSearch"
                     android:layout_weight=".10"
                     android:foregroundGravity="right"
-                    android:id="@+id/frameLayout4" >
+                    android:id="@+id/FLSearch" >
 
                     <ImageView
                         android:layout_width="50dp"
@@ -95,13 +89,10 @@
                         android:src="@drawable/explorenavicon" />
                 </FrameLayout>
 
+
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerVertical="true"
-                    android:layout_centerInParent="true"
-                    android:layout_centerHorizontal="true"
                     android:layout_weight=".10"
                     android:id="@+id/searchAdd" >
 
@@ -110,14 +101,13 @@
                         android:layout_height="50dp"
                         android:id="@+id/imageView6"
                         android:layout_gravity="center"
-                        android:src="@drawable/addpostnavicon" />
+                        android:src="@drawable/addpostnavicon"
+                        />
                 </FrameLayout>
 
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
                     android:layout_weight=".10"
                     android:id="@+id/searchProfile" >
 
@@ -135,7 +125,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_weight=".35"
-                    android:id="@+id/frameLayout7" />
+                    android:id="@+id/FL7" />
 
             </LinearLayout>
 
