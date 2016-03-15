@@ -121,6 +121,39 @@ public class postview extends AppCompatActivity {
                 });
             }
         });
+        post.setOnTouchListener(new OnSwipeTouchListener(postview.this)
+        {
+            public void onSwipeRight() {
+                Log.i("swipe", "right");
+                postO.setNumLikes(postO.getNumLikes() + 1);
+                Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
+                    @Override
+                    public void handleResponse(Post post) {
+                        upVotes.setText(Integer.toString(post.getNumLikes()));
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault) {
+
+                    }
+                });
+            }
+            public void onSwipeLeft() {
+                Log.i("swipe", "left");
+                postO.setNumDislikes(postO.getNumDislikes() + 1);
+                Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
+                    @Override
+                    public void handleResponse(Post post) {
+                        downVotes.setText(Integer.toString(post.getNumDislikes()));
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault) {
+
+                    }
+                });
+            }
+        });
         Backendless.Data.of(Post.class).findById(PostID, new AsyncCallback<Post>() {
             @Override
             public void handleResponse(Post foundPost) {
