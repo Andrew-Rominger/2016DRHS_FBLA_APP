@@ -12,12 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
@@ -43,6 +45,11 @@ public class trendingsearch extends AppCompatActivity {
     RelativeLayout recent;
     String pictureImagePath = "";
     ListView listView;
+    ProgressBar spinner;
+    EditText tagSearch;
+    LinearLayout m;
+    ImageView go;
+    ImageView imageView;
 
     static ArrayList<Drawable> draw;
     ArrayList<Post> postsToBeDisplayed = new ArrayList<>();
@@ -50,6 +57,15 @@ public class trendingsearch extends AppCompatActivity {
     public ArrayList<String> URLS = new ArrayList<String>();
     final trendingsearch g = this;
     ArrayAdapter adapter;
+
+    public static ArrayList<Drawable> getDraw() {
+        return draw;
+    }
+
+    public static void setDraw(ArrayList<Drawable> draw) {
+        trendingsearch.draw = draw;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +73,18 @@ public class trendingsearch extends AppCompatActivity {
         adapter = new MyListAdapter();
 
         search = (FrameLayout) findViewById(R.id.frameLayout4);
+        m = (LinearLayout)findViewById(R.id.dummmyFocus);
         add = (FrameLayout) findViewById(R.id.frameLayout5);
         profile = (FrameLayout) findViewById(R.id.frameLayout6);
         upVote = (RelativeLayout) findViewById(R.id.upVote);
         recent = (RelativeLayout) findViewById(R.id.recent);
+        spinner = (ProgressBar) findViewById(R.id.loadingBarTrending);
         listView = (ListView) findViewById(R.id.listView_Trending);
-
+        tagSearch = (EditText) findViewById(R.id.searchView);
+        go = (ImageView) findViewById(R.id.goButton);
+        tagSearch.clearFocus();
+        imageView = (ImageView) findViewById(R.id.lfs);
+        m.requestFocus();
 
         upVote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +108,17 @@ public class trendingsearch extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        tagSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                imageView.setVisibility(View.GONE);
+            }
+        });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openBackCamera(1,trendingsearch.this);
+                openBackCamera(1, trendingsearch.this);
             }
         });
         profile.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +128,21 @@ public class trendingsearch extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Bundle b = new Bundle();
+                b.putString("tag", tagSearch.getText().toString());
+
+                Intent i = new Intent(trendingsearch.this, searchByTags.class);
+                i.putExtras(b);
+                DLC.cancel(true);
+
+                startActivity(i);
+            }
+        });
+        showSpinner();
         getFirstPage();
     }
     public void populateListView() throws InterruptedException
@@ -172,10 +216,18 @@ public class trendingsearch extends AppCompatActivity {
         BackendlessDataQuery query = new BackendlessDataQuery();
         QueryOptions qo = new QueryOptions();
         qo.addSortByOption("numLikes desc");
-        query.setWhereClause(createWhereClause());
+        //query.setWhereClause(createWhereClause());
         query.setPageSize(pageSize);
         query.setQueryOptions(qo);
         Backendless.Data.of(Post.class).find(query, callback);
+    }
+    public void showSpinner()
+    {
+        spinner.setVisibility(View.VISIBLE);
+    }
+    public void hideSpinner()
+    {
+        spinner.setVisibility(View.INVISIBLE);
     }
     public class MyListAdapter extends ArrayAdapter<Post>
     {
@@ -198,8 +250,16 @@ public class trendingsearch extends AppCompatActivity {
             TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
             TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
             iv.setImageDrawable(trendingsearch.draw.get(position));
-            tv.setText(post.getCaption());
-            numlikes.setText(""+post.getNumLikes());
+            if(post.getCaption().length() > 16)
+            {
+                String newCap = post.getCaption().substring(0,12) + "...";
+                tv.setText(newCap);
+            }
+            else
+            {
+                tv.setText(post.getCaption());
+            }
+            numlikes.setText(String.valueOf(post.getNumLikes()));
             return itemView;
             //return super.getView(position, convertView, parent);
         }
@@ -212,8 +272,8 @@ public class trendingsearch extends AppCompatActivity {
         dateFormat.format(c.get(Calendar.DAY_OF_MONTH));
         Date toLoadFrom = c.getTime();
         String toLoadFromS = toLoadFrom.toString();
-        toLoadFromS = toLoadFromS.toLowerCase();
-
+        return toLoadFromS.toLowerCase();
+        /*
         String Month = toLoadFromS.substring(4, 7);
         Log.i("LOG", toLoadFromS);
         Log.i("logging", Month);
@@ -267,7 +327,9 @@ public class trendingsearch extends AppCompatActivity {
         String str = "created > " + str1;
         Log.i("c", str);
         return str;
+        */
 
     }
+
 
 }

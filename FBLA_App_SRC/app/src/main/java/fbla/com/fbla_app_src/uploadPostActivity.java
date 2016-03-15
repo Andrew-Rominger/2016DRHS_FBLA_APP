@@ -32,6 +32,7 @@ public class uploadPostActivity extends AppCompatActivity {
     Picture pObject;
     Picture image;
     Picture image2;
+    EditText tag;
     EditText caption;
     ImageView goBack;
     Button shareButton;
@@ -48,6 +49,7 @@ public class uploadPostActivity extends AppCompatActivity {
         caption = (EditText) findViewById(R.id.uploadPost_Caption);
         shareButton = (Button) findViewById(R.id.uploadPost_shareButton);
         goBack  = (ImageView) findViewById(R.id.uploadPost_goBackButton);
+        tag = (EditText) findViewById(R.id.tagPost);
         post = new Post();
         image = new Picture();
         Intent i = getIntent();
@@ -74,6 +76,10 @@ public class uploadPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                if(tag.getText().toString() != "")
+                {
+                    post.setTag(tag.getText().toString());
+                }
                  if(caption.getText().toString().isEmpty())
                  {
                      post.setCaption("");

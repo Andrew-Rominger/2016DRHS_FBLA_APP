@@ -186,16 +186,18 @@ public class profilePage extends AppCompatActivity{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-            if (requestCode == 1) {
-                File imgFile = new File(pictureImagePath);
-                //Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
-                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
-                Matrix matrix = new Matrix();
-                matrix.setRotate(90);
+        File imgFile = new File(pictureImagePath);
+        Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
 
-                final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+
+        if(myBitmap != null) {
+            final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+            if (requestCode == 1) {
                 uploadImage.setImageDrawable(new BitmapDrawable(getResources(), result));
                 Backendless.Persistence.save(profPic, new AsyncCallback<Picture>() {
                     @Override
@@ -205,8 +207,7 @@ public class profilePage extends AppCompatActivity{
 
                         Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
                             @Override
-                            public void handleResponse(BackendlessUser backendlessUser)
-                            {
+                            public void handleResponse(BackendlessUser backendlessUser) {
                                 Log.i("setImageD", "SetD");
                             }
 
@@ -224,17 +225,7 @@ public class profilePage extends AppCompatActivity{
                     }
                 });
             } else if (requestCode == 2) {
-                File imgFile = new File(pictureImagePath);
-                Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
-                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
-                Matrix matrix = new Matrix();
-                matrix.setRotate(90);
-                final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
-
                 bckg.setBackground(new BitmapDrawable(getResources(), result));
-
                 Backendless.Persistence.save(coverPhoto, new AsyncCallback<Picture>() {
                     @Override
                     public void handleResponse(Picture picture) {
@@ -259,13 +250,13 @@ public class profilePage extends AppCompatActivity{
 
                     }
                 });
-            } else if (requestCode == 3)
-            {
-                Intent i = new Intent(profilePage.this,uploadPostActivity.class);
+            } else if (requestCode == 3) {
+                Intent i = new Intent(profilePage.this, uploadPostActivity.class);
                 i.putExtra("passedPictureData", data);
                 i.putExtra("IP", pictureImagePath);
                 startActivity(i);
             }
+        }
         }
 
     public static void showSpinner(){loadingSpinner.setVisibility(View.VISIBLE);}

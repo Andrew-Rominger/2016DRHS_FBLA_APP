@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fbla.com.fbla_app_src.searchByTags"
+    tools:showIn="@layout/activity_search_by_tags">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <!--This section of code represents the search title Image view of the app  -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/mainTitle"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight=".05"
+            android:background="#C2C6C1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:id="@+id/tagTitle"
+                android:text="Posts tagged "
+                android:gravity="center"
+                android:textSize="30sp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                />
+        </RelativeLayout>
+        <!--This section of code represents the diffrent tabs that, when pressed, takes the user to a new amount of posts that are ordered by most recent or by if the posts are trending -->
+        <!--This section of code represents the section of the app that displays a number of posts ordered by the amount of upvotes it has -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight=".3">
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchListView"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:headerDividersEnabled="false" />
+        </RelativeLayout>
+        <!--This section of code represents the navigation of the application -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="bottom"
+            android:layout_weight=".07"
+            android:id="@+id/relativeLayout2" >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearLayout"
+
+                android:background="#7D8C93" >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".35"
+                    android:id="@+id/extra" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".10"
+                    android:foregroundGravity="right"
+                    android:id="@+id/FLSearch" >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:maxWidth="60dp"
+                        android:maxHeight="10dp"
+                        android:id="@+id/imageView5"
+                        android:layout_gravity="center"
+                        android:src="@drawable/explorenavicon" />
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".10"
+                    android:id="@+id/searchAdd" >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/imageView6"
+                        android:layout_gravity="center"
+                        android:src="@drawable/addpostnavicon"
+                        />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".10"
+                    android:id="@+id/searchProfile" >
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/imageView7"
+                        android:layout_gravity="center"
+                        android:src="@drawable/profilenavicon" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight=".35"
+                    android:id="@+id/FL7" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

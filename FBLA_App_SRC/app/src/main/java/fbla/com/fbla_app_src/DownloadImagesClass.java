@@ -22,6 +22,24 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
     mostupvotessearch from;
     trendingsearch fromT;
     recentsearch fromR;
+    searchByTags fromS;
+    commentView fromC;
+
+    public commentView getFromC() {
+        return fromC;
+    }
+
+    public void setFromC(commentView fromC) {
+        this.fromC = fromC;
+    }
+
+    public searchByTags getFromS() {
+        return fromS;
+    }
+
+    public void setFromS(searchByTags fromS) {
+        this.fromS = fromS;
+    }
 
     public recentsearch getFromR() {
         return fromR;
@@ -119,9 +137,17 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
         {
             update(fromT);
         }
-        else
+        else if(fromR != null)
         {
             update(fromR);
+        }
+        else if(fromS != null)
+        {
+            update(fromS);
+        }
+        else
+        {
+            update(fromC);
         }
 
     }
@@ -139,6 +165,7 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
         muv.setDL(dlList);
         try {
             muv.populateListView();
+            muv.hideSpinner();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -152,6 +179,23 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
             e.printStackTrace();
         }
 
+    }
+    public void update(searchByTags muv)
+    {
+        muv.setDraw(dlList);
+        try {
+            muv.populateListView();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void update(commentView muv)
+    {
+        try {
+            muv.populateListView();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -211,11 +211,9 @@ public class mostupvotessearch extends AppCompatActivity {
                 {
                     Log.i("C", "CLICKED");
                     post.setNumLikes(post.getNumLikes() + 1);
-                    Backendless.Persistence.save(post, new AsyncCallback<Post>()
-                    {
+                    Backendless.Persistence.save(post, new AsyncCallback<Post>() {
                         @Override
-                        public void handleResponse(Post post)
-                        {
+                        public void handleResponse(Post post) {
                             numlikes.setText(Integer.toString(post.getNumLikes()));
                         }
 
@@ -228,16 +226,13 @@ public class mostupvotessearch extends AppCompatActivity {
             });
             downvoteArrow.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     Log.i("C", "CLICKED");
-                    if(post.getNumLikes() > 0)
-                    {
-                        post.setNumDislikes(post.getNumDislikes() + 1 );
+                    if (post.getNumLikes() > 0) {
+                        post.setNumDislikes(post.getNumDislikes() + 1);
                         Backendless.Data.save(post, new AsyncCallback<Post>() {
                             @Override
-                            public void handleResponse(Post post)
-                            {
+                            public void handleResponse(Post post) {
 
                             }
 
@@ -250,7 +245,15 @@ public class mostupvotessearch extends AppCompatActivity {
                 }
             });
             iv.setImageDrawable(mostupvotessearch.draw.get(position));
-            tv.setText(post.getCaption());
+            if(post.getCaption().length() > 16)
+            {
+                String newCap = post.getCaption().substring(0,12) + "...";
+                tv.setText(newCap);
+            }
+            else
+            {
+                tv.setText(post.getCaption());
+            }
             numlikes.setText(Integer.toString(post.getNumLikes()));
             return itemView;
             //return super.getView(position, convertView, parent);

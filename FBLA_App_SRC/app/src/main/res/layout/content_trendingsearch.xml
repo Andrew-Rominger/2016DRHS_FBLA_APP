@@ -21,16 +21,50 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
-            android:layout_weight=".1"
+            android:layout_weight=".2"
             android:background="#C2C6C1">
 
             <ImageView
                 android:layout_width="300dp"
                 android:layout_height="100dp"
-                android:id="@+id/imageView22"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/letsfindstuff" />
+                android:id="@+id/lfs"
+                android:src="@drawable/letsfindstuff"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+            <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px"/>
+            <LinearLayout
+                android:id="@+id/dummmyFocus"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px"/>
+            <EditText
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:hint="Search tags, people, #'s "
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text=""
+                android:background="@drawable/mybutton2"
+                android:id="@+id/searchView"
+                android:layout_below="@+id/lfs"
+                android:layout_centerHorizontal="true" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/goButton"
+                android:src="@drawable/rightarrow"
+                android:layout_alignTop="@+id/searchView"
+                android:layout_toRightOf="@+id/searchView"
+                android:layout_toEndOf="@+id/searchView" />
+
         </RelativeLayout>
         <!--This section of code represents the diffrent tabs that, when pressed, takes the user to a new amount of posts that are ordered by most upvoted or by if the posts are recent -->
         <LinearLayout
@@ -93,10 +127,19 @@
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight=".3">
+            <ProgressBar
+                android:id="@+id/loadingBarTrending"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_above="@+id/profilepage_bio"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="48dp" />
 
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:focusable="true"
                 android:id="@+id/listView_Trending"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />

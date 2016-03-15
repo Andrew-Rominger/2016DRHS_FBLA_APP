@@ -54,7 +54,7 @@ public class postview extends AppCompatActivity {
         caption = (TextView) findViewById(R.id.postViewCaption);
         userName = (TextView) findViewById(R.id.postViewUserName);
         userNameBelow = (TextView) findViewById(R.id.postViewUserPosted);
-        comments = (TextView) findViewById(R.id.postViewComment);
+        comments = (TextView) findViewById(R.id.postViewCommentNum);
         profile = (FrameLayout) findViewById(R.id.postViewProfile);
         downVotes = (TextView) findViewById(R.id.postViewDownvote);
         upVotes = (TextView) findViewById(R.id.postViewUpvote);
@@ -165,6 +165,7 @@ public class postview extends AppCompatActivity {
                 userName.setText(user.getProperty("userName").toString());
                 userNameBelow.setText(postO.getUserUploadedS());
                 caption.setText(postO.getCaption());
+                comments.setText(Integer.toString(postO.getNumComments()));
             }
 
             @Override
