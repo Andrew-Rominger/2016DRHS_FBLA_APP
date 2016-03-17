@@ -30,13 +30,13 @@ public class editprofilesettings extends AppCompatActivity {
     BackendlessUser user;
     DownloadImageClass dlc = new DownloadImageClass();
     RoundedImageView riv;
-
     @Override
+    //creates the page
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editprofilesettings);
-
+        // links variables to xml id representations
         name = (EditText) findViewById(R.id.editTextName);
         handle = (EditText) findViewById(R.id.editTextHandle);
         bio = (EditText) findViewById(R.id.editText4);
@@ -48,16 +48,16 @@ public class editprofilesettings extends AppCompatActivity {
         bio.setHint(user.getProperty("Bio").toString());
         riv = (RoundedImageView) findViewById(R.id.editProfPage_Picture);
         i = getIntent();
+        //displays the user's profile picture if he/she has one
         if(!(user.getProperty("profilePictureID") == null))
         {
             riv.setVisibility(View.INVISIBLE);
             Log.i("userHas", "User Has profpic");
             dlc.setImageView(riv);
             dlc.execute("https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + user.getProperty("profilePictureID") + ".png");
-
             riv.setVisibility(View.VISIBLE);
         }
-
+        //checks to see if the user is coming from the user profile page or the account settings page
         if (i.getBooleanExtra("fromProf", false))
         {
             back.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +78,7 @@ public class editprofilesettings extends AppCompatActivity {
                 }
             });
         }
+        //updates the user profile
         done.setOnClickListener(new View.OnClickListener()
         {
             @Override

@@ -39,14 +39,13 @@ public class accountsettings extends AppCompatActivity {
     BackendlessUser user;
     Button deleteAccount;
     final IDataStore<BackendlessUser> dataStore = Backendless.Data.of( BackendlessUser.class );
-
+    //creates the page
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         user = Backendless.UserService.CurrentUser();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accountsettings);
-
-
+        // links variables to xml id representations
         editProfile = (FrameLayout) findViewById(R.id.editProfile);
         changePassword = (FrameLayout) findViewById(R.id.changePassword);
         privatePolicy = (FrameLayout) findViewById(R.id.privatePolicy);
@@ -54,7 +53,7 @@ public class accountsettings extends AppCompatActivity {
         goBack = (ImageView) findViewById(R.id.backArrowImageView);
         logout = (Button) findViewById(R.id.logoutButton);
         deleteAccount = (Button) findViewById(R.id.deleteAccountButton);
-
+        //takes the user to edit profile settings page
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +61,7 @@ public class accountsettings extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //takes the user to the password settings page
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,12 +69,14 @@ public class accountsettings extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //takes the user to the private policy page
         privatePolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(accountsettings.this, privatepolicy.class));
             }
         });
+        //takes the user to their profile page
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -82,12 +84,14 @@ public class accountsettings extends AppCompatActivity {
                startActivity(new Intent(accountsettings.this, profilePage.class));
             }
         });
+        //shows the user the terms and conditions of the application
         terms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(accountsettings.this, termsandconditions.class));
             }
         });
+        //logs the user out and takes them to the first screen
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,17 +100,16 @@ public class accountsettings extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //deletes the user's account and takes them to the first screen
         deleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
                 dialogBox();
-
-
             }
         });
     }
-
+    //this method logs the user out
     public void logOut()
     {
         Backendless.UserService.logout(new AsyncCallback<Void>() {
@@ -123,6 +126,7 @@ public class accountsettings extends AppCompatActivity {
             }
         });
     }
+    //this method creates a dialog box that asks the user if he/she want to delete their account
     public void dialogBox() {
         final Intent i = new Intent(accountsettings.this, MainActivity.class);
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -181,7 +185,7 @@ public class accountsettings extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
+    //this method disables the dialog box
     public void dismissDialog(Dialog log)
     {
         log.dismiss();

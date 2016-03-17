@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
+    //moves user to sign up with their email
     public void moveToEmailSignUp()
     {
         Intent moveToSU = new Intent(MainActivity.this, signupEmail.class);

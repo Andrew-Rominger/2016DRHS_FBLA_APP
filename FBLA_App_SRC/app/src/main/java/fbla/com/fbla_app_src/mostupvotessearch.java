@@ -62,11 +62,13 @@ public class mostupvotessearch extends AppCompatActivity {
         }
         return URLS;
     }
+    //creates the page
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostupvotessearch);
+        // links variables to xml id representations
         search = (FrameLayout) findViewById(R.id.profilepage_searchNav);
         add = (FrameLayout) findViewById(R.id.searchAdd);
         profile = (FrameLayout) findViewById(R.id.frameLayout6);
@@ -74,8 +76,7 @@ public class mostupvotessearch extends AppCompatActivity {
         recent = (RelativeLayout) findViewById(R.id.recentFromUpvote);
         trending = (RelativeLayout) findViewById(R.id.trendingFromUpvote);
         adapter = new MyListAdapter();
-
-
+        //takes user to recent tab
         recent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +84,7 @@ public class mostupvotessearch extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //takes user to trending tab
         trending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +110,7 @@ public class mostupvotessearch extends AppCompatActivity {
         getFirstPage();
 
     }
-
+    //declares image path
     private String pictureImagePath = "";
     public void openBackCamera(int numCode, Context context)
     {
@@ -129,15 +131,17 @@ public class mostupvotessearch extends AppCompatActivity {
         i.putExtra("IP", pictureImagePath);
         startActivity(i);
     }
-
+    //displays posts
     public void populateListView() throws InterruptedException
     {
         mainList.setAdapter(adapter);
     }
+    //updates the list of posts
     private void updateList()
     {
         adapter.notifyDataSetChanged();
     }
+    //retrieves the posts from backendless
     public void getFirstPage()
     {
         AsyncCallback<BackendlessCollection<Post>> callback = new AsyncCallback<BackendlessCollection<Post>>() {
@@ -173,8 +177,7 @@ public class mostupvotessearch extends AppCompatActivity {
 
         Backendless.Data.of(Post.class).find(query,callback);
     }
-
-
+    //displays a list of all posts
     public class MyListAdapter extends ArrayAdapter<Post>
     {
 

@@ -12,13 +12,14 @@ import android.widget.ImageView;
 public class privatepolicy extends AppCompatActivity {
     // Declared global variables
     ImageView button;
-
+    //creates the page
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privatepolicy);
+        // links variables to xml id representations
         button = (ImageView) findViewById(R.id.back);
-
+        // this code declares that if the user presses the back button, he be taken to account settings page
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
