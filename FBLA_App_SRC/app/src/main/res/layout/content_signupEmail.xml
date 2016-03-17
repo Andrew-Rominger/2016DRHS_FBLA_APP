@@ -47,7 +47,7 @@
         android:id="@+id/dob"
         android:gravity="center"
         android:inputType="datetime"
-        android:hint="Date of Birth (mm-dd-yyyy)"
+        android:hint="Date of Birth (mmddyyyy)"
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
         android:background="@drawable/mybutton2"
@@ -120,14 +120,14 @@
     <!--This section of code represents the button that takes the text from all of the above fields and creates a user -->
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:textAppearance="@style/TextAppearance.FontPath"
         android:text="SIGN UP"
         android:id="@+id/signUp"
         android:background="@drawable/mybutton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:layout_below="@+id/textView6"
+        android:layout_centerHorizontal="true" />
     <!--This section of code represents the Button that moves the user back to the title page-->
     <Button
         android:layout_width="20dp"
@@ -143,12 +143,23 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="By clicking sign up I am that I have read and agreed to Suit's Terms and Conditions"
+        android:text="By clicking sign up I am certifying that I have read and agreed to Suit's Terms and Conditions"
         android:id="@+id/textView6"
-        android:layout_above="@+id/signUp"
-        android:layout_centerHorizontal="true"
         android:textColor="#fff"
         android:textAlignment="center"
         android:textSize="13sp"
-        android:textAppearance="@style/TextAppearance.FontPath"/>
+        android:textAppearance="@style/TextAppearance.FontPath"
+        android:layout_below="@+id/signupEmail_passwordCheck"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Press to View Terms and Conditions"
+        android:id="@+id/TandCTV"
+        android:textColor="#ffffff"
+        android:textSize="13sp"
+        android:layout_below="@+id/signUp"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

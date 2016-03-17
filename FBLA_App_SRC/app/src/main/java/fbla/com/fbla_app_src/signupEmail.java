@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -35,6 +36,7 @@ public class signupEmail extends AppCompatActivity
     EditText date;
     static SimpleDateFormat dateFormat;
     Date theDateOfBirth;
+    TextView termsAndConditions;
 
 
 
@@ -45,6 +47,7 @@ public class signupEmail extends AppCompatActivity
         setContentView(R.layout.activity_login);
 
         //Buttons, images
+        termsAndConditions = (TextView) findViewById(R.id.TandCTV);
         goBack = (Button) findViewById(R.id.signupEmail_gobackButton);
         signUp = (Button) findViewById(R.id.signUp);
         emailInput = (EditText) findViewById(R.id.signupEmail_emailField);
@@ -64,6 +67,12 @@ public class signupEmail extends AppCompatActivity
                 Intent goBackToSignIn = new Intent(signupEmail.this, MainActivity.class);
                 startActivity(goBackToSignIn);
 
+            }
+        });
+        termsAndConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(signupEmail.this, termsandconditionstextview.class));
             }
         });
 

@@ -111,6 +111,10 @@
         <activity
             android:name=".commentView"
             android:label="@string/title_activity_comment_view"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".termsandconditionstextview"
+            android:label="@string/title_activity_termsandconditionstextview"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

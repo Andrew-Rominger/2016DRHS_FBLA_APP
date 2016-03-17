@@ -70,4 +70,5 @@
     <string name="title_activity_termsandconditions">termsandconditions</string>
     <string name="title_activity_search_by_tags">searchByTags</string>
     <string name="title_activity_comment_view">commentView</string>
+    <string name="title_activity_termsandconditionstextview">terms and conditions textview</string>
 </resources>
