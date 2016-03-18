@@ -18,6 +18,7 @@ import com.backendless.exceptions.BackendlessFault;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,12 +35,9 @@ public class signupEmail extends AppCompatActivity
     EditText userNameInput;
     EditText fullName;
     EditText date;
-    static SimpleDateFormat dateFormat;
+    static SimpleDateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
     Date theDateOfBirth;
     TextView termsAndConditions;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -57,10 +55,7 @@ public class signupEmail extends AppCompatActivity
         fullName = (EditText) findViewById(R.id.FandLName);
         date = (EditText) findViewById(R.id.dob);
         user = new BackendlessUser();
-        dateFormat = new SimpleDateFormat("MMddyyyy");
-
-
-
+        // a method to execute when the go back button is pressed
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,13 +64,14 @@ public class signupEmail extends AppCompatActivity
 
             }
         });
+        // a method to execute when the terms and conditions button is pressed
         termsAndConditions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(signupEmail.this, termsandconditionstextview.class));
             }
         });
-
+        // this method signs the user up and moves the user to the profile page
         signUp.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -90,7 +86,7 @@ public class signupEmail extends AppCompatActivity
                 Boolean validEmail = Validator.isEmailValid(signupEmail.this, email);
                 Boolean passwordValid = Validator.isPasswordValid(signupEmail.this, password, passwordCheck);
                 String theDate = date.getText().toString();
-
+                convertDate(theDate);
 
                 if (util.shave(theDate) == null)
                 {
@@ -143,15 +139,15 @@ public class signupEmail extends AppCompatActivity
             }
         });
     }
+    //checks if user is thirteen years old
     public boolean isThirteen(Date date)
     {
-        Date currentDate;
-        dateFormat = new SimpleDateFormat("MMddyyyy");
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.YEAR, -13);
-        dateFormat.format(c.get(Calendar.YEAR));
-        currentDate = c.getTime();
-        if(currentDate.after(date))
+        c.setTime(date);
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.set(Calendar.YEAR, Calendar.YEAR-13);
+
+        if(currentDate.before(c))
         {
             Log.i("returned ", "true");
             return true;
@@ -161,5 +157,27 @@ public class signupEmail extends AppCompatActivity
             Log.i("returned", "false");
             return false;
         }
+    }
+    // converts the date into a string acceptable for use for backendless
+    public static String convertDate(String string)
+    {
+        String end = "";
+        ArrayList<Character> newArray = new ArrayList<Character>();
+        for(int i = 0;i< string.length();i++)
+        {
+            newArray.add(string.charAt(i));
+        }
+        for(int i = 0; i< newArray.size();i++)
+        {
+            if(newArray.get(i) == '-' || newArray.get(i) == '/')
+            {
+                newArray.remove(i);
+            }
+        }
+        for(int i = 0;i< newArray.size();i++)
+        {
+            end += newArray.get(i);
+        }
+        return end;
     }
 }
