@@ -24,19 +24,10 @@
         android:textAppearance="@style/TextAppearance.FontPath"/>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/findupvote"
-            android:background="@drawable/findupvote"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-
-            android:src="@drawable/findupvote" />
     </RelativeLayout>
 
     <RelativeLayout

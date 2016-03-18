@@ -132,7 +132,7 @@ public class profilePage extends AppCompatActivity{
             });
         }
 
-        //sets onclick listers
+        //sets onclick listeners
         uploadImage.setOnClickListener(new View.OnClickListener()
         {
             @Override
