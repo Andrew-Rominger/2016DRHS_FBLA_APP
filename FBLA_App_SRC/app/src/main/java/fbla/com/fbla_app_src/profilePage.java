@@ -53,20 +53,23 @@ public class profilePage extends AppCompatActivity{
     DownloadImageClass downloadCover = new DownloadImageClass();
     String pictureImagePath = "";
 
+
+
     @Override
     public void onBackPressed()
     {
-
+        return;
     }
-    //creates the page
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_profile_page);
-        // sets user to current backendless user
+
+        //get views and user
         user = Backendless.UserService.CurrentUser();
-        // links variables to xml id representations
         profPic = new Picture();
         coverPhoto = new Picture();
         riv = (RoundedImageView) findViewById(R.id.profilePage_addPic);
@@ -81,7 +84,9 @@ public class profilePage extends AppCompatActivity{
         uploadCoverPhoto = (TextView) findViewById(R.id.addCoverPhoto);
         profile = (FrameLayout) findViewById(R.id.profilepage_profileNav);
         bckg = (RelativeLayout) findViewById(R.id.mainBCKG);
-        //gets user cover photo and displays it on the page
+
+
+        //SEE EDIT PORFILE SETTINGS
         if(!(user.getProperty("coverPhotoID") == null))
         {
             downloadCover.setRelativeLayout(bckg);
@@ -93,7 +98,7 @@ public class profilePage extends AppCompatActivity{
         {
             hideSpinner();
         }
-        //gets the profile picture and displays it on the page
+
         if(!(user.getProperty("profilePictureID") == null))
         {
             showSpinner();
@@ -107,7 +112,8 @@ public class profilePage extends AppCompatActivity{
         {
             hideSpinner();
         }
-        //gets user bio and displays it o the page
+
+
         if(!user.getProperty("Bio").equals("No Bio Set"))
         {
             bio.setText(user.getProperty("Bio").toString());
@@ -125,7 +131,8 @@ public class profilePage extends AppCompatActivity{
                 }
             });
         }
-        //uploads a image and sets that image as the user's profile picture
+
+        //sets onclick listers
         uploadImage.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -133,7 +140,8 @@ public class profilePage extends AppCompatActivity{
                 openBackCamera(1,profilePage.this);
             }
         });
-        //uploads a image and sets that image as the user's cover photo
+
+
         uploadCoverPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -141,7 +149,9 @@ public class profilePage extends AppCompatActivity{
                 openBackCamera(2,profilePage.this);
             }
         });
-        //takes the user to the setting page
+
+
+
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,6 +159,7 @@ public class profilePage extends AppCompatActivity{
                 startActivity(i);
             }
         });
+
         //navigaion
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +187,7 @@ public class profilePage extends AppCompatActivity{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        //gets picture from camera and handles it
         File imgFile = new File(pictureImagePath);
         Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -184,9 +196,11 @@ public class profilePage extends AppCompatActivity{
         Matrix matrix = new Matrix();
         matrix.setRotate(90);
 
+
         if(myBitmap != null) {
             final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
             if (requestCode == 1) {
+                //user took profile picture
                 uploadImage.setImageDrawable(new BitmapDrawable(getResources(), result));
                 Backendless.Persistence.save(profPic, new AsyncCallback<Picture>() {
                     @Override
@@ -214,6 +228,7 @@ public class profilePage extends AppCompatActivity{
                     }
                 });
             } else if (requestCode == 2) {
+                //user took cover photo
                 bckg.setBackground(new BitmapDrawable(getResources(), result));
                 Backendless.Persistence.save(coverPhoto, new AsyncCallback<Picture>() {
                     @Override
@@ -240,6 +255,7 @@ public class profilePage extends AppCompatActivity{
                     }
                 });
             } else if (requestCode == 3) {
+                //user took post
                 Intent i = new Intent(profilePage.this, uploadPostActivity.class);
                 i.putExtra("passedPictureData", data);
                 i.putExtra("IP", pictureImagePath);

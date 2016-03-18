@@ -39,6 +39,7 @@ public class postview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        //get views
         Intent i = getIntent();
         Bundle extras = i.getExtras();
         String PostID = extras.get("postID").toString();
@@ -48,13 +49,11 @@ public class postview extends AppCompatActivity {
         add = (FrameLayout) findViewById(R.id.postViewAdd);
         search = (FrameLayout) findViewById(R.id.postViewSearch);
         report = (ImageView) findViewById(R.id.postViewReport);
-        commentsButton = (ImageView) findViewById(R.id.postViewCommentButton);
         downVoteButton = (ImageView) findViewById(R.id.postViewDownvoteButton);
         upVoteButton = (ImageView) findViewById(R.id.postViewUpvoteButton);
         caption = (TextView) findViewById(R.id.postViewCaption);
         userName = (TextView) findViewById(R.id.postViewUserName);
         userNameBelow = (TextView) findViewById(R.id.postViewUserPosted);
-        comments = (TextView) findViewById(R.id.postViewCommentNum);
         profile = (FrameLayout) findViewById(R.id.postViewProfile);
         downVotes = (TextView) findViewById(R.id.postViewDownvote);
         upVotes = (TextView) findViewById(R.id.postViewUpvote);
@@ -87,6 +86,7 @@ public class postview extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                //adds one upvote to the post and updates it
                 Log.i("C", "CLICKED");
                 postO.setNumLikes(postO.getNumLikes() + 1);
                 Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
@@ -106,6 +106,7 @@ public class postview extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                //adds one downvote to the post and updates it
                 Log.i("C", "CLICKED");
                 postO.setNumDislikes(postO.getNumDislikes() + 1);
                 Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
@@ -157,6 +158,7 @@ public class postview extends AppCompatActivity {
         Backendless.Data.of(Post.class).findById(PostID, new AsyncCallback<Post>() {
             @Override
             public void handleResponse(Post foundPost) {
+                //gets post from id and sets picture
                 postO = foundPost;
                 DLC.setImageView(post);
                 DLC.execute("https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + foundPost.getPictureOID() + ".png");
