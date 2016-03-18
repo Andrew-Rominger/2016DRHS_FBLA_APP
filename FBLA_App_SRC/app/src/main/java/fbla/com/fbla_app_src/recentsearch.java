@@ -57,6 +57,7 @@ public class recentsearch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recentsearch);
 
+        //get viewa
         adapter = new MyListAdapter();
         search = (FrameLayout) findViewById(R.id.frameLayout4);
         add = (FrameLayout) findViewById(R.id.frameLayout5);
@@ -65,7 +66,7 @@ public class recentsearch extends AppCompatActivity {
         upVote = (RelativeLayout) findViewById(R.id.upVote);
         trending = (RelativeLayout) findViewById(R.id.trending);
 
-
+        //set listers
         upVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,16 +102,21 @@ public class recentsearch extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //get first page of data
         getFirstPage();
     }
+    //put data in list
     public void populateListView() throws InterruptedException
     {
+
         lv.setAdapter(adapter);
     }
+
     private void updateList()
     {
         adapter.notifyDataSetChanged();
     }
+    //opens camera for post
     public void openBackCamera(int numCode, Context context)
     {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -124,6 +130,7 @@ public class recentsearch extends AppCompatActivity {
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
         startActivityForResult(cameraIntent, numCode);
     }
+    //gets urls for post list
     public ArrayList<String> getURLS(ArrayList<Post> postArray)
     {
 
@@ -135,21 +142,26 @@ public class recentsearch extends AppCompatActivity {
         }
         return URLS;
     }
+
     public void getFirstPage()
     {
+        //declare new callback for posts
         AsyncCallback<BackendlessCollection<Post>> callback = new AsyncCallback<BackendlessCollection<Post>>() {
             @Override
             public void handleResponse(BackendlessCollection<Post> postBackendlessCollection)
             {
                 Log.i("GotPosts", "GotPosts");
+                //gets current page
                 List<Post> firstPage = postBackendlessCollection.getCurrentPage();
                 Iterator<Post> it = firstPage.iterator();
                 while (it.hasNext())
                 {
+                    //adds each post from the page into a list
                     Post post = it.next();
                     Log.i("POST ID", post.getObjectId());
                     postsToBeDisplayed.add(post);
                 }
+                //downloads posts
                 DLC.setDlList(draw);
                 DLC.setFromR(g);
                 DLC.execute(getURLS(postsToBeDisplayed));
@@ -161,11 +173,14 @@ public class recentsearch extends AppCompatActivity {
             }
         };
         int pageSize = 10;
+        //set query for sorting
         BackendlessDataQuery query = new BackendlessDataQuery();
         QueryOptions qo = new QueryOptions();
         qo.addSortByOption("created desc");
+
         query.setPageSize(pageSize);
         query.setQueryOptions(qo);
+        //call method to get posts
         Backendless.Data.of(Post.class).find(query, callback);
     }
     public class MyListAdapter extends ArrayAdapter<Post>
@@ -179,6 +194,7 @@ public class recentsearch extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
+            //populates each row in the list with its respective data
             View itemView = convertView;
             if(itemView == null)
             {

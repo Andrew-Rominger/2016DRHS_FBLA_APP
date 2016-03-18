@@ -2,14 +2,8 @@ package fbla.com.fbla_app_src;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,15 +13,8 @@ import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
-import com.backendless.UserService;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.persistence.local.UserTokenStorageFactory;
-
-import java.io.Serializable;
-import java.util.Objects;
-import fbla.com.fbla_app_src.util;
 
 
 public class signIn extends AppCompatActivity {
@@ -50,6 +37,7 @@ public class signIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        //initailaze varriables and get views
         timeTried = 0;
         UsernameIn = (EditText) findViewById(R.id.userNameLogin);
         PassowrdIn = (EditText) findViewById(R.id.passwordLogin);
@@ -60,48 +48,21 @@ public class signIn extends AppCompatActivity {
         signinButton = (Button) findViewById(R.id.signInButton);
         goBackButton = (ImageView) findViewById(R.id.signIn_moveBackButton);
 
-       // Utility = new util();
-
+        /**
+         * Called when the user clicks the sign in button
+         */
         signinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
+                //Gets the inputted username and password
                 Username = UsernameIn.getText().toString();
                 Password = PassowrdIn.getText().toString();
 
-
+                //shows a loading spinner when attempting to login
                 showSpinner();
-                if(Build.VERSION.SDK_INT >= 21)
-                {
-                    spinner.setTranslationZ(0);
-                }
-                else
-                {
-                    ViewCompat.setTranslationZ(spinner, 0);
-                }
+                //Attempts to sign in user
                 signInUser(Username, Password, signIn.this);
-
-
-
-
-                /*
-                if(user == null)
-                {
-                    Toast.makeText(signIn.this, "Sign in failed.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-
-                if(util.checkForFirstTime(user))
-                {
-                    moveTo = new Intent(signIn.this, extrainfo.class);
-                }
-                else
-                {
-                    moveTo = new Intent(signIn.this, profilePage.class);
-                }
-                startActivity(moveTo);
-                */
             }
         });
         goBackButton.setOnClickListener(new View.OnClickListener()
@@ -117,23 +78,40 @@ public class signIn extends AppCompatActivity {
     }
     public static void showSpinner()
     {
+        //shows the loading spinner
         spinner.setVisibility(View.VISIBLE);
     }
-    public static void hideSpinner(){spinner.setVisibility(View.GONE);}
-    public static void signInUser(final String userName, final String password, final Context c)
+    public static void hideSpinner(){
+        //hides the spinner
+        spinner.setVisibility(View.GONE
+        );}
+
+    /**
+     *
+     * @param userName-The username to login with
+     * @param password-The password to login with
+     * @param c-The context being called from
+     */
+    public static void signInUser(final String userName, final String password, Context c)
     {
+        //declare varriables to user
         final Context context = c;
         final Intent i = new Intent(c, profilePage.class);
+
+        //makes a call to login the user and run a method if it succeds or fails
         Backendless.UserService.login(userName, password, new AsyncCallback<BackendlessUser>() {
             @Override
             public void handleResponse(BackendlessUser backendlessUser) {
+                //user logged in succesfully, move to profile page
                 Toast.makeText(context, userName + " logged in", Toast.LENGTH_LONG).show();
-                c.startActivity(i);
-                //Intent moveTo;
-                Log.i("logged in", "sucessful");
+                context.startActivity(i);
+
+
             }
             @Override
-            public void handleFault(BackendlessFault backendlessFault) {
+            public void handleFault(BackendlessFault backendlessFault)
+            {
+                //user did not signin, show why and hide spinner
                 Toast.makeText(context, userName + " did not login", Toast.LENGTH_LONG).show();
                 hideSpinner();
             }

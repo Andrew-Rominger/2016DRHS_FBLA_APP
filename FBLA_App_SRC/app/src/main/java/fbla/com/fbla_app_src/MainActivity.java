@@ -7,13 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.backendless.Backendless;
-import com.backendless.BackendlessUser;
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
-
 import com.facebook.CallbackManager;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -77,6 +72,7 @@ public class MainActivity extends AppCompatActivity
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    //Starts and moves to the email signup activity
     public void moveToEmailSignUp()
     {
         Intent moveToSU = new Intent(MainActivity.this, signupEmail.class);

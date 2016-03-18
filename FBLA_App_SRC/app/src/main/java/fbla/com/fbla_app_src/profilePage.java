@@ -58,7 +58,7 @@ public class profilePage extends AppCompatActivity{
     @Override
     public void onBackPressed()
     {
-
+        return;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class profilePage extends AppCompatActivity{
 
         setContentView(R.layout.activity_profile_page);
 
-
+        //get views and user
         user = Backendless.UserService.CurrentUser();
         profPic = new Picture();
         coverPhoto = new Picture();
@@ -86,7 +86,7 @@ public class profilePage extends AppCompatActivity{
         bckg = (RelativeLayout) findViewById(R.id.mainBCKG);
 
 
-
+        //SEE EDIT PORFILE SETTINGS
         if(!(user.getProperty("coverPhotoID") == null))
         {
             downloadCover.setRelativeLayout(bckg);
@@ -132,6 +132,7 @@ public class profilePage extends AppCompatActivity{
             });
         }
 
+        //sets onclick listers
         uploadImage.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -186,6 +187,7 @@ public class profilePage extends AppCompatActivity{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        //gets picture from camera and handles it
         File imgFile = new File(pictureImagePath);
         Log.i("PRINT IMGFILE", imgFile.getAbsolutePath());
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -198,6 +200,7 @@ public class profilePage extends AppCompatActivity{
         if(myBitmap != null) {
             final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
             if (requestCode == 1) {
+                //user took profile picture
                 uploadImage.setImageDrawable(new BitmapDrawable(getResources(), result));
                 Backendless.Persistence.save(profPic, new AsyncCallback<Picture>() {
                     @Override
@@ -225,6 +228,7 @@ public class profilePage extends AppCompatActivity{
                     }
                 });
             } else if (requestCode == 2) {
+                //user took cover photo
                 bckg.setBackground(new BitmapDrawable(getResources(), result));
                 Backendless.Persistence.save(coverPhoto, new AsyncCallback<Picture>() {
                     @Override
@@ -251,6 +255,7 @@ public class profilePage extends AppCompatActivity{
                     }
                 });
             } else if (requestCode == 3) {
+                //user took post
                 Intent i = new Intent(profilePage.this, uploadPostActivity.class);
                 i.putExtra("passedPictureData", data);
                 i.putExtra("IP", pictureImagePath);
