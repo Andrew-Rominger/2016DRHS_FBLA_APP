@@ -50,6 +50,30 @@ public class util
         });
 
     }
+
+    public static void uploadImageWCheck(Bitmap bMap, Picture p, Context thisContextp)
+    {
+        final String OID = p.getObjectId();
+
+        final Context thisContext = thisContextp;
+
+        Backendless.Files.Android.upload(bMap, Bitmap.CompressFormat.PNG, 100, OID + ".png", "/media/userpics", new AsyncCallback<BackendlessFile>()
+        {
+            @Override
+            public void handleResponse(BackendlessFile backendlessFile)
+            {
+                Toast.makeText(thisContext, OID + ".png Uploaded", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+                Toast.makeText(thisContext, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+
+    }
     //updates inputted user
     public static void updateUser(BackendlessUser user)
     {

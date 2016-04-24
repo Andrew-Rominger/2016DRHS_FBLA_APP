@@ -2,6 +2,9 @@ package fbla.com.fbla_app_src;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
+import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
@@ -43,7 +47,8 @@ public class trendingsearch extends AppCompatActivity {
     FrameLayout profile;
     RelativeLayout upVote;
     RelativeLayout recent;
-    String pictureImagePath = "";
+    BackendlessUser user;
+
     ListView listView;
     ProgressBar spinner;
     EditText tagSearch;
@@ -71,7 +76,7 @@ public class trendingsearch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trendingsearch);
         adapter = new MyListAdapter();
-
+        user = Backendless.UserService.CurrentUser();
         search = (FrameLayout) findViewById(R.id.frameLayout4);
         m = (LinearLayout)findViewById(R.id.dummmyFocus);
         add = (FrameLayout) findViewById(R.id.frameLayout5);
@@ -149,10 +154,7 @@ public class trendingsearch extends AppCompatActivity {
     {
         listView.setAdapter(adapter);
     }
-    private void updateList()
-    {
-        adapter.notifyDataSetChanged();
-    }
+    private String pictureImagePath = "";
     public void openBackCamera(int numCode, Context context)
     {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -168,9 +170,17 @@ public class trendingsearch extends AppCompatActivity {
     }
     public void onActivityResult(int requestCode, int resultCode, final Intent data)
     {
-        Intent i = new Intent(trendingsearch.this, uploadPostActivity.class);
-        i.putExtra("IP", pictureImagePath);
-        startActivity(i);
+        File imgFile = new File(pictureImagePath);
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+        if(myBitmap != null) {
+            Intent i = new Intent(trendingsearch.this, uploadPostActivity.class);
+            i.putExtra("IP", pictureImagePath);
+            startActivity(i);
+        }
     }
     public void setDL(ArrayList<Drawable> dr)
     {
@@ -245,10 +255,11 @@ public class trendingsearch extends AppCompatActivity {
             {
                 itemView = getLayoutInflater().inflate(R.layout.layout_listview, parent, false);
             }
-            Post post = postsToBeDisplayed.get(position);
+            final Post post = postsToBeDisplayed.get(position);
             ImageView iv = (ImageView) itemView.findViewById(R.id.item_listViewImage);
-            TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
-            TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
+            final TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
+            final TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
+            ImageView upvoteArrow = (ImageView) itemView.findViewById(R.id.item_listViewUpvoteArrow);
             iv.setImageDrawable(trendingsearch.draw.get(position));
             if(post.getCaption().length() > 16)
             {
@@ -260,18 +271,39 @@ public class trendingsearch extends AppCompatActivity {
                 tv.setText(post.getCaption());
             }
             numlikes.setText(String.valueOf(post.getNumLikes()));
+            upvoteArrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("C", "CLICKED");
+                    post.setNumLikes(post.getNumLikes() + 1);
+                    Backendless.Persistence.save(post, new AsyncCallback<Post>() {
+                        @Override
+                        public void handleResponse(Post post) {
+                            numlikes.setText(Integer.toString(post.getNumLikes()));
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault backendlessFault) {
+
+                        }
+                    });
+                    user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
+                    util.updateUser(user);
+                }
+            });
             return itemView;
             //return super.getView(position, convertView, parent);
         }
     }
     public String createWhereClause()
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy");
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, -2);
         dateFormat.format(c.get(Calendar.DAY_OF_MONTH));
         Date toLoadFrom = c.getTime();
         String toLoadFromS = toLoadFrom.toString();
+        Log.i(toLoadFromS, toLoadFromS);
         return toLoadFromS.toLowerCase();
         /*
         String Month = toLoadFromS.substring(4, 7);

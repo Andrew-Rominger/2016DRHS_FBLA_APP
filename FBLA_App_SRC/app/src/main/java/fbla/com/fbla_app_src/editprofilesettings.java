@@ -102,10 +102,6 @@ public class editprofilesettings extends AppCompatActivity {
                 {
                     user.setProperty("name", newName);
                 }
-                else
-                {
-                    return;
-                }
                 user.setProperty("userName", newHanle);
                 user.setProperty("Bio", newBio);
                 //attempts to update the user
@@ -117,7 +113,7 @@ public class editprofilesettings extends AppCompatActivity {
 
                     @Override
                     public void handleFault(BackendlessFault backendlessFault) {
-                        Toast.makeText(editprofilesettings.this, "Failed to update profile", Toast.LENGTH_LONG).show();
+                        Toast.makeText(editprofilesettings.this, backendlessFault.getCode(), Toast.LENGTH_LONG).show();
                     }
                 });
             }

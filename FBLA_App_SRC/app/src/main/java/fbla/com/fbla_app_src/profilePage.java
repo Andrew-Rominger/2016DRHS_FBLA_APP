@@ -46,6 +46,8 @@ public class profilePage extends AppCompatActivity{
     FrameLayout add;
     Picture profPic;
     Picture coverPhoto;
+    TextView numPosts;
+    TextView numLikes;
     FrameLayout profile;
     TextView bio;
     TextView uploadCoverPhoto;
@@ -79,16 +81,24 @@ public class profilePage extends AppCompatActivity{
         settings = (ImageView) findViewById(R.id.settings);
         search = (FrameLayout) findViewById(R.id.profilepage_searchNav);
         bio = (TextView) findViewById(R.id.profilepage_bio);
+        numPosts = (TextView) findViewById(R.id.profilepage_postsText);
+        numLikes = (TextView) findViewById(R.id.profilepage_likesText);
         loadingSpinner = (ProgressBar) findViewById(R.id.lodingProfSpinner);
         add = (FrameLayout) findViewById(R.id.profilepage_addPosNav);
         uploadCoverPhoto = (TextView) findViewById(R.id.addCoverPhoto);
         profile = (FrameLayout) findViewById(R.id.profilepage_profileNav);
         bckg = (RelativeLayout) findViewById(R.id.mainBCKG);
+        String numposts = (String) user.getProperty("numposts") + " Posts";
+        String numlikes = user.getProperty("numlikes") + " Likes";
+
+        numPosts.setText(numposts);
+        numLikes.setText(numlikes);
 
 
         //SEE EDIT PORFILE SETTINGS
         if(!(user.getProperty("coverPhotoID") == null))
         {
+
             downloadCover.setRelativeLayout(bckg);
             downloadCover.execute("https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + user.getProperty("coverPhotoID") + ".png");
             uploadCoverPhoto.setText("");
@@ -102,7 +112,7 @@ public class profilePage extends AppCompatActivity{
         if(!(user.getProperty("profilePictureID") == null))
         {
             showSpinner();
-            uploadImage.setVisibility(View.INVISIBLE);
+            uploadImage.setVisibility(View.GONE);
             //Log.i("userHas", "User Has profpic");
             downloadProf.setImageView(uploadImage);
             downloadProf.execute("https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + user.getProperty("profilePictureID") + ".png");
@@ -185,7 +195,7 @@ public class profilePage extends AppCompatActivity{
         }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResult(final int requestCode, int resultCode, Intent data)
     {
         //gets picture from camera and handles it
         File imgFile = new File(pictureImagePath);
@@ -199,13 +209,15 @@ public class profilePage extends AppCompatActivity{
 
         if(myBitmap != null) {
             final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+            final Bitmap scaledResult = Bitmap.createScaledBitmap(result, result.getWidth() / 2, result.getHeight() / 2, true);
             if (requestCode == 1) {
                 //user took profile picture
                 uploadImage.setImageDrawable(new BitmapDrawable(getResources(), result));
                 Backendless.Persistence.save(profPic, new AsyncCallback<Picture>() {
                     @Override
                     public void handleResponse(Picture picture) {
-                        util.uploadImage(result, picture, profilePage.this);
+                       // Bitmap scaledResult = Bitmap.createScaledBitmap(result, result.getWidth()/2, result.getHeight()/2, true);
+                        util.uploadImage(scaledResult, picture, profilePage.this);
                         user.setProperty("profilePictureID", picture.getObjectId());
 
                         Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
@@ -227,14 +239,16 @@ public class profilePage extends AppCompatActivity{
 
                     }
                 });
-            } else if (requestCode == 2) {
+            } else if (requestCode == 2)
+            {
                 //user took cover photo
                 bckg.setBackground(new BitmapDrawable(getResources(), result));
                 Backendless.Persistence.save(coverPhoto, new AsyncCallback<Picture>() {
                     @Override
                     public void handleResponse(Picture picture) {
                         Log.i("LOL", "MADE IT BRO");
-                        util.uploadImage(result, picture, profilePage.this);
+
+                        util.uploadImage(scaledResult, picture, profilePage.this);
                         user.setProperty("coverPhotoID", picture.getObjectId());
                         Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
                             @Override

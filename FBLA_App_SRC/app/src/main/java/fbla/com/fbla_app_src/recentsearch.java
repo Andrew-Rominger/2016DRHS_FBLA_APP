@@ -2,6 +2,9 @@ package fbla.com.fbla_app_src;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,9 +40,9 @@ public class recentsearch extends AppCompatActivity {
     // Declared global variables
     FrameLayout search;
     FrameLayout add;
+    ProgressBar spinner;
     FrameLayout profile;
     RelativeLayout upVote;
-    String pictureImagePath = "";
     RelativeLayout trending;
     ListView lv;
     static ArrayList<Drawable> draw;
@@ -62,6 +66,7 @@ public class recentsearch extends AppCompatActivity {
         search = (FrameLayout) findViewById(R.id.frameLayout4);
         add = (FrameLayout) findViewById(R.id.frameLayout5);
         profile = (FrameLayout) findViewById(R.id.frameLayout6);
+        spinner = (ProgressBar) findViewById(R.id.loadingBarRecent);
         lv  = (ListView) findViewById(R.id.listView_Recent);
         upVote = (RelativeLayout) findViewById(R.id.upVote);
         trending = (RelativeLayout) findViewById(R.id.trending);
@@ -103,6 +108,7 @@ public class recentsearch extends AppCompatActivity {
             }
         });
         //get first page of data
+        showSpinner();
         getFirstPage();
     }
     //put data in list
@@ -111,12 +117,16 @@ public class recentsearch extends AppCompatActivity {
 
         lv.setAdapter(adapter);
     }
-
-    private void updateList()
+    public void showSpinner()
     {
-        adapter.notifyDataSetChanged();
+        spinner.setVisibility(View.VISIBLE);
     }
-    //opens camera for post
+    public void hideSpinner()
+    {
+        spinner.setVisibility(View.INVISIBLE);
+    }
+
+    private String pictureImagePath = "";
     public void openBackCamera(int numCode, Context context)
     {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -129,6 +139,20 @@ public class recentsearch extends AppCompatActivity {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
         startActivityForResult(cameraIntent, numCode);
+    }
+    public void onActivityResult(int requestCode, int resultCode, final Intent data)
+    {
+        File imgFile = new File(pictureImagePath);
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+        if(myBitmap != null) {
+            Intent i = new Intent(recentsearch.this, uploadPostActivity.class);
+            i.putExtra("IP", pictureImagePath);
+            startActivity(i);
+        }
     }
     //gets urls for post list
     public ArrayList<String> getURLS(ArrayList<Post> postArray)

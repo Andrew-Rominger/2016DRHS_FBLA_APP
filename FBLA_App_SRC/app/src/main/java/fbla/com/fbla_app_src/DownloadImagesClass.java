@@ -154,6 +154,7 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
     public void update(mostupvotessearch muv)
     {
         muv.setDL(dlList);
+        muv.hideSpinner();
         try {
             muv.populateListView();
         } catch (InterruptedException e) {
@@ -173,6 +174,7 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
     public void update(recentsearch muv)
     {
         muv.setDL(dlList);
+        muv.hideSpinner();
         try {
             muv.populateListView();
         } catch (InterruptedException e) {
@@ -183,6 +185,7 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
     public void update(searchByTags muv)
     {
         muv.setDraw(dlList);
+        muv.hideSpinner();
         try {
             muv.populateListView();
         } catch (InterruptedException e) {

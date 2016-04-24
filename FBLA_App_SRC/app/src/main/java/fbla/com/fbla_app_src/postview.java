@@ -100,6 +100,8 @@ public class postview extends AppCompatActivity {
 
                     }
                 });
+                user.setProperty("numlikes", (Integer)user.getProperty("numlikes") + 1);
+                util.updateUser(user);
             }
         });
         downVoteButton.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +169,7 @@ public class postview extends AppCompatActivity {
                 userName.setText(user.getProperty("userName").toString());
                 userNameBelow.setText(postO.getUserUploadedS());
                 caption.setText(postO.getCaption());
-                comments.setText(Integer.toString(postO.getNumComments()));
+                //comments.setText(Integer.toString(postO.getNumComments()));
             }
 
             @Override

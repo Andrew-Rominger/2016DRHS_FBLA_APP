@@ -101,6 +101,14 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:headerDividersEnabled="false" />
+            <ProgressBar
+                android:id="@+id/loadingMostSpinner"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_above="@+id/profilepage_bio"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="48dp" />
         </RelativeLayout>
         <!--This section of code represents the navigation of the application -->
         <RelativeLayout

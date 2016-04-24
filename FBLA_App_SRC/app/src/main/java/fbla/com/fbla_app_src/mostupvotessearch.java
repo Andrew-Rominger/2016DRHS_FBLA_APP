@@ -2,6 +2,9 @@ package fbla.com.fbla_app_src;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,11 +18,13 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
+import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
@@ -38,6 +43,8 @@ public class mostupvotessearch extends AppCompatActivity {
     FrameLayout add;
     FrameLayout profile;
     RelativeLayout recent;
+    ProgressBar spinner;
+    BackendlessUser user;
     RelativeLayout trending;
     ArrayList<Post> postsToBeDisplayed = new ArrayList<>();
     ListView mainList;
@@ -74,7 +81,9 @@ public class mostupvotessearch extends AppCompatActivity {
         profile = (FrameLayout) findViewById(R.id.frameLayout6);
         mainList = (ListView) findViewById(R.id.upvoteListView);
         recent = (RelativeLayout) findViewById(R.id.recentFromUpvote);
+        user = Backendless.UserService.CurrentUser();
         trending = (RelativeLayout) findViewById(R.id.trendingFromUpvote);
+        spinner = (ProgressBar) findViewById(R.id.loadingMostSpinner);
         adapter = new MyListAdapter();
         //takes user to recent tab
         recent.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +117,7 @@ public class mostupvotessearch extends AppCompatActivity {
             }
         });
         getFirstPage();
+        showSpinner();
 
     }
     //declares image path
@@ -127,9 +137,17 @@ public class mostupvotessearch extends AppCompatActivity {
     }
     public void onActivityResult(int requestCode, int resultCode, final Intent data)
     {
-        Intent i = new Intent(mostupvotessearch.this, uploadPostActivity.class);
-        i.putExtra("IP", pictureImagePath);
-        startActivity(i);
+        File imgFile = new File(pictureImagePath);
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), bmOptions);
+        Matrix matrix = new Matrix();
+        matrix.setRotate(90);
+        if(myBitmap != null) {
+            Intent i = new Intent(mostupvotessearch.this, uploadPostActivity.class);
+            i.putExtra("IP", pictureImagePath);
+            startActivity(i);
+        }
     }
     //displays posts
     public void populateListView() throws InterruptedException
@@ -144,7 +162,8 @@ public class mostupvotessearch extends AppCompatActivity {
     //retrieves the posts from backendless
     public void getFirstPage()
     {
-        AsyncCallback<BackendlessCollection<Post>> callback = new AsyncCallback<BackendlessCollection<Post>>() {
+        AsyncCallback<BackendlessCollection<Post>> callback = new AsyncCallback<BackendlessCollection<Post>>()
+        {
             @Override
             public void handleResponse(BackendlessCollection<Post> postBackendlessCollection)
             {
@@ -162,6 +181,7 @@ public class mostupvotessearch extends AppCompatActivity {
                 DLC.execute(getURLS(postsToBeDisplayed));
             }
 
+
             @Override
             public void handleFault(BackendlessFault backendlessFault) {
 
@@ -175,8 +195,12 @@ public class mostupvotessearch extends AppCompatActivity {
         query.setPageSize(pageSize);
         query.setQueryOptions(qo);
 
-        Backendless.Data.of(Post.class).find(query,callback);
+        Backendless.Data.of(Post.class).find(query, callback);
+        hideSpinner();
+
     }
+    public void showSpinner(){spinner.setVisibility(View.VISIBLE);}
+    public void hideSpinner(){spinner.setVisibility(View.INVISIBLE);}
     //displays a list of all posts
     public class MyListAdapter extends ArrayAdapter<Post>
     {
@@ -225,6 +249,8 @@ public class mostupvotessearch extends AppCompatActivity {
 
                         }
                     });
+                    user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
+                    util.updateUser(user);
                 }
             });
             downvoteArrow.setOnClickListener(new View.OnClickListener() {
@@ -257,7 +283,7 @@ public class mostupvotessearch extends AppCompatActivity {
             {
                 tv.setText(post.getCaption());
             }
-            numlikes.setText(Integer.toString(post.getNumLikes()));
+            numlikes.setText(Integer.toString(post.getNumLikes() - post.getNumDislikes()));
             return itemView;
             //return super.getView(position, convertView, parent);
         }

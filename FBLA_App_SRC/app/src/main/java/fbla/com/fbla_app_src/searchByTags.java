@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class searchByTags extends AppCompatActivity
     String tag;
     FrameLayout profile;
     Intent i;
+    ProgressBar spinner;
     final searchByTags g = this;
     ArrayList<Post> postsToBeDisplayed = new ArrayList<>();
     public DownloadImagesClass DLC = new DownloadImagesClass();
@@ -48,7 +50,9 @@ public class searchByTags extends AppCompatActivity
         seachBy = (TextView) findViewById(R.id.tagTitle);
         seachList = (ListView) findViewById(R.id.searchListView);
         add = (FrameLayout) findViewById(R.id.searchAdd);
+
         profile = (FrameLayout) findViewById(R.id.searchProfile);
+        spinner = (ProgressBar) findViewById(R.id.loadingbartagged);
         search = (FrameLayout) findViewById(R.id.FLSearch);
         i = getIntent();
         Bundle b = i.getExtras();
@@ -57,6 +61,7 @@ public class searchByTags extends AppCompatActivity
         String str = "Posts Tagged " + tag;
     //      seachBy.setText(str);
         adapter = new MyListAdapter();
+        showSpinner();
 
 
 
@@ -130,6 +135,14 @@ public class searchByTags extends AppCompatActivity
         query.setPageSize(pageSize);
         query.setQueryOptions(qo);
         Backendless.Data.of(Post.class).find(query, callback);
+    }
+    public void showSpinner()
+    {
+        spinner.setVisibility(View.VISIBLE);
+    }
+    public void hideSpinner()
+    {
+        spinner.setVisibility(View.INVISIBLE);
     }
     public class MyListAdapter extends ArrayAdapter<Post>
     {

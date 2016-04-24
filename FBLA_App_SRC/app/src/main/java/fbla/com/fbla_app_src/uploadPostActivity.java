@@ -33,6 +33,7 @@ public class uploadPostActivity extends AppCompatActivity {
     Picture image;
     Picture image2;
     EditText tag;
+    Boolean hasImageUploaded;
     EditText caption;
     ImageView goBack;
     Button shareButton;
@@ -53,6 +54,7 @@ public class uploadPostActivity extends AppCompatActivity {
         post = new Post();
         image = new Picture();
         Intent i = getIntent();
+        hasImageUploaded = false;
         extras = i.getExtras();
         if(extras.get("IP") != null)
         {
@@ -177,8 +179,11 @@ public class uploadPostActivity extends AppCompatActivity {
                 }
                 Matrix matrix = new Matrix();
                 matrix.setRotate(90);
+
+
                 final Bitmap result = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
-                util.uploadImage(result, imagePassed,uploadPostActivity.this);
+                final Bitmap scaledResult = Bitmap.createScaledBitmap(result, result.getWidth()/2, result.getHeight()/2, true);
+                util.uploadImage(scaledResult, imagePassed, uploadPostActivity.this);
                 Log.i("imagetest", image.getObjectId());
                 image.setObjectId(imagePassed.getObjectId());
                 Log.i("imagetest2", image.getObjectId());
@@ -189,6 +194,8 @@ public class uploadPostActivity extends AppCompatActivity {
                 post.setPictureOnPost(image);
                 post.setUserUploadedS(user.getProperty("userName").toString());
                 post.setPictureOID(imagePassed.getObjectId());
+                user.setProperty("numposts", (Integer) user.getProperty("numposts") + 1);
+                util.updateUser(user);
 
 
             }
