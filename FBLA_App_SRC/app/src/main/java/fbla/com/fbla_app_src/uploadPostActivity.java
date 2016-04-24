@@ -98,7 +98,7 @@ public class uploadPostActivity extends AppCompatActivity {
                         public void handleResponse(Post postlol)
                         {
                             Toast.makeText(uploadPostActivity.this, "Post " + postlol.getObjectId() + " uploaded succesfully!", Toast.LENGTH_LONG).show();
-                            int numPosts = Integer.parseInt(user.getProperty("numPosts").toString());
+                            int numPosts = Integer.parseInt(user.getProperty("numposts").toString());
                             user.setProperty("numPosts", numPosts++);
                             util.updateUser(user);
                             startActivity(new Intent(uploadPostActivity.this, profilePage.class));
