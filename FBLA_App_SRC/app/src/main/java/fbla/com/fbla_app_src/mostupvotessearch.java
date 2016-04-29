@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -121,7 +124,7 @@ public class mostupvotessearch extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        getFirstPage();
+        getFirstPage(this);
         showSpinner();
 
     }
@@ -165,8 +168,9 @@ public class mostupvotessearch extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
     //retrieves the posts from backendless
-    public void getFirstPage()
+    public void getFirstPage(final Context c)
     {
+
         AsyncCallback<BackendlessCollection<Post>> callback = new AsyncCallback<BackendlessCollection<Post>>()
         {
             @Override
@@ -181,9 +185,38 @@ public class mostupvotessearch extends AppCompatActivity {
                     Log.i("POST ID", post.getObjectId());
                     postsToBeDisplayed.add(post);
                 }
+                /*
                 DLC.setDlList(draw);
                 DLC.setFrom(g);
                 DLC.execute(getURLS(postsToBeDisplayed));
+                */
+                ExtendedTarget t = new ExtendedTarget()
+                {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
+                    {
+                        setBd(new BitmapDrawable(bitmap));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable)
+                    {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable)
+                    {
+
+                    }
+                };
+                ArrayList<String> sArr = getURLS(postsToBeDisplayed);
+                for(String s : sArr)
+                {
+                    Picasso.with(c).load(s).into(t);
+                    draw.add(t.getBd());
+                }
+
             }
 
 
@@ -202,6 +235,8 @@ public class mostupvotessearch extends AppCompatActivity {
 
         Backendless.Data.of(Post.class).find(query, callback);
         hideSpinner();
+
+
 
     }
     public void showSpinner(){spinner.setVisibility(View.VISIBLE);}
