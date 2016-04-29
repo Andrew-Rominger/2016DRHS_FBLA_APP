@@ -191,11 +191,13 @@ public class postview extends AppCompatActivity {
     private void onRightSwipe()
     {
         Log.i("Right", "Swiped");
-        postO.setNumLikes(postO.getNumLikes() + 1);
+        int num = postO.getNumLikes();
+        postO.setNumLikes(num+1);
+        upVotes.setText(Integer.toString(num + 1));
         Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
             @Override
             public void handleResponse(Post post) {
-                upVotes.setText(Integer.toString(post.getNumLikes()));
+
             }
 
             @Override
@@ -234,7 +236,7 @@ public class postview extends AppCompatActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {
                 float diffAbs = Math.abs(e1.getY() - e2.getY());
-                float diff = e1.getX() - e2.getY();
+                float diff = e1.getX() - e2.getX();
                 if (diffAbs > SWIPE_MAX_OFF_PATH) {
                     return false;
                 }
@@ -251,6 +253,7 @@ public class postview extends AppCompatActivity {
             }
             return false;
         }
+
 
     }
 }
