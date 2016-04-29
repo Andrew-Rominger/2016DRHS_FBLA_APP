@@ -10,6 +10,7 @@
     tools:context="fbla.com.fbla_app_src.signIn"
     tools:showIn="@layout/activity_sign_in"
     android:orientation="vertical"
+    android:id="@+id/signInBackground"
     android:background="@drawable/signin_bckg">
     <!--This section of code represents the layout for this section of the application   -->
     <RelativeLayout

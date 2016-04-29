@@ -24,6 +24,7 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
     recentsearch fromR;
     searchByTags fromS;
     commentView fromC;
+    yourupvotes fromY;
 
     public commentView getFromC() {
         return fromC;
@@ -68,6 +69,10 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
     public ArrayList<Drawable> getDlList() {
         return dlList;
     }
+
+    public yourupvotes getFromY(){return fromY;}
+
+    public void setFromY(yourupvotes fromY){this.fromY = fromY;}
 
     public void setDlList(ArrayList<Drawable> dlList) {
         this.dlList = dlList;

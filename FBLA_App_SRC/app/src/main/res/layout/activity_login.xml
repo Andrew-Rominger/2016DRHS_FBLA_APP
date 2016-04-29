@@ -8,7 +8,7 @@
 
 
 
-    <include layout="@layout/content_signupemail" />
+    <include layout="@layout/content_signupEmail" />
 
 
 </android.support.design.widget.CoordinatorLayout>

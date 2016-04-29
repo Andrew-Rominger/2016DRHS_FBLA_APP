@@ -1,13 +1,20 @@
 package fbla.com.fbla_app_src;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,13 +44,16 @@ public class signupEmail extends AppCompatActivity
     EditText date;
     static SimpleDateFormat dateFormat = new SimpleDateFormat("MMddyyyy");
     Date theDateOfBirth;
+    Date currentDate;
     TextView termsAndConditions;
+    public Calendar c;
+    public Calendar cal;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        setupUI(findViewById(R.id.background));
         //Buttons, images
         termsAndConditions = (TextView) findViewById(R.id.TandCTV);
         goBack = (Button) findViewById(R.id.signupEmail_gobackButton);
@@ -55,6 +65,22 @@ public class signupEmail extends AppCompatActivity
         fullName = (EditText) findViewById(R.id.FandLName);
         date = (EditText) findViewById(R.id.dob);
         user = new BackendlessUser();
+        c = Calendar.getInstance();
+        cal = Calendar.getInstance();
+        //cal.set(Calendar.YEAR, Calendar.YEAR - 13);
+        cal.set(Calendar.YEAR - 13, Calendar.MONTH, Calendar.DATE);
+        /*
+        dateFormat.format(currentDate);
+        c = Calendar.getInstance();
+        day = c.get(Calendar.DATE);
+        month = c.get(Calendar.MONTH);
+        year = c.get(Calendar.YEAR) - 13;
+        userDay = c.get(Calendar.DATE);
+        userMonth = c.get(Calendar.MONTH);
+        userYear = c.get(Calendar.YEAR);
+
+        currentDate.setTime();
+*/
         // a method to execute when the go back button is pressed
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +104,6 @@ public class signupEmail extends AppCompatActivity
             public void onClick(View v) {
                 final String newUserName = userNameInput.getText().toString();
                 final String password = passwordInput.getText().toString();
-
                 String name = fullName.getText().toString();
                 String email = emailInput.getText().toString();
                 String passwordCheck = passwordInputCheck.getText().toString();
@@ -87,7 +112,7 @@ public class signupEmail extends AppCompatActivity
                 Boolean passwordValid = Validator.isPasswordValid(signupEmail.this, password, passwordCheck);
                 String theDate = date.getText().toString();
                 convertDate(theDate);
-
+                Log.i(cal.toString(), "cal");
                 if (util.shave(theDate) == null)
                 {
                 Toast.makeText(signupEmail.this, "Incorrect format for your Date of Birth, please use the format mmddyyyy", Toast.LENGTH_LONG).show();
@@ -99,7 +124,8 @@ public class signupEmail extends AppCompatActivity
                     } catch (ParseException e) {
                         Toast.makeText(signupEmail.this, "Incorrect format for your Date of Birth, please use the format mmddyyyy", Toast.LENGTH_LONG).show();
                     }
-                    if (isThirteen(theDateOfBirth))
+                    c.setTime(theDateOfBirth);
+                    if (isThirteen(c,cal))
                     {
                         if (validEmail && passwordValid && isUserNameValid) {
                             user.setProperty("userName", newUserName);
@@ -140,14 +166,13 @@ public class signupEmail extends AppCompatActivity
         });
     }
     //checks if user is thirteen years old
-    public boolean isThirteen(Date date)
-    {
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        Calendar currentDate = Calendar.getInstance();
-        currentDate.set(Calendar.YEAR, Calendar.YEAR-13);
 
-        if(currentDate.before(c))
+    public boolean isThirteen(Calendar current, Calendar user)
+    {
+        int theCalendar;
+        theCalendar = current.compareTo(user);
+
+        if(theCalendar >= 0)
         {
             Log.i("returned ", "true");
             return true;
@@ -158,6 +183,7 @@ public class signupEmail extends AppCompatActivity
             return false;
         }
     }
+
     // converts the date into a string acceptable for use for backendless
     public static String convertDate(String string)
     {
@@ -180,4 +206,38 @@ public class signupEmail extends AppCompatActivity
         }
         return end;
     }
+    //this method hides the keyboard
+    public static void hideSoftKeyboard(Activity activity)
+    {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+    //this method checks to see if the user has clicked outside of the edit text when the key board is up, if they do the hideSoftKeyboard() method is called
+    public void setupUI(View view) {
+
+        //Set up touch listener for non-text box views to hide keyboard.
+        if(!(view instanceof EditText)) {
+
+            view.setOnTouchListener(new View.OnTouchListener() {
+
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(signupEmail.this);
+                    return false;
+                }
+
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+                View innerView = ((ViewGroup) view).getChildAt(i);
+
+                setupUI(innerView);
+            }
+        }
+    }
+
 }

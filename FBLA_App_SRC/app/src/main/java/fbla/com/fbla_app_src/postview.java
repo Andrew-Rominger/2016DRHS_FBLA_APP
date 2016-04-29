@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -34,11 +36,10 @@ public class postview extends AppCompatActivity {
     BackendlessUser user;
     Post postO;
     DownloadImageClass DLC = new DownloadImageClass();
-
+    private GestureDetector gestureDetector;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         //get views
         Intent i = getIntent();
         Bundle extras = i.getExtras();
@@ -58,6 +59,7 @@ public class postview extends AppCompatActivity {
         downVotes = (TextView) findViewById(R.id.postViewDownvote);
         upVotes = (TextView) findViewById(R.id.postViewUpvote);
         user = Backendless.UserService.CurrentUser();
+        gestureDetector = new GestureDetector(new SwipeGestureDetector());
 
         //navigaion
 
@@ -67,8 +69,7 @@ public class postview extends AppCompatActivity {
                 startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 3);
             }
         });
-        search.setOnClickListener(new View.OnClickListener()
-        {
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(postview.this, mostupvotessearch.class);
@@ -84,8 +85,7 @@ public class postview extends AppCompatActivity {
         });
         upVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 //adds one upvote to the post and updates it
                 Log.i("C", "CLICKED");
                 postO.setNumLikes(postO.getNumLikes() + 1);
@@ -100,14 +100,13 @@ public class postview extends AppCompatActivity {
 
                     }
                 });
-                user.setProperty("numlikes", (Integer)user.getProperty("numlikes") + 1);
+                user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
                 util.updateUser(user);
             }
         });
         downVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 //adds one downvote to the post and updates it
                 Log.i("C", "CLICKED");
                 postO.setNumDislikes(postO.getNumDislikes() + 1);
@@ -124,6 +123,7 @@ public class postview extends AppCompatActivity {
                 });
             }
         });
+        /*
         post.setOnTouchListener(new OnSwipeTouchListener(postview.this)
         {
             public void onSwipeRight() {
@@ -157,6 +157,7 @@ public class postview extends AppCompatActivity {
                 });
             }
         });
+        */
         Backendless.Data.of(Post.class).findById(PostID, new AsyncCallback<Post>() {
             @Override
             public void handleResponse(Post foundPost) {
@@ -178,10 +179,76 @@ public class postview extends AppCompatActivity {
             }
         });
 
+    }
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        if(gestureDetector.onTouchEvent(event))
+        {
+            return true;
+        }
+      return super.onTouchEvent(event);
+    }
+    private void onRightSwipe()
+    {
+        Log.i("Left", "Swiped");
+        postO.setNumLikes(postO.getNumLikes() + 1);
+        Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
+            @Override
+            public void handleResponse(Post post) {
+                upVotes.setText(Integer.toString(post.getNumLikes()));
+            }
 
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
 
+            }
+        });
+        user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
+        util.updateUser(user);
+    }
+    private void onLeftSwipe()
+    {
+        Log.i("Right", "Swipe");
+        postO.setNumDislikes(postO.getNumDislikes() + 1);
+        Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
+            @Override
+            public void handleResponse(Post post) {
+                downVotes.setText(Integer.toString(post.getNumDislikes()));
+            }
 
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
 
+            }
+        });
+    }
+    //private class for gestures
+    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
+        //makes swipes shorter or longer
+        private static final int SWIPE_MIN_DISTANCE = 120;
+        private static final int SWIPE_MAX_OFF_PATH = 200;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            try {
+                float diffAbs = Math.abs(e1.getY() - e2.getY());
+                float diff = e1.getX() - e2.getY();
+                if (diffAbs > SWIPE_MAX_OFF_PATH) {
+                    return false;
+                }
+                //left swipe
+                if (diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    postview.this.onLeftSwipe();
+                }
+                //right swipe
+                else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    postview.this.onRightSwipe();
+                }
+            } catch (Exception e) {
+                Log.e("postview", "Error on strech gestures");
+            }
+            return false;
+        }
 
     }
 }

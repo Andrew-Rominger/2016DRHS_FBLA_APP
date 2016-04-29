@@ -1,5 +1,6 @@
 package fbla.com.fbla_app_src;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,8 +13,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -75,6 +78,7 @@ public class trendingsearch extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trendingsearch);
+        setupUI(findViewById(R.id.trendingSearchBackground));
         adapter = new MyListAdapter();
         user = Backendless.UserService.CurrentUser();
         search = (FrameLayout) findViewById(R.id.frameLayout4);
@@ -305,62 +309,41 @@ public class trendingsearch extends AppCompatActivity {
         String toLoadFromS = toLoadFrom.toString();
         Log.i(toLoadFromS, toLoadFromS);
         return toLoadFromS.toLowerCase();
-        /*
-        String Month = toLoadFromS.substring(4, 7);
-        Log.i("LOG", toLoadFromS);
-        Log.i("logging", Month);
-        switch (Month)
-        {
-            case "jan":
-                Month = "01";
-                break;
-            case "feb":
-                Month = "02";
-                break;
-            case "mar":
-                Month = "03";
-                break;
-            case "apr":
-                Month = "04";
-                break;
-            case "may":
-                Month = "05";
-                break;
-            case "jun":
-                Month = "06";
-                break;
-            case "jul":
-                Month = "07";
-                break;
-            case "aug":
-                Month = "08";
-                break;
-            case "sep":
-                Month = "09";
-                break;
-            case "oct":
-                Month = "10";
-                break;
-            case "nov":
-                Month = "11";
-                break;
-            case "dec":
-                Month = "13";
-                break;
-            default:
-                Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show();
-        }
-        String Day = toLoadFromS.substring(8,10);
-        String Hour = toLoadFromS.substring(11,13);
-        String Minute = toLoadFromS.substring(14, 16);
-        String Seconds = toLoadFromS.substring(17,19);
-        String Year = toLoadFromS.substring(24,28);
-        String str1 = Month + "/" + Day + "/" + Year;
-        String str = "created > " + str1;
-        Log.i("c", str);
-        return str;
-        */
 
+
+    }
+    //this method hides the keyboard
+    public static void hideSoftKeyboard(Activity activity)
+    {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+    //this method checks to see if the user has clicked outside of the edit text when the key board is up, if they do the hideSoftKeyboard() method is called
+    public void setupUI(View view) {
+
+        //Set up touch listener for non-text box views to hide keyboard.
+        if(!(view instanceof EditText)) {
+
+            view.setOnTouchListener(new View.OnTouchListener() {
+
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(trendingsearch.this);
+                    return false;
+                }
+
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+                View innerView = ((ViewGroup) view).getChildAt(i);
+
+                setupUI(innerView);
+            }
+        }
     }
 
 

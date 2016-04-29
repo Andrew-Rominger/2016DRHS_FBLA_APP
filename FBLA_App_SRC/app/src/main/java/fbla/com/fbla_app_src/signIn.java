@@ -1,10 +1,14 @@
 package fbla.com.fbla_app_src;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,11 +36,10 @@ public class signIn extends AppCompatActivity {
 
     //Called when activity is created
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
+        setupUI(findViewById(R.id.signInBackground));
         //initailaze varriables and get views
         timeTried = 0;
         UsernameIn = (EditText) findViewById(R.id.userNameLogin);
@@ -53,8 +56,7 @@ public class signIn extends AppCompatActivity {
          */
         signinButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 //Gets the inputted username and password
                 Username = UsernameIn.getText().toString();
                 Password = PassowrdIn.getText().toString();
@@ -65,11 +67,9 @@ public class signIn extends AppCompatActivity {
                 signInUser(Username, Password, signIn.this);
             }
         });
-        goBackButton.setOnClickListener(new View.OnClickListener()
-        {
+        goBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 startActivity(new Intent(signIn.this, MainActivity.class));
             }
         });
@@ -108,9 +108,9 @@ public class signIn extends AppCompatActivity {
 
 
             }
+
             @Override
-            public void handleFault(BackendlessFault backendlessFault)
-            {
+            public void handleFault(BackendlessFault backendlessFault) {
                 //user did not signin, show why and hide spinner
                 Toast.makeText(context, userName + " did not login", Toast.LENGTH_LONG).show();
                 hideSpinner();
@@ -118,5 +118,38 @@ public class signIn extends AppCompatActivity {
         });
 
 
+    }
+    //this method hides the keyboard
+    public static void hideSoftKeyboard(Activity activity)
+    {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+    //this method checks to see if the user has clicked outside of the edit text when the key board is up, if they do the hideSoftKeyboard() method is called
+    public void setupUI(View view) {
+
+        //Set up touch listener for non-text box views to hide keyboard.
+        if(!(view instanceof EditText)) {
+
+            view.setOnTouchListener(new View.OnTouchListener() {
+
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(signIn.this);
+                    return false;
+                }
+
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+                View innerView = ((ViewGroup) view).getChildAt(i);
+
+                setupUI(innerView);
+            }
+        }
     }
 }
