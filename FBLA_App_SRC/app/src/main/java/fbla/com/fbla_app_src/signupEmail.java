@@ -48,6 +48,7 @@ public class signupEmail extends AppCompatActivity
     TextView termsAndConditions;
     public Calendar c;
     public Calendar cal;
+    private int year;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -67,20 +68,11 @@ public class signupEmail extends AppCompatActivity
         user = new BackendlessUser();
         c = Calendar.getInstance();
         cal = Calendar.getInstance();
-        //cal.set(Calendar.YEAR, Calendar.YEAR - 13);
-        cal.set(Calendar.YEAR - 13, Calendar.MONTH, Calendar.DATE);
-        /*
+        year =  cal.get(Calendar.YEAR);
+        year = year - 13;
+        cal.set(year, Calendar.MONTH, Calendar.DATE);
+        currentDate = cal.getTime();
         dateFormat.format(currentDate);
-        c = Calendar.getInstance();
-        day = c.get(Calendar.DATE);
-        month = c.get(Calendar.MONTH);
-        year = c.get(Calendar.YEAR) - 13;
-        userDay = c.get(Calendar.DATE);
-        userMonth = c.get(Calendar.MONTH);
-        userYear = c.get(Calendar.YEAR);
-
-        currentDate.setTime();
-*/
         // a method to execute when the go back button is pressed
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,9 +116,11 @@ public class signupEmail extends AppCompatActivity
                     } catch (ParseException e) {
                         Toast.makeText(signupEmail.this, "Incorrect format for your Date of Birth, please use the format mmddyyyy", Toast.LENGTH_LONG).show();
                     }
-                    c.setTime(theDateOfBirth);
-                    if (isThirteen(c,cal))
+                        dateFormat.format(theDateOfBirth);
+                    if (theDateOfBirth.before(currentDate))
                     {
+                        Log.i("User Date of birth", theDateOfBirth.toString());
+                        Log.i("device date", currentDate.toString());
                         if (validEmail && passwordValid && isUserNameValid) {
                             user.setProperty("userName", newUserName);
                             user.setPassword(password);
@@ -165,25 +159,6 @@ public class signupEmail extends AppCompatActivity
             }
         });
     }
-    //checks if user is thirteen years old
-
-    public boolean isThirteen(Calendar current, Calendar user)
-    {
-        int theCalendar;
-        theCalendar = current.compareTo(user);
-
-        if(theCalendar >= 0)
-        {
-            Log.i("returned ", "true");
-            return true;
-        }
-        else
-        {
-            Log.i("returned", "false");
-            return false;
-        }
-    }
-
     // converts the date into a string acceptable for use for backendless
     public static String convertDate(String string)
     {

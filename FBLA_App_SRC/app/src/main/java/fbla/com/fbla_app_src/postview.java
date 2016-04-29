@@ -190,7 +190,7 @@ public class postview extends AppCompatActivity {
     }
     private void onRightSwipe()
     {
-        Log.i("Left", "Swiped");
+        Log.i("Right", "Swiped");
         postO.setNumLikes(postO.getNumLikes() + 1);
         Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
             @Override
@@ -208,7 +208,7 @@ public class postview extends AppCompatActivity {
     }
     private void onLeftSwipe()
     {
-        Log.i("Right", "Swipe");
+        Log.i("Left", "Swipe");
         postO.setNumDislikes(postO.getNumDislikes() + 1);
         Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
             @Override
@@ -221,6 +221,8 @@ public class postview extends AppCompatActivity {
 
             }
         });
+        user.setProperty("numDislikes", (Integer) user.getProperty("numDislikes") + 1);
+        util.updateUser(user);
     }
     //private class for gestures
     private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
