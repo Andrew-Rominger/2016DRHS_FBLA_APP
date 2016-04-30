@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
@@ -32,12 +34,13 @@ public class postview extends AppCompatActivity {
     FrameLayout search;
     FrameLayout add;
     FrameLayout profile;
+    RelativeLayout upVote;
     ImageView post;
     BackendlessUser user;
     Post postO;
     DownloadImageClass DLC = new DownloadImageClass();
     private GestureDetector gestureDetector;
-
+    private ViewGroup containerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //get views
@@ -46,6 +49,7 @@ public class postview extends AppCompatActivity {
         String PostID = extras.get("postID").toString();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postview);
+        upVote = (RelativeLayout) findViewById(R.id.upVoteRL);
         post = (ImageView) findViewById(R.id.picturePost);
         add = (FrameLayout) findViewById(R.id.postViewAdd);
         search = (FrameLayout) findViewById(R.id.postViewSearch);
@@ -123,41 +127,7 @@ public class postview extends AppCompatActivity {
                 });
             }
         });
-        /*
-        post.setOnTouchListener(new OnSwipeTouchListener(postview.this)
-        {
-            public void onSwipeRight() {
-                Log.i("swipe", "right");
-                postO.setNumLikes(postO.getNumLikes() + 1);
-                Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
-                    @Override
-                    public void handleResponse(Post post) {
-                        upVotes.setText(Integer.toString(post.getNumLikes()));
-                    }
 
-                    @Override
-                    public void handleFault(BackendlessFault backendlessFault) {
-
-                    }
-                });
-            }
-            public void onSwipeLeft() {
-                Log.i("swipe", "left");
-                postO.setNumDislikes(postO.getNumDislikes() + 1);
-                Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
-                    @Override
-                    public void handleResponse(Post post) {
-                        downVotes.setText(Integer.toString(post.getNumDislikes()));
-                    }
-
-                    @Override
-                    public void handleFault(BackendlessFault backendlessFault) {
-
-                    }
-                });
-            }
-        });
-        */
         Backendless.Data.of(Post.class).findById(PostID, new AsyncCallback<Post>() {
             @Override
             public void handleResponse(Post foundPost) {
@@ -211,11 +181,14 @@ public class postview extends AppCompatActivity {
     private void onLeftSwipe()
     {
         Log.i("Left", "Swipe");
-        postO.setNumDislikes(postO.getNumDislikes() + 1);
+        int numl = postO.getNumDislikes();
+        postO.setNumDislikes(numl + 1);
+        downVotes.setText(Integer.toString(numl));
+
         Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
             @Override
             public void handleResponse(Post post) {
-                downVotes.setText(Integer.toString(post.getNumDislikes()));
+
             }
 
             @Override
@@ -233,27 +206,35 @@ public class postview extends AppCompatActivity {
         private static final int SWIPE_MAX_OFF_PATH = 200;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            try {
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+        {
+            try
+            {
                 float diffAbs = Math.abs(e1.getY() - e2.getY());
                 float diff = e1.getX() - e2.getX();
-                if (diffAbs > SWIPE_MAX_OFF_PATH) {
+                if (diffAbs > SWIPE_MAX_OFF_PATH)
+                {
                     return false;
                 }
                 //left swipe
-                if (diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                if (diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+                {
                     postview.this.onLeftSwipe();
                 }
                 //right swipe
-                else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+                {
                     postview.this.onRightSwipe();
+
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Log.e("postview", "Error on strech gestures");
+                //Log.e("Eception", "" + e.getMessage());
             }
             return false;
         }
-
 
     }
 }

@@ -65,7 +65,7 @@ public class recentsearch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recentsearch);
         setupUI(findViewById(R.id.recentSearchBackground));
-        //get viewa
+        //get views
         adapter = new MyListAdapter();
         search = (FrameLayout) findViewById(R.id.frameLayout4);
         add = (FrameLayout) findViewById(R.id.frameLayout5);
@@ -256,27 +256,29 @@ public class recentsearch extends AppCompatActivity {
     //this method checks to see if the user has clicked outside of the edit text when the key board is up, if they do the hideSoftKeyboard() method is called
     public void setupUI(View view) {
 
-        //Set up touch listener for non-text box views to hide keyboard.
-        if(!(view instanceof EditText)) {
+        if(!(view instanceof RelativeLayout)) {
+            //Set up touch listener for non-text box views to hide keyboard.
+            if (!(view instanceof EditText)) {
 
-            view.setOnTouchListener(new View.OnTouchListener() {
+                view.setOnTouchListener(new View.OnTouchListener() {
 
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(recentsearch.this);
-                    return false;
+                    public boolean onTouch(View v, MotionEvent event) {
+                        hideSoftKeyboard(recentsearch.this);
+                        return false;
+                    }
+
+                });
+            }
+
+            //If a layout container, iterate over children and seed recursion.
+            if (view instanceof ViewGroup) {
+
+                for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+                    View innerView = ((ViewGroup) view).getChildAt(i);
+
+                    setupUI(innerView);
                 }
-
-            });
-        }
-
-        //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-
-                View innerView = ((ViewGroup) view).getChildAt(i);
-
-                setupUI(innerView);
             }
         }
     }

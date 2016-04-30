@@ -27,7 +27,8 @@
             android:layout_centerHorizontal="true"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:layout_alignParentStart="false" />
+            android:layout_alignParentStart="false"
+            android:layout_alignParentLeft="false" />
 
     </RelativeLayout>
     <!--This section of code represents the amount of upvotes, downvotes and comments on the post -->
@@ -236,7 +237,8 @@
             android:layout_height="fill_parent"
             android:layout_centerInParent="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:id="@+id/relativeLayout3">
 
 
             <LinearLayout
@@ -244,16 +246,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true">
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:id="@+id/picturePost"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight=".85"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp" />
+                    android:layout_weight=".85">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="#60C6C7"
+                        android:alpha=".5"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="false"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/upVoteRL"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/upvoteTV"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="#fff"
+                            android:textSize="40sp" />
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/picturePost"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight=".85"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -319,7 +354,9 @@
                         android:src="@drawable/upvotes" />
 
                 </RelativeLayout>
+
             </LinearLayout>
+
         </RelativeLayout>
 
 

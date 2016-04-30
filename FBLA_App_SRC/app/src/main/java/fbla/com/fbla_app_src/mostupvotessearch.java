@@ -185,11 +185,11 @@ public class mostupvotessearch extends AppCompatActivity {
                     Log.i("POST ID", post.getObjectId());
                     postsToBeDisplayed.add(post);
                 }
-                /*
+
                 DLC.setDlList(draw);
                 DLC.setFrom(g);
                 DLC.execute(getURLS(postsToBeDisplayed));
-                */
+                /*
                 ExtendedTarget t = new ExtendedTarget()
                 {
                     @Override
@@ -216,6 +216,7 @@ public class mostupvotessearch extends AppCompatActivity {
                     Picasso.with(c).load(s).into(t);
                     draw.add(t.getBd());
                 }
+                */
 
             }
 
@@ -332,33 +333,34 @@ public class mostupvotessearch extends AppCompatActivity {
     //this method hides the keyboard
     public static void hideSoftKeyboard(Activity activity)
     {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
     //this method checks to see if the user has clicked outside of the edit text when the key board is up, if they do the hideSoftKeyboard() method is called
     public void setupUI(View view) {
 
-        //Set up touch listener for non-text box views to hide keyboard.
-        if(!(view instanceof EditText)) {
+        if(!(view instanceof RelativeLayout)) {
+            //Set up touch listener for non-text box views to hide keyboard.
+            if (!(view instanceof EditText)) {
+                view.setOnTouchListener(new View.OnTouchListener() {
 
-            view.setOnTouchListener(new View.OnTouchListener() {
+                    public boolean onTouch(View v, MotionEvent event) {
+                        hideSoftKeyboard(mostupvotessearch.this);
+                        return false;
+                    }
 
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(mostupvotessearch.this);
-                    return false;
+                });
+            }
+
+            //If a layout container, iterate over children and seed recursion.
+            if (view instanceof ViewGroup) {
+
+                for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+                    View innerView = ((ViewGroup) view).getChildAt(i);
+
+                    setupUI(innerView);
                 }
-
-            });
-        }
-
-        //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-
-                View innerView = ((ViewGroup) view).getChildAt(i);
-
-                setupUI(innerView);
             }
         }
     }
