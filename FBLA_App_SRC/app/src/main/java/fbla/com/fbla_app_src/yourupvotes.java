@@ -140,7 +140,7 @@ public class yourupvotes extends AppCompatActivity {
                     postsToBeDisplayed.add(post);
                 }
                 DLC.setDlList(draw);
-                DLC.setFromY(g);
+               // DLC.setFromY(g);
                 DLC.execute(getURLS(postsToBeDisplayed));
             }
 

@@ -182,6 +182,7 @@ public class postview extends AppCompatActivity {
                 });
             }
         });
+        /*
         post.setOnTouchListener(new OnSwipeTouchListener(postview.this)
         {
             public void onSwipeRight() {
@@ -254,6 +255,7 @@ public class postview extends AppCompatActivity {
                 });
             }
         });
+        */
         Backendless.Data.of(Post.class).findById(PostID, new AsyncCallback<Post>() {
             @Override
             public void handleResponse(Post foundPost) {
