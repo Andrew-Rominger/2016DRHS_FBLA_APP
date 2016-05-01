@@ -237,6 +237,7 @@ public class trendingsearch extends AppCompatActivity {
         qo.addSortByOption("numLikes desc");
         //query.setWhereClause(createWhereClause());
         query.setPageSize(pageSize);
+        query.setWhereClause("isReported = false");
         query.setQueryOptions(qo);
         Backendless.Data.of(Post.class).find(query, callback);
     }

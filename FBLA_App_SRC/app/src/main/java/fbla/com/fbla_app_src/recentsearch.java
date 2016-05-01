@@ -207,6 +207,7 @@ public class recentsearch extends AppCompatActivity {
 
         query.setPageSize(pageSize);
         query.setQueryOptions(qo);
+        query.setWhereClause("isReported = false");
         //call method to get posts
         Backendless.Data.of(Post.class).find(query, callback);
     }

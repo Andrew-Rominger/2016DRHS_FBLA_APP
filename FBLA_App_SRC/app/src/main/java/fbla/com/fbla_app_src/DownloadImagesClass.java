@@ -23,9 +23,26 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
     trendingsearch fromT;
     recentsearch fromR;
     searchByTags fromS;
+    yourupvotes fromY;
     commentView fromC;
+    usersPosts fromU;
     int locF;
 
+    public usersPosts getFromU() {
+        return fromU;
+    }
+
+    public void setFromU(usersPosts fromU) {
+        this.fromU = fromU;
+    }
+
+    public yourupvotes getFromY() {
+        return fromY;
+    }
+
+    public void setFromY(yourupvotes fromY) {
+        this.fromY = fromY;
+    }
 
     public commentView getFromC() {
         return fromC;
@@ -191,9 +208,13 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
         {
             update(fromS);
         }
-        else
+        else if(fromY != null)
         {
-            update(fromC);
+            update(fromY);
+        }
+        else if(fromU != null)
+        {
+            update(fromU);
         }
 
     }
@@ -217,6 +238,15 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
             e.printStackTrace();
         }
     }
+    public void update(yourupvotes muv)
+    {
+        muv.setDraw(dlList);
+        try {
+            muv.populateListView();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     public void update(recentsearch muv)
     {
         muv.setDL(dlList);
@@ -227,6 +257,15 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
             e.printStackTrace();
         }
 
+    }
+    public void update(usersPosts muv)
+    {
+        muv.setDraw(dlList);
+        try {
+            muv.populateListView();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     public void update(searchByTags muv)
     {

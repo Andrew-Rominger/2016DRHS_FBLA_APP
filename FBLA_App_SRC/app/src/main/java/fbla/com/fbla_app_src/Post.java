@@ -16,6 +16,7 @@ public class Post
     private String Caption;
     private BackendlessUser userUploaded;
     private Picture pictureOnPost;
+    private Boolean isReported;
     private String objectId;
     private Date created;
     private int numComments;
@@ -26,6 +27,13 @@ public class Post
         return tag;
     }
 
+    public Boolean getisReported() {
+        return isReported;
+    }
+
+    public void setisReported(Boolean reported) {
+        isReported = reported;
+    }
 
     public void setTag(String tag) {
         this.tag = tag;

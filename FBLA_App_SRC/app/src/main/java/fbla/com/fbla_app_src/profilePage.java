@@ -40,6 +40,7 @@ public class profilePage extends AppCompatActivity{
     ImageView settings;
     FrameLayout search;
     RelativeLayout bckg;
+    FrameLayout numLikesProf;
     Bitmap myBitmap;
     RoundedImageView riv;
     static ProgressBar loadingSpinner;
@@ -47,6 +48,7 @@ public class profilePage extends AppCompatActivity{
     Picture profPic;
     Picture coverPhoto;
     TextView numPosts;
+    FrameLayout yourPosts;
     TextView numLikes;
     FrameLayout profile;
     TextView bio;
@@ -79,8 +81,10 @@ public class profilePage extends AppCompatActivity{
         userName.setText(user.getProperty("userName").toString());
         uploadImage = (ImageView) findViewById(R.id.profilePage_addPic);
         settings = (ImageView) findViewById(R.id.settings);
+        numLikesProf = (FrameLayout) findViewById(R.id.likesProf);
         search = (FrameLayout) findViewById(R.id.profilepage_searchNav);
         bio = (TextView) findViewById(R.id.profilepage_bio);
+        yourPosts = (FrameLayout) findViewById(R.id.yourPosts);
         numPosts = (TextView) findViewById(R.id.profilepage_postsText);
         numLikes = (TextView) findViewById(R.id.profilepage_likesText);
         loadingSpinner = (ProgressBar) findViewById(R.id.lodingProfSpinner);
@@ -141,7 +145,13 @@ public class profilePage extends AppCompatActivity{
                 }
             });
         }
-
+        yourPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(profilePage.this, usersPosts.class));
+            }
+        });
         //sets onclick listeners
         uploadImage.setOnClickListener(new View.OnClickListener()
         {
@@ -160,7 +170,13 @@ public class profilePage extends AppCompatActivity{
             }
         });
 
-
+        numLikesProf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(profilePage.this, yourupvotes.class));
+            }
+        });
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override

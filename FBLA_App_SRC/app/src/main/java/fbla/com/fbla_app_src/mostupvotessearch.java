@@ -243,6 +243,7 @@ public class mostupvotessearch extends AppCompatActivity {
         QueryOptions qo = new QueryOptions();
 
         qo.addSortByOption("numLikes desc");
+        query.setWhereClause("isReported = FALSE");
         query.setPageSize(pageSize);
         query.setQueryOptions(qo);
 

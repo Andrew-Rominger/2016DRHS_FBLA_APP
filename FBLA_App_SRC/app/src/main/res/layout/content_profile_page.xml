@@ -26,7 +26,7 @@
             android:layout_centerHorizontal="true"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:layout_alignParentStart="false"
+
             android:textAppearance="@style/TextAppearance.FontPath"/>
 
         <ImageView
@@ -50,7 +50,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="#60C6C7"
-                android:id="@+id/followers"
+                android:id="@+id/yourPosts"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/profilepage_saves"
                 android:layout_toEndOf="@+id/profilepage_saves"
@@ -72,7 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="#1DBCBA"
-                android:id="@+id/friends"
+                android:id="@+id/likesProf"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/followers"
                 android:layout_toEndOf="@+id/followers"

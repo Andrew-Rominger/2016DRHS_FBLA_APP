@@ -163,7 +163,7 @@ public class searchByTags extends AppCompatActivity
         BackendlessDataQuery query = new BackendlessDataQuery();
         QueryOptions qo = new QueryOptions();
         qo.addSortByOption("numLikes desc");
-        String w = "tag LIKE '" + tag + "'";
+        String w = "tag LIKE '" + tag + "' AND isReported = false";
         query.setWhereClause(w);
         query.setPageSize(pageSize);
         query.setQueryOptions(qo);

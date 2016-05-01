@@ -1,5 +1,8 @@
 package fbla.com.fbla_app_src;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -13,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
@@ -36,6 +40,8 @@ public class postview extends AppCompatActivity {
     ImageView upVoteButton;
     ImageView downVoteButton;
     ImageView commentsButton;
+    ImageView postViewReport;
+    Dialog log;
     ImageView report;
     FrameLayout search;
     FrameLayout add;
@@ -81,6 +87,7 @@ public class postview extends AppCompatActivity {
         post = (ImageView) findViewById(R.id.picturePost);
         add = (FrameLayout) findViewById(R.id.postViewAdd);
         commentsButton = (ImageView) findViewById(R.id.postViewComment);
+        postViewReport = (ImageView) findViewById(R.id.postViewReport);
         search = (FrameLayout) findViewById(R.id.postViewSearch);
         report = (ImageView) findViewById(R.id.postViewReport);
         backOfPost = (RelativeLayout) findViewById(R.id.backOfPost);
@@ -116,6 +123,14 @@ public class postview extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(postview.this, profilePage.class);
                 startActivity(i);
+            }
+        });
+        postViewReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+                dialogBox();
             }
         });
         commentsButton.setOnClickListener(new View.OnClickListener() {
@@ -248,6 +263,48 @@ public class postview extends AppCompatActivity {
         */
 
 
+    }
+    public void dialogBox() {
+        final Intent i = new Intent(postview.this, profilePage.class);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure you want to report this post? It will be reviewed by us and either put back up or removed permanently.");
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1)
+                    {
+                        postO.setisReported(true);
+                        Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
+                            @Override
+                            public void handleResponse(Post post)
+                            {
+                                Log.i("TEST", post.getisReported().toString());
+                                Toast.makeText(postview.this, "Succesfully reported", Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void handleFault(BackendlessFault backendlessFault) {
+                                Toast.makeText(postview.this, "Did not report", Toast.LENGTH_LONG).show();
+                                Log.e("ERROR:", backendlessFault.getMessage());
+                            }
+                        });
+                        startActivity(i);
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1)
+                    {
+                        arg0.dismiss();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
     public boolean onTouchEvent(MotionEvent event)
     {
