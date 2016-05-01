@@ -2,7 +2,6 @@ package fbla.com.fbla_app_src;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,8 +12,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -127,7 +124,8 @@ public class signupEmail extends AppCompatActivity
                             user.setEmail(email);
                             user.setProperty("name", name);
                             user.setProperty("DOB", theDateOfBirth);
-                            Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
+                            Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>()
+                            {
                                 @Override
                                 public void handleResponse(BackendlessUser backendlessUser) {
                                     Backendless.UserService.login(user.getProperty("userName").toString(), user.getPassword(), new AsyncCallback<BackendlessUser>() {
@@ -138,7 +136,7 @@ public class signupEmail extends AppCompatActivity
 
                                         @Override
                                         public void handleFault(BackendlessFault backendlessFault) {
-                                            Toast.makeText(signupEmail.this, backendlessFault.toString(), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(signupEmail.this, backendlessFault.getCode().toString(), Toast.LENGTH_LONG).show();
                                         }
                                     });
 
@@ -146,7 +144,7 @@ public class signupEmail extends AppCompatActivity
 
                                 @Override
                                 public void handleFault(BackendlessFault backendlessFault) {
-                                    Toast.makeText(signupEmail.this, backendlessFault.toString(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(signupEmail.this, backendlessFault.getCode().toString(), Toast.LENGTH_LONG).show();
                                 }
                             });
                         }

@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,13 +26,13 @@ import java.util.List;
 
 public class postview extends AppCompatActivity {
     // Declared global variables
-    RelativeLayout backOfPost;
     TextView upVotes;
     TextView downVotes;
     TextView comments;
     TextView userNameBelow;
     TextView userName;
     TextView caption;
+    RelativeLayout backOfPost;
     ImageView upVoteButton;
     ImageView downVoteButton;
     ImageView commentsButton;
@@ -42,30 +41,54 @@ public class postview extends AppCompatActivity {
     FrameLayout add;
     FrameLayout profile;
     ImageView post;
+    private GestureDetector gestureDetector;
     BackendlessUser user;
     Post postO;
     DownloadImageClass DLC = new DownloadImageClass();
-    private GestureDetector gestureDetector;
-    private ViewGroup containerView;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        //get views
+    protected void onCreate(Bundle savedInstanceState)
+    {
         Intent i = getIntent();
         Bundle extras = i.getExtras();
         String PostID = extras.get("postID").toString();
+        Backendless.Data.of(Post.class).findById(PostID, new AsyncCallback<Post>() {
+            @Override
+            public void handleResponse(Post foundPost) {
+                //gets post from id and sets picture
+                postO = foundPost;
+                DLC.setImageView(post);
+                DLC.execute("https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + foundPost.getPictureOID() + ".png");
+                upVotes.setText(Integer.toString(postO.getNumLikes()));
+                downVotes.setText(Integer.toString(postO.getNumDislikes()));
+                userName.setText(user.getProperty("userName").toString());
+                userNameBelow.setText(postO.getUserUploadedS());
+                caption.setText(postO.getCaption());
+                //comments.setText(Integer.toString(postO.getNumComments()));
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+
+            }
+        });
+        //get views
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postview);
-        backOfPost = (RelativeLayout) findViewById(R.id.backOfPost);
         post = (ImageView) findViewById(R.id.picturePost);
         add = (FrameLayout) findViewById(R.id.postViewAdd);
+        commentsButton = (ImageView) findViewById(R.id.postViewComment);
         search = (FrameLayout) findViewById(R.id.postViewSearch);
         report = (ImageView) findViewById(R.id.postViewReport);
+        backOfPost = (RelativeLayout) findViewById(R.id.backOfPost);
         downVoteButton = (ImageView) findViewById(R.id.postViewDownvoteButton);
         upVoteButton = (ImageView) findViewById(R.id.postViewUpvoteButton);
         caption = (TextView) findViewById(R.id.postViewCaption);
         userName = (TextView) findViewById(R.id.postViewUserName);
         userNameBelow = (TextView) findViewById(R.id.postViewUserPosted);
-        commentsButton = (ImageView) findViewById(R.id.postViewComment);
         profile = (FrameLayout) findViewById(R.id.postViewProfile);
         downVotes = (TextView) findViewById(R.id.postViewDownvote);
         upVotes = (TextView) findViewById(R.id.postViewUpvote);
@@ -80,7 +103,8 @@ public class postview extends AppCompatActivity {
                 startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 3);
             }
         });
-        search.setOnClickListener(new View.OnClickListener() {
+        search.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(postview.this, mostupvotessearch.class);
@@ -94,8 +118,7 @@ public class postview extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        commentsButton.setOnClickListener(new View.OnClickListener()
-        {
+        commentsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -108,18 +131,21 @@ public class postview extends AppCompatActivity {
         });
         upVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //adds one upvote to the post and updates it
-                Log.i("C", "CLICKED");
-                AsyncCallback<BackendlessCollection<upvoted>> callback = new AsyncCallback<BackendlessCollection<upvoted>>() {
+            public void onClick(View v)
+            {
+                AsyncCallback<BackendlessCollection<upvoted>> callback = new AsyncCallback<BackendlessCollection<upvoted>>()
+                {
                     @Override
-                    public void handleResponse(BackendlessCollection<upvoted> upvotedBackendlessCollection) {
+                    public void handleResponse(BackendlessCollection<upvoted> upvotedBackendlessCollection)
+                    {
                         List<upvoted> list = upvotedBackendlessCollection.getCurrentPage();
-                        if (list.isEmpty()) {
+                        if(list.isEmpty())
+                        {
                             postO.setNumLikes(postO.getNumLikes() + 1);
                             Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
                                 @Override
-                                public void handleResponse(Post post) {
+                                public void handleResponse(Post post)
+                                {
                                     upVotes.setText(Integer.toString(post.getNumLikes()));
                                 }
 
@@ -128,8 +154,6 @@ public class postview extends AppCompatActivity {
 
                                 }
                             });
-                            user.setProperty("numlikes", (Integer)user.getProperty("numlikes") + 1);
-                            util.updateUser(user);
                             upvoted uv = new upvoted();
                             uv.setPostid(postO.getObjectId());
                             uv.setUserid(user.getObjectId());
@@ -161,11 +185,16 @@ public class postview extends AppCompatActivity {
                 query.setQueryOptions(qo);
                 Backendless.Data.of(upvoted.class).find(query, callback);
 
+
+                //adds one upvote to the post and updates it
+                Log.i("C", "CLICKED");
+
             }
         });
         downVoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 //adds one downvote to the post and updates it
                 Log.i("C", "CLICKED");
                 postO.setNumDislikes(postO.getNumDislikes() + 1);
@@ -187,60 +216,21 @@ public class postview extends AppCompatActivity {
         {
             public void onSwipeRight() {
                 Log.i("swipe", "right");
-                AsyncCallback<BackendlessCollection<upvoted>> callback = new AsyncCallback<BackendlessCollection<upvoted>>() {
+                postO.setNumLikes(postO.getNumLikes() + 1);
+                Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
                     @Override
-                    public void handleResponse(BackendlessCollection<upvoted> upvotedBackendlessCollection) {
-                        List<upvoted> list = upvotedBackendlessCollection.getCurrentPage();
-                        if (list.isEmpty()) {
-                            postO.setNumLikes(postO.getNumLikes() + 1);
-                            Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
-                                @Override
-                                public void handleResponse(Post post) {
-                                    upVotes.setText(Integer.toString(post.getNumLikes()));
-                                }
-
-                                @Override
-                                public void handleFault(BackendlessFault backendlessFault) {
-
-                                }
-                            });
-                            upvoted uv = new upvoted();
-                            uv.setPostid(postO.getObjectId());
-                            uv.setUserid(user.getObjectId());
-                            Backendless.Persistence.save(uv, new AsyncCallback<upvoted>() {
-                                @Override
-                                public void handleResponse(upvoted upvoted) {
-
-                                }
-
-                                @Override
-                                public void handleFault(BackendlessFault backendlessFault) {
-
-                                }
-                            });
-                            user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
-                            util.updateUser(user);
-                        }
-
+                    public void handleResponse(Post post) {
+                        upVotes.setText(Integer.toString(post.getNumLikes()));
                     }
 
                     @Override
                     public void handleFault(BackendlessFault backendlessFault) {
 
                     }
-                };
-                BackendlessDataQuery query = new BackendlessDataQuery();
-                QueryOptions qo = new QueryOptions();
-                query.setWhereClause("postid = '" + postO.getObjectId() + "' AND userid = '" + user.getObjectId() + "'");
-                query.setQueryOptions(qo);
-                Backendless.Data.of(upvoted.class).find(query, callback);
-
-
-
+                });
             }
             public void onSwipeLeft() {
                 Log.i("swipe", "left");
-
                 postO.setNumDislikes(postO.getNumDislikes() + 1);
                 Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
                     @Override
@@ -256,26 +246,7 @@ public class postview extends AppCompatActivity {
             }
         });
         */
-        Backendless.Data.of(Post.class).findById(PostID, new AsyncCallback<Post>() {
-            @Override
-            public void handleResponse(Post foundPost) {
-                //gets post from id and sets picture
-                postO = foundPost;
-                DLC.setImageView(post);
-                DLC.execute("https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + foundPost.getPictureOID() + ".png");
-                upVotes.setText(Integer.toString(postO.getNumLikes()));
-                downVotes.setText(Integer.toString(postO.getNumDislikes()));
-                userName.setText(user.getProperty("userName").toString());
-                userNameBelow.setText(postO.getUserUploadedS());
-                caption.setText(postO.getCaption());
-                //comments.setText(Integer.toString(postO.getNumComments()));
-            }
 
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-
-            }
-        });
 
     }
     public boolean onTouchEvent(MotionEvent event)
@@ -284,20 +255,53 @@ public class postview extends AppCompatActivity {
         {
             return true;
         }
-      return super.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
     private void onRightSwipe()
     {
         Log.i("Right", "Swiped");
-        int num = postO.getNumLikes();
-        postO.setNumLikes(num+ 1 );
-        backOfPost.setBackgroundResource(R.drawable.whitetoblue);
-        TransitionDrawable transition = (TransitionDrawable) backOfPost.getBackground();
-        transition.startTransition(1000);
-        upVotes.setText(Integer.toString(num + 1));
-        Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
+        final int num = postO.getNumLikes();
+        AsyncCallback<BackendlessCollection<upvoted>> callback = new AsyncCallback<BackendlessCollection<upvoted>>()
+        {
             @Override
-            public void handleResponse(Post post) {
+            public void handleResponse(BackendlessCollection<upvoted> upvotedBackendlessCollection)
+            {
+                List<upvoted> list = upvotedBackendlessCollection.getCurrentPage();
+                if(list.isEmpty())
+                {
+                    backOfPost.setBackgroundResource(R.drawable.whitetoblue);
+                    TransitionDrawable transition = (TransitionDrawable) backOfPost.getBackground();
+                    transition.startTransition(1000);
+                    postO.setNumLikes(num + 1);
+                    Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
+                        @Override
+                        public void handleResponse(Post post)
+                        {
+                            upVotes.setText(Integer.toString(post.getNumLikes()));
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault backendlessFault) {
+
+                        }
+                    });
+                    upvoted uv = new upvoted();
+                    uv.setPostid(postO.getObjectId());
+                    uv.setUserid(user.getObjectId());
+                    Backendless.Persistence.save(uv, new AsyncCallback<upvoted>() {
+                        @Override
+                        public void handleResponse(upvoted upvoted) {
+
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault backendlessFault) {
+
+                        }
+                    });
+                    user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
+                    util.updateUser(user);
+                }
 
             }
 
@@ -305,9 +309,17 @@ public class postview extends AppCompatActivity {
             public void handleFault(BackendlessFault backendlessFault) {
 
             }
-        });
-        user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
-        util.updateUser(user);
+        };
+        BackendlessDataQuery query = new BackendlessDataQuery();
+        QueryOptions qo = new QueryOptions();
+        query.setWhereClause("postid = '" + postO.getObjectId() + "' AND userid = '" + user.getObjectId() + "'");
+        query.setQueryOptions(qo);
+        Backendless.Data.of(upvoted.class).find(query, callback);
+
+
+        //adds one upvote to the post and updates it
+        Log.i("C", "CLICKED");
+
     }
     private void onLeftSwipe()
     {
@@ -336,8 +348,8 @@ public class postview extends AppCompatActivity {
     //private class for gestures
     private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         //makes swipes shorter or longer
-        private static final int SWIPE_MIN_DISTANCE = 120;
-        private static final int SWIPE_MAX_OFF_PATH = 200;
+        private static final int SWIPE_MIN_DISTANCE = 100;
+        private static final int SWIPE_MAX_OFF_PATH = 100;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
@@ -359,7 +371,7 @@ public class postview extends AppCompatActivity {
                 else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
                 {
                     postview.this.onRightSwipe();
-                   // backOfPost.setBackgroundResource(R.drawable.whitetoblue);
+                    // backOfPost.setBackgroundResource(R.drawable.whitetoblue);
 
                 }
             }

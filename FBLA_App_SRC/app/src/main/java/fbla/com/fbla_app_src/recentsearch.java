@@ -237,6 +237,15 @@ public class recentsearch extends AppCompatActivity {
                 tv.setText(post.getCaption());
             }
             numlikes.setText(String.valueOf(post.getNumLikes()));
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent i = new Intent(recentsearch.this, postview.class);
+                    i.putExtra("postID", post.getObjectId());
+                    startActivity(i);
+                }
+            });
             upvoteArrow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

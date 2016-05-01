@@ -26,6 +26,7 @@ public class Post
         return tag;
     }
 
+
     public void setTag(String tag) {
         this.tag = tag;
     }
@@ -96,7 +97,6 @@ public class Post
     public int getNumLikes() {
         return numLikes;
     }
-
 
 
     public String getCaption() {

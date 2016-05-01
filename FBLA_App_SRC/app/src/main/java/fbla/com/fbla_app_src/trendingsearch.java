@@ -279,6 +279,15 @@ public class trendingsearch extends AppCompatActivity {
             {
                 tv.setText(post.getCaption());
             }
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent i = new Intent(trendingsearch.this, postview.class);
+                    i.putExtra("postID", post.getObjectId());
+                    startActivity(i);
+                }
+            });
             numlikes.setText(String.valueOf(post.getNumLikes()));
             upvoteArrow.setOnClickListener(new View.OnClickListener() {
                     @Override
