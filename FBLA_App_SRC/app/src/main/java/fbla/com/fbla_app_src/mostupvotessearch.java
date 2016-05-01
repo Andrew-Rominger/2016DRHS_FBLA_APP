@@ -1,12 +1,10 @@
 package fbla.com.fbla_app_src;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,12 +12,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -34,8 +29,6 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -53,14 +46,15 @@ public class mostupvotessearch extends AppCompatActivity {
     ProgressBar spinner;
     BackendlessUser user;
     RelativeLayout trending;
+    Boolean hasuserUpvoted;
     ArrayList<Post> postsToBeDisplayed = new ArrayList<>();
     ListView mainList;
     public ArrayAdapter<Post> adapter;
-    static ArrayList<Drawable> draw;
+    static ArrayList<Drawable> draw = new ArrayList<Drawable>();
     public DownloadImagesClass DLC = new DownloadImagesClass();
     public ArrayList<String> URLS = new ArrayList<String>();
     final mostupvotessearch g = this;
-
+    public ArrayList<Integer> posArr = new ArrayList<>();
     public void setDL(ArrayList<Drawable> dr)
     {
        draw = dr;
@@ -82,7 +76,6 @@ public class mostupvotessearch extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostupvotessearch);
-        setupUI(findViewById(R.id.mostUpVoteSearchBackground));
         // links variables to xml id representations
         search = (FrameLayout) findViewById(R.id.profilepage_searchNav);
         add = (FrameLayout) findViewById(R.id.searchAdd);
@@ -160,6 +153,17 @@ public class mostupvotessearch extends AppCompatActivity {
     //displays posts
     public void populateListView() throws InterruptedException
     {
+        for(int i : posArr)
+        {
+            try {
+                postsToBeDisplayed.remove(i);
+            }
+            catch (IndexOutOfBoundsException e)
+            {
+
+            }
+        }
+
         mainList.setAdapter(adapter);
     }
     //updates the list of posts
@@ -185,36 +189,44 @@ public class mostupvotessearch extends AppCompatActivity {
                     Log.i("POST ID", post.getObjectId());
                     postsToBeDisplayed.add(post);
                 }
-
                 DLC.setDlList(draw);
                 DLC.setFrom(g);
                 DLC.execute(getURLS(postsToBeDisplayed));
+
                 /*
-                ExtendedTarget t = new ExtendedTarget()
-                {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
-                    {
-                        setBd(new BitmapDrawable(bitmap));
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable)
-                    {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable)
-                    {
-
-                    }
-                };
                 ArrayList<String> sArr = getURLS(postsToBeDisplayed);
                 for(String s : sArr)
                 {
+                    ExtendedTarget t = new ExtendedTarget()
+                    {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
+                        {
+                            Log.i("Download", "Complete");
+                            setBd(new BitmapDrawable(bitmap));
+
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Drawable errorDrawable)
+                        {
+                            Log.i("Download", "Failed");
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable)
+                        {
+
+                        }
+                    };
                     Picasso.with(c).load(s).into(t);
                     draw.add(t.getBd());
+
+                }
+                try {
+                    populateListView();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
                 */
 
@@ -278,20 +290,61 @@ public class mostupvotessearch extends AppCompatActivity {
                 public void onClick(View v)
                 {
                     Log.i("C", "CLICKED");
-                    post.setNumLikes(post.getNumLikes() + 1);
-                    Backendless.Persistence.save(post, new AsyncCallback<Post>() {
+
+                    AsyncCallback<BackendlessCollection<upvoted>> callback = new AsyncCallback<BackendlessCollection<upvoted>>()
+                    {
                         @Override
-                        public void handleResponse(Post post) {
-                            numlikes.setText(Integer.toString(post.getNumLikes()));
+                        public void handleResponse(BackendlessCollection<upvoted> upvotedBackendlessCollection)
+                        {
+                            List<upvoted> list = upvotedBackendlessCollection.getCurrentPage();
+                            if(list.isEmpty())
+                            {
+                                post.setNumLikes(post.getNumLikes() + 1);
+                                Backendless.Persistence.save(post, new AsyncCallback<Post>() {
+                                    @Override
+                                    public void handleResponse(Post post) {
+                                        numlikes.setText(Integer.toString(post.getNumLikes()));
+                                    }
+
+                                    @Override
+                                    public void handleFault(BackendlessFault backendlessFault) {
+
+                                    }
+                                });
+                                upvoted uv = new upvoted();
+                                uv.setPostid(post.getObjectId());
+                                uv.setUserid(user.getObjectId());
+                                Backendless.Persistence.save(uv, new AsyncCallback<upvoted>() {
+                                    @Override
+                                    public void handleResponse(upvoted upvoted) {
+
+                                    }
+
+                                    @Override
+                                    public void handleFault(BackendlessFault backendlessFault) {
+
+                                    }
+                                });
+                                user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
+                                util.updateUser(user);
+                            }
+
                         }
 
                         @Override
                         public void handleFault(BackendlessFault backendlessFault) {
 
                         }
-                    });
-                    user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
-                    util.updateUser(user);
+                    };
+                    BackendlessDataQuery query = new BackendlessDataQuery();
+                    QueryOptions qo = new QueryOptions();
+                    query.setWhereClause("postid = '" + post.getObjectId() + "' AND userid = '" + user.getObjectId() + "'");
+                    query.setQueryOptions(qo);
+                    Backendless.Data.of(upvoted.class).find(query, callback);
+
+
+
+
                 }
             });
             downvoteArrow.setOnClickListener(new View.OnClickListener() {
@@ -324,45 +377,11 @@ public class mostupvotessearch extends AppCompatActivity {
             {
                 tv.setText(post.getCaption());
             }
-            numlikes.setText(Integer.toString(post.getNumLikes() - post.getNumDislikes()));
+            numlikes.setText(Integer.toString(post.getNumLikes()));
             return itemView;
             //return super.getView(position, convertView, parent);
         }
 
-    }
-    //this method hides the keyboard
-    public static void hideSoftKeyboard(Activity activity)
-    {
-            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-    }
-    //this method checks to see if the user has clicked outside of the edit text when the key board is up, if they do the hideSoftKeyboard() method is called
-    public void setupUI(View view) {
-
-        if(!(view instanceof RelativeLayout)) {
-            //Set up touch listener for non-text box views to hide keyboard.
-            if (!(view instanceof EditText)) {
-                view.setOnTouchListener(new View.OnTouchListener() {
-
-                    public boolean onTouch(View v, MotionEvent event) {
-                        hideSoftKeyboard(mostupvotessearch.this);
-                        return false;
-                    }
-
-                });
-            }
-
-            //If a layout container, iterate over children and seed recursion.
-            if (view instanceof ViewGroup) {
-
-                for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-
-                    View innerView = ((ViewGroup) view).getChildAt(i);
-
-                    setupUI(innerView);
-                }
-            }
-        }
     }
 
 }

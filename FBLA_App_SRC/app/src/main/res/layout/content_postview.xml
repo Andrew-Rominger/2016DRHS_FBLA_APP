@@ -331,6 +331,15 @@
                         android:layout_toLeftOf="@+id/postViewDownvoteButton"
                         android:layout_toStartOf="@+id/postViewDownvoteButton"
                         android:src="@drawable/upvotes" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/postViewComment"
+                        android:layout_marginRight="5dip"
+                        android:src="@drawable/comments"
+                        android:layout_alignTop="@+id/postViewUserPosted"
+                        android:layout_toLeftOf="@+id/postViewUpvoteButton"
+                        android:layout_toStartOf="@+id/postViewUpvoteButton" />
 
                 </RelativeLayout>
 

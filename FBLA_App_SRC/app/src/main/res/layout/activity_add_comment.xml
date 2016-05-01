@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fbla.com.fbla_app_src.addComment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="#EA6C55"
+        android:text="Add a comment"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:id="@+id/commentAddTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/commentContent"
+        android:hint="Add your comment here"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <Button
+            android:id="@+id/cancelAddComment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.50"
+            android:background="#EA6C55"
+            android:text="Cancel"
+            android:textAppearance="@style/TextAppearance.FontPath"/>
+
+        <Button
+            android:id="@+id/addCommentButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.50"
+            android:background="#60C6C7"
+            android:text="Add"
+            android:textAppearance="@style/TextAppearance.FontPath"/>
+    </LinearLayout>
+</RelativeLayout>

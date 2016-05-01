@@ -7,6 +7,33 @@ public class Comment
 {
     private String objectId;
     private String content;
+    private String postid;
+    private String useruploaded;
+    private String dateUploaded;
+
+    public String getDateUploaded() {
+        return dateUploaded;
+    }
+
+    public void setDateUploaded(String dateUploaded) {
+        this.dateUploaded = dateUploaded;
+    }
+
+    public String getUseruploaded() {
+        return useruploaded;
+    }
+
+    public void setUseruploaded(String useruploaded) {
+        this.useruploaded = useruploaded;
+    }
+
+    public String getPostid() {
+        return postid;
+    }
+
+    public void setPostid(String postid) {
+        this.postid = postid;
+    }
 
     public String getObjectId() {
         return objectId;

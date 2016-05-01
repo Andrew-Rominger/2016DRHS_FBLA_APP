@@ -88,7 +88,7 @@ public class profilePage extends AppCompatActivity{
         uploadCoverPhoto = (TextView) findViewById(R.id.addCoverPhoto);
         profile = (FrameLayout) findViewById(R.id.profilepage_profileNav);
         bckg = (RelativeLayout) findViewById(R.id.mainBCKG);
-        String numposts =  user.getProperty("numposts") + " Posts";
+        String numposts = user.getProperty("numposts") + " Posts";
         String numlikes = user.getProperty("numlikes") + " Likes";
 
         numPosts.setText(numposts);

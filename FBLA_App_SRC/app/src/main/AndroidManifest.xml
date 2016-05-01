@@ -119,7 +119,8 @@
         <activity
             android:name=".usersPosts"
             android:label="@string/title_activity_users_posts"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".addComment"></activity>
     </application>
 
 </manifest>
