@@ -341,10 +341,6 @@ public class mostupvotessearch extends AppCompatActivity {
                     query.setWhereClause("postid = '" + post.getObjectId() + "' AND userid = '" + user.getObjectId() + "'");
                     query.setQueryOptions(qo);
                     Backendless.Data.of(upvoted.class).find(query, callback);
-
-
-
-
                 }
             });
             downvoteArrow.setOnClickListener(new View.OnClickListener() {

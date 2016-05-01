@@ -243,6 +243,15 @@ public class searchByTags extends AppCompatActivity
 
                 }
             });
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent i = new Intent(searchByTags.this, postview.class);
+                    i.putExtra("postID", post.getObjectId());
+                    startActivity(i);
+                }
+            });
             if(post.getCaption().length() > 16)
             {
                 String newCap = post.getCaption().substring(0,12) + "...";
