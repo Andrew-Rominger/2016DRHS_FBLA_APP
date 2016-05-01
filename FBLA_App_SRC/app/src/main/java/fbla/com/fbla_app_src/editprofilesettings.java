@@ -21,6 +21,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 public class editprofilesettings extends AppCompatActivity {
     // Declared global variables
+    EditText editImage;
     EditText name;
     EditText handle;
     EditText bio;
@@ -102,11 +103,12 @@ public class editprofilesettings extends AppCompatActivity {
                 newName = name.getText().toString();
                 newHanle = handle.getText().toString();
                 newBio = bio.getText().toString();
-                if(Validator.isUserNameValid(newName))
-                {
-                    user.setProperty("name", newName);
+                if(newName == "" || newBio == "") {
+                    if (Validator.isUserNameValid(newName)) {
+                        user.setProperty("name", newName);
+                    }
+                    user.setProperty("userName", newHanle);
                 }
-                user.setProperty("userName", newHanle);
                 user.setProperty("Bio", newBio);
                 //attempts to update the user
                 Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
@@ -117,7 +119,7 @@ public class editprofilesettings extends AppCompatActivity {
 
                     @Override
                     public void handleFault(BackendlessFault backendlessFault) {
-                        Toast.makeText(editprofilesettings.this, backendlessFault.getCode(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(editprofilesettings.this, backendlessFault.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }
