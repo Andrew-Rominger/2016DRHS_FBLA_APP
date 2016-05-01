@@ -1,6 +1,8 @@
 package fbla.com.fbla_app_src;
 
 import android.content.Intent;
+import android.graphics.drawable.TransitionDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import com.backendless.exceptions.BackendlessFault;
 
 public class postview extends AppCompatActivity {
     // Declared global variables
+    RelativeLayout backOfPost;
     TextView upVotes;
     TextView downVotes;
     TextView comments;
@@ -34,7 +37,6 @@ public class postview extends AppCompatActivity {
     FrameLayout search;
     FrameLayout add;
     FrameLayout profile;
-    RelativeLayout upVote;
     ImageView post;
     BackendlessUser user;
     Post postO;
@@ -49,7 +51,7 @@ public class postview extends AppCompatActivity {
         String PostID = extras.get("postID").toString();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postview);
-        upVote = (RelativeLayout) findViewById(R.id.upVoteRL);
+        backOfPost = (RelativeLayout) findViewById(R.id.backOfPost);
         post = (ImageView) findViewById(R.id.picturePost);
         add = (FrameLayout) findViewById(R.id.postViewAdd);
         search = (FrameLayout) findViewById(R.id.postViewSearch);
@@ -162,7 +164,10 @@ public class postview extends AppCompatActivity {
     {
         Log.i("Right", "Swiped");
         int num = postO.getNumLikes();
-        postO.setNumLikes(num+1);
+        postO.setNumLikes(num+ 1 );
+        backOfPost.setBackgroundResource(R.drawable.whitetoblue);
+        TransitionDrawable transition = (TransitionDrawable) backOfPost.getBackground();
+        transition.startTransition(1000);
         upVotes.setText(Integer.toString(num + 1));
         Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
             @Override
@@ -182,8 +187,11 @@ public class postview extends AppCompatActivity {
     {
         Log.i("Left", "Swipe");
         int numl = postO.getNumDislikes();
-        postO.setNumDislikes(numl + 1);
-        downVotes.setText(Integer.toString(numl));
+        postO.setNumDislikes(numl + 1 );
+        backOfPost.setBackgroundResource(R.drawable.whitetoorange);
+        TransitionDrawable transition = (TransitionDrawable) backOfPost.getBackground();
+        transition.startTransition(1000);
+        downVotes.setText(Integer.toString(numl + 1));
 
         Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
             @Override
@@ -225,6 +233,7 @@ public class postview extends AppCompatActivity {
                 else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
                 {
                     postview.this.onRightSwipe();
+                   // backOfPost.setBackgroundResource(R.drawable.whitetoblue);
 
                 }
             }
@@ -232,6 +241,7 @@ public class postview extends AppCompatActivity {
             {
                 Log.e("postview", "Error on strech gestures");
                 //Log.e("Eception", "" + e.getMessage());
+                Log.e("Eception", e.getStackTrace().toString());
             }
             return false;
         }
