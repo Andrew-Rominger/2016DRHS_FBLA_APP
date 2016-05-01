@@ -125,6 +125,7 @@ public class postview extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //Reports a post
         postViewReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -265,6 +266,7 @@ public class postview extends AppCompatActivity {
 
     }
     public void dialogBox() {
+        //creates intent ot move to after reporting
         final Intent i = new Intent(postview.this, profilePage.class);
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Are you sure you want to report this post? It will be reviewed by us and either put back up or removed permanently.");
@@ -274,6 +276,7 @@ public class postview extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1)
                     {
+                        //saves the post with a flag that marks it as reported
                         postO.setisReported(true);
                         Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
                             @Override
@@ -316,6 +319,7 @@ public class postview extends AppCompatActivity {
     }
     private void onRightSwipe()
     {
+        //Activated when swiped right
         Log.i("Right", "Swiped");
         final int num = postO.getNumLikes();
         AsyncCallback<BackendlessCollection<upvoted>> callback = new AsyncCallback<BackendlessCollection<upvoted>>()

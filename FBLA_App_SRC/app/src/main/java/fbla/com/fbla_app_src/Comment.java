@@ -5,6 +5,7 @@ package fbla.com.fbla_app_src;
  */
 public class Comment
 {
+    //Represnets one comment
     private String objectId;
     private String content;
     private String postid;

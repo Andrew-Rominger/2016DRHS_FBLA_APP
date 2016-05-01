@@ -16,7 +16,7 @@ public class addComment extends AppCompatActivity
     Button add;
     Button cancel;
     EditText input;
-
+    //adds comment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +30,7 @@ public class addComment extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                //returns to comments activity with data
                 Intent i = new Intent();
                 i.putExtra("result", input.getText().toString());
                 setResult(1,i);

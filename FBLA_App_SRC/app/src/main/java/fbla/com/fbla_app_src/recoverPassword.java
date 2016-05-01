@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -19,6 +18,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
 public class recoverPassword extends AppCompatActivity {
+
     EditText usernameInput;
     Button submit;
     ImageView cancle;
@@ -38,6 +38,7 @@ public class recoverPassword extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                //makes a call to reset the user's password
                 Backendless.UserService.restorePassword(usernameInput.getText().toString(), new AsyncCallback<Void>() {
                     @Override
                     public void handleResponse(Void aVoid)

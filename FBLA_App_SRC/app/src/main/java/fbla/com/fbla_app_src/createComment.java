@@ -15,6 +15,7 @@ import com.backendless.exceptions.BackendlessFault;
 
 public class createComment extends AppCompatActivity
 {
+    // declare variables
     Intent i;
     Bundle b;
     String postID;
@@ -35,13 +36,14 @@ public class createComment extends AppCompatActivity
 
         field = (EditText)findViewById(R.id.commentContentField);
         add = (Button) findViewById(R.id.addCommentButton);
-
+        //listner for add comment
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
                 if(!field.getText().toString().equals(""))
                 {
+                    //saves new commnent
                     comment.setContent(field.getText().toString());
                     comment.setUseruploaded(user.getUserId());
                     comment.setPostid(postID);

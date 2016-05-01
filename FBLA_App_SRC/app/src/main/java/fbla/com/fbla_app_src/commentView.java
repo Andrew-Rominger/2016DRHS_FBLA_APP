@@ -28,6 +28,7 @@ import java.util.List;
 
 public class commentView extends AppCompatActivity
 {
+    //Create variables
     ListView commentListView;
     ArrayList<Comment> commentArrayList = new ArrayList<>();
     Post post;
@@ -43,6 +44,7 @@ public class commentView extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        //setup page
         super.onCreate(savedInstanceState);
         Intent i = getIntent();
         setContentView(R.layout.activity_comment_view);
@@ -70,7 +72,7 @@ public class commentView extends AppCompatActivity
 
 
 
-
+        //get post
         Backendless.Data.of(Post.class).findById(postOID, new AsyncCallback<Post>()
         {
             @Override
@@ -85,15 +87,17 @@ public class commentView extends AppCompatActivity
         });
         adapter = new MyListAdapter();
         commentListView = (ListView) findViewById(R.id.commentListView);
+        //get comments
         getComments();
 
     }
-
+    //called after a comment is created
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if(data.getStringExtra("result") != null)
         {
+            // creates a new comment in the data base
             String commentString = data.getStringExtra("result");
             DateFormat df = new SimpleDateFormat("MM-dd-yyyy, hh:mm aa");
             String date = df.format(Calendar.getInstance().getTime());
@@ -107,6 +111,7 @@ public class commentView extends AppCompatActivity
                 @Override
                 public void handleResponse(Comment comment)
                 {
+                    //adds comment to page
                     Toast.makeText(commentView.this, "Comment Uploaded", Toast.LENGTH_LONG).show();
                     commentArrayList.add(0,comment);
                     adapter.notifyDataSetChanged();
@@ -127,7 +132,7 @@ public class commentView extends AppCompatActivity
 
     }
 
-
+    //gets the comments for post
     private void getComments()
     {
         final commentView c = this;
@@ -155,7 +160,7 @@ public class commentView extends AppCompatActivity
 
             }
         };
-
+        // sets parametets for finding comments
         BackendlessDataQuery query = new BackendlessDataQuery();
         QueryOptions qo = new QueryOptions();
         qo.addSortByOption("created desc");
@@ -166,43 +171,6 @@ public class commentView extends AppCompatActivity
 
         Backendless.Data.of(Comment.class).find(query, callback);
     }
-    /*
-    public void getFirstPage()
-    {
-        AsyncCallback<BackendlessCollection<Comment>> callback = new AsyncCallback<BackendlessCollection<Comment>>()
-        {
-            @Override
-            public void handleResponse(BackendlessCollection<Comment> CommentBackendlessCollection)
-            {
-                Log.i("GotPosts", "GotPosts");
-                List<Comment> firstPage = CommentBackendlessCollection.getCurrentPage();
-                Iterator<Comment> it = firstPage.iterator();
-                while (it.hasNext())
-                {
-                    Comment comment = it.next();
-                    Log.i("POST ID", post.getObjectId());
-                    commentArrayList.add(comment);
-                }
-                DLC.setDlList(draw);
-                DLC.setFromC(g);
-                DLC.execute(getURLS(commentArrayList));
-            }
-
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-
-            }
-        };
-
-        int pageSize = 10;
-        BackendlessDataQuery query = new BackendlessDataQuery();
-        QueryOptions qo = new QueryOptions();
-        qo.addSortByOption("created desc");
-        query.setPageSize(pageSize);
-        query.setQueryOptions(qo);
-        Backendless.Data.of(Comment.class).find(query, callback);
-    }
-    */
     public void populateListView() throws InterruptedException
     {
         commentListView.setAdapter(adapter);
