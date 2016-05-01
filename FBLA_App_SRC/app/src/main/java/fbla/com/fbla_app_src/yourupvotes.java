@@ -7,18 +7,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
@@ -41,7 +37,7 @@ public class yourupvotes extends AppCompatActivity {
     FrameLayout search;
     FrameLayout add;
     FrameLayout profile;
-    GridView gV;
+    ListView gV;
     static ArrayList<Drawable> draw;
     ArrayList<Post> postsToBeDisplayed = new ArrayList<>();
     public DownloadImagesClass DLC = new DownloadImagesClass();
@@ -49,6 +45,13 @@ public class yourupvotes extends AppCompatActivity {
     public ArrayList<String> URLS = new ArrayList<String>();
     final yourupvotes g = this;
 
+    public static ArrayList<Drawable> getDraw() {
+        return draw;
+    }
+
+    public static void setDraw(ArrayList<Drawable> draw) {
+        yourupvotes.draw = draw;
+    }
 
     //gets urls for post list
     public ArrayList<String> getURLS(ArrayList<Post> postArray)
@@ -70,6 +73,7 @@ public class yourupvotes extends AppCompatActivity {
         search = (FrameLayout) findViewById(R.id.frameLayout4);
         add = (FrameLayout) findViewById(R.id.frameLayout5);
         profile = (FrameLayout) findViewById(R.id.frameLayout6);
+        gV = (ListView) findViewById(R.id.yourUpvotesListView);
         adapter = new MyListAdapter();
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +118,14 @@ public class yourupvotes extends AppCompatActivity {
         startActivity(i);
     }
     //displays posts
+    public void update()
+    {
+        try {
+            populateListView();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     public void populateListView() throws InterruptedException
     {
         gV.setAdapter(adapter);
@@ -139,8 +151,56 @@ public class yourupvotes extends AppCompatActivity {
                     Log.i("POST ID", post.getObjectId());
                     postsToBeDisplayed.add(post);
                 }
+                AsyncCallback<BackendlessCollection<upvoted>> upvotedCallback = new AsyncCallback<BackendlessCollection<upvoted>>() {
+                    @Override
+                    public void handleResponse(BackendlessCollection<upvoted> upvotedBackendlessCollection)
+                    {
+                        List<upvoted> list = upvotedBackendlessCollection.getCurrentPage();
+                        ArrayList<Integer> intlist = new ArrayList<>();
+                        ArrayList<Post> tempList = new ArrayList<>();
+                        tempList = postsToBeDisplayed;
+                        for(Post p : postsToBeDisplayed)
+                        {
+                            for(upvoted u : list)
+                            {
+                                if(p.getObjectId().equals(u.getPostid()))
+                                {
+                                    intlist.add(postsToBeDisplayed.indexOf(p));
+                                }
+
+                            }
+                        }
+                        for(Post p : postsToBeDisplayed)
+                        {
+                            postsToBeDisplayed.remove(postsToBeDisplayed.indexOf(p));
+                        }
+                        for(int i : intlist)
+                        {
+                            postsToBeDisplayed.add(tempList.get(i));
+                        }
+                        DLC.setDlList(draw);
+                        DLC.setFromY(g);
+                        DLC.execute(getURLS(postsToBeDisplayed));
+
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault backendlessFault) {
+
+                    }
+                };
+                BackendlessDataQuery query = new BackendlessDataQuery();
+                QueryOptions qo = new QueryOptions();
+
+                qo.addSortByOption("numLikes desc");
+                query.setPageSize(10);
+                query.setQueryOptions(qo);
+                Backendless.Data.of(upvoted.class).find(query, upvotedCallback);
+
+
+
                 DLC.setDlList(draw);
-               // DLC.setFromY(g);
+                DLC.setFromY(yourupvotes.this);
                 DLC.execute(getURLS(postsToBeDisplayed));
             }
 
@@ -149,6 +209,7 @@ public class yourupvotes extends AppCompatActivity {
 
             }
         };
+
         int pageSize = 10;
         BackendlessDataQuery query = new BackendlessDataQuery();
         QueryOptions qo = new QueryOptions();
@@ -164,7 +225,7 @@ public class yourupvotes extends AppCompatActivity {
     {
 
         public MyListAdapter() {
-            super(yourupvotes.this, R.layout.upvotelist, postsToBeDisplayed);
+            super(yourupvotes.this, R.layout.layout_listview, postsToBeDisplayed);
         }
 
         @Override
@@ -173,15 +234,15 @@ public class yourupvotes extends AppCompatActivity {
             View itemView = convertView;
             if(itemView == null)
             {
-                itemView = getLayoutInflater().inflate(R.layout.upvotelist, parent, false);
+                itemView = getLayoutInflater().inflate(R.layout.layout_listview, parent, false);
             }
             final Post post = postsToBeDisplayed.get(position);
-            ImageView iv = (ImageView) itemView.findViewById(R.id.item_listViewImage);
-        //    TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
-        //    final TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
-        //    ImageView upvoteArrow = (ImageView) itemView.findViewById(R.id.item_listViewUpvoteArrow);
-        //    ImageView downvoteArrow = (ImageView) itemView.findViewById(R.id.item_listViewDownVoteArrow);
-            iv.setOnClickListener(new View.OnClickListener() {
+            ImageView postImage = (ImageView) itemView.findViewById(R.id.item_listViewImage);
+            TextView caption = (TextView) itemView.findViewById(R.id.item_listViewCaption);
+            final TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
+            ImageView upvoteArrow = (ImageView) itemView.findViewById(R.id.item_listViewUpvoteArrow);
+            ImageView downvoteArrow = (ImageView) itemView.findViewById(R.id.item_listViewDownVoteArrow);
+            postImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
@@ -190,19 +251,24 @@ public class yourupvotes extends AppCompatActivity {
                     startActivity(i);
                 }
             });
-            /*
-            iv.setImageDrawable(yourupvotes.draw.get(position));
+            try{
+                postImage.setImageDrawable(yourupvotes.draw.get(position));
+            } catch (IndexOutOfBoundsException e)
+            {
+
+            }
+
             if(post.getCaption().length() > 16)
             {
                 String newCap = post.getCaption().substring(0,12) + "...";
-                tv.setText(newCap);
+                caption.setText(newCap);
             }
             else
             {
-                tv.setText(post.getCaption());
+                caption.setText(post.getCaption());
             }
             numlikes.setText(Integer.toString(post.getNumLikes()));
-            */
+
             return itemView;
             //return super.getView(position, convertView, parent);
         }
