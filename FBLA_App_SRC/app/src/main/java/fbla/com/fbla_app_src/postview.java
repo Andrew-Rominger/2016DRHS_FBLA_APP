@@ -50,14 +50,37 @@ public class postview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        //get views
         Intent i = getIntent();
         Bundle extras = i.getExtras();
         String PostID = extras.get("postID").toString();
+        Backendless.Data.of(Post.class).findById(PostID, new AsyncCallback<Post>() {
+            @Override
+            public void handleResponse(Post foundPost) {
+                //gets post from id and sets picture
+                postO = foundPost;
+                DLC.setImageView(post);
+                DLC.execute("https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + foundPost.getPictureOID() + ".png");
+                upVotes.setText(Integer.toString(postO.getNumLikes()));
+                downVotes.setText(Integer.toString(postO.getNumDislikes()));
+                userName.setText(user.getProperty("userName").toString());
+                userNameBelow.setText(postO.getUserUploadedS());
+                caption.setText(postO.getCaption());
+                //comments.setText(Integer.toString(postO.getNumComments()));
+            }
+
+            @Override
+            public void handleFault(BackendlessFault backendlessFault) {
+
+            }
+        });
+        //get views
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postview);
         post = (ImageView) findViewById(R.id.picturePost);
         add = (FrameLayout) findViewById(R.id.postViewAdd);
+        commentsButton = (ImageView) findViewById(R.id.postViewComment);
         search = (FrameLayout) findViewById(R.id.postViewSearch);
         report = (ImageView) findViewById(R.id.postViewReport);
         backOfPost = (RelativeLayout) findViewById(R.id.backOfPost);
@@ -92,6 +115,17 @@ public class postview extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(postview.this, profilePage.class);
+                startActivity(i);
+            }
+        });
+        commentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent i = new Intent(postview.this, commentView.class);
+                Bundle b = new Bundle();
+                b.putString("postID", postO.getObjectId());
+                i.putExtras(b);
                 startActivity(i);
             }
         });
@@ -212,26 +246,7 @@ public class postview extends AppCompatActivity {
             }
         });
         */
-        Backendless.Data.of(Post.class).findById(PostID, new AsyncCallback<Post>() {
-            @Override
-            public void handleResponse(Post foundPost) {
-                //gets post from id and sets picture
-                postO = foundPost;
-                DLC.setImageView(post);
-                DLC.execute("https://api.backendless.com/67BF989E-7E10-5DB8-FFD7-C9147CA4F200/v1/files/media/userpics/" + foundPost.getPictureOID() + ".png");
-                upVotes.setText(Integer.toString(postO.getNumLikes()));
-                downVotes.setText(Integer.toString(postO.getNumDislikes()));
-                userName.setText(user.getProperty("userName").toString());
-                userNameBelow.setText(postO.getUserUploadedS());
-                caption.setText(postO.getCaption());
-                //comments.setText(Integer.toString(postO.getNumComments()));
-            }
 
-            @Override
-            public void handleFault(BackendlessFault backendlessFault) {
-
-            }
-        });
 
     }
     public boolean onTouchEvent(MotionEvent event)
@@ -245,11 +260,7 @@ public class postview extends AppCompatActivity {
     private void onRightSwipe()
     {
         Log.i("Right", "Swiped");
-        int num = postO.getNumLikes();
-        postO.setNumLikes(num + 1 );
-        backOfPost.setBackgroundResource(R.drawable.whitetoblue);
-        TransitionDrawable transition = (TransitionDrawable) backOfPost.getBackground();
-        transition.startTransition(1000);
+        final int num = postO.getNumLikes();
         AsyncCallback<BackendlessCollection<upvoted>> callback = new AsyncCallback<BackendlessCollection<upvoted>>()
         {
             @Override
@@ -258,7 +269,10 @@ public class postview extends AppCompatActivity {
                 List<upvoted> list = upvotedBackendlessCollection.getCurrentPage();
                 if(list.isEmpty())
                 {
-                    postO.setNumLikes(postO.getNumLikes() + 1);
+                    backOfPost.setBackgroundResource(R.drawable.whitetoblue);
+                    TransitionDrawable transition = (TransitionDrawable) backOfPost.getBackground();
+                    transition.startTransition(1000);
+                    postO.setNumLikes(num + 1);
                     Backendless.Persistence.save(postO, new AsyncCallback<Post>() {
                         @Override
                         public void handleResponse(Post post)
