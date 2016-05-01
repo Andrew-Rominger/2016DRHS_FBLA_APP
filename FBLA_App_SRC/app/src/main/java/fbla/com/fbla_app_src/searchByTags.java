@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
+import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
@@ -36,12 +37,14 @@ public class searchByTags extends AppCompatActivity
     FrameLayout profile;
     Intent i;
     ProgressBar spinner;
+    BackendlessUser user;
     final searchByTags g = this;
     ArrayList<Post> postsToBeDisplayed = new ArrayList<>();
     public DownloadImagesClass DLC = new DownloadImagesClass();
     public ArrayList<String> URLS = new ArrayList<String>();
     static ArrayList<Drawable> draw;
     ArrayAdapter adapter;
+    public ArrayList<Integer> posArr = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -50,6 +53,7 @@ public class searchByTags extends AppCompatActivity
         seachBy = (TextView) findViewById(R.id.tagTitle);
         seachList = (ListView) findViewById(R.id.searchListView);
         add = (FrameLayout) findViewById(R.id.searchAdd);
+        user = Backendless.UserService.CurrentUser();
 
         profile = (FrameLayout) findViewById(R.id.searchProfile);
         spinner = (ProgressBar) findViewById(R.id.loadingbartagged);
@@ -78,6 +82,10 @@ public class searchByTags extends AppCompatActivity
 
     public void populateListView() throws InterruptedException
     {
+        for(int i : posArr)
+        {
+            postsToBeDisplayed.remove(i);
+        }
         seachList.setAdapter(adapter);
     }
     private void updateList()
@@ -160,11 +168,12 @@ public class searchByTags extends AppCompatActivity
             {
                 itemView = getLayoutInflater().inflate(R.layout.layout_listview, parent, false);
             }
-            Post post = postsToBeDisplayed.get(position);
+            final Post post = postsToBeDisplayed.get(position);
             ImageView iv = (ImageView) itemView.findViewById(R.id.item_listViewImage);
-            TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
-            TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
-            iv.setImageDrawable(draw.get(position));
+            final TextView tv = (TextView) itemView.findViewById(R.id.item_listViewCaption);
+            final TextView numlikes = (TextView) itemView.findViewById(R.id.item_listViewUpVote);
+            ImageView upvoteArrow = (ImageView) itemView.findViewById(R.id.item_listViewUpvoteArrow);
+            iv.setImageDrawable(searchByTags.draw.get(position));
             if(post.getCaption().length() > 16)
             {
                 String newCap = post.getCaption().substring(0,12) + "...";
@@ -174,9 +183,75 @@ public class searchByTags extends AppCompatActivity
             {
                 tv.setText(post.getCaption());
             }
+            numlikes.setText(String.valueOf(post.getNumLikes()));
+            upvoteArrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AsyncCallback<BackendlessCollection<upvoted>> callback = new AsyncCallback<BackendlessCollection<upvoted>>()
+                    {
+                        @Override
+                        public void handleResponse(BackendlessCollection<upvoted> upvotedBackendlessCollection)
+                        {
+                            List<upvoted> list = upvotedBackendlessCollection.getCurrentPage();
+                            if(list.isEmpty())
+                            {
+                                post.setNumLikes(post.getNumLikes() + 1);
+                                Backendless.Persistence.save(post, new AsyncCallback<Post>() {
+                                    @Override
+                                    public void handleResponse(Post post) {
+                                        numlikes.setText(Integer.toString(post.getNumLikes()));
+                                    }
 
-            tv.setText(post.getCaption());
-            numlikes.setText(""+post.getNumLikes());
+                                    @Override
+                                    public void handleFault(BackendlessFault backendlessFault) {
+
+                                    }
+                                });
+                                upvoted uv = new upvoted();
+                                uv.setPostid(post.getObjectId());
+                                uv.setUserid(user.getObjectId());
+                                Backendless.Persistence.save(uv, new AsyncCallback<upvoted>() {
+                                    @Override
+                                    public void handleResponse(upvoted upvoted) {
+
+                                    }
+
+                                    @Override
+                                    public void handleFault(BackendlessFault backendlessFault) {
+
+                                    }
+                                });
+                                user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
+                                util.updateUser(user);
+                            }
+
+                        }
+
+                        @Override
+                        public void handleFault(BackendlessFault backendlessFault) {
+
+                        }
+                    };
+                    BackendlessDataQuery query = new BackendlessDataQuery();
+                    QueryOptions qo = new QueryOptions();
+                    query.setWhereClause("postid = '" + post.getObjectId() + "' AND userid = '" + user.getObjectId() + "'");
+                    query.setQueryOptions(qo);
+                    Backendless.Data.of(upvoted.class).find(query, callback);
+
+
+
+
+                }
+            });
+            if(post.getCaption().length() > 16)
+            {
+                String newCap = post.getCaption().substring(0,12) + "...";
+                tv.setText(newCap);
+            }
+            else
+            {
+                tv.setText(post.getCaption());
+            }
             return itemView;
             //return super.getView(position, convertView, parent);
         }

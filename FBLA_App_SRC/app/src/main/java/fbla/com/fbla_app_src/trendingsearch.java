@@ -62,6 +62,7 @@ public class trendingsearch extends AppCompatActivity {
     public ArrayList<String> URLS = new ArrayList<String>();
     final trendingsearch g = this;
     ArrayAdapter adapter;
+    public ArrayList<Integer> posArr = new ArrayList<>();
 
     public static ArrayList<Drawable> getDraw() {
         return draw;
@@ -152,6 +153,10 @@ public class trendingsearch extends AppCompatActivity {
     }
     public void populateListView() throws InterruptedException
     {
+        for(int i : posArr)
+        {
+            postsToBeDisplayed.remove(i);
+        }
         listView.setAdapter(adapter);
     }
     private String pictureImagePath = "";
@@ -272,23 +277,59 @@ public class trendingsearch extends AppCompatActivity {
             }
             numlikes.setText(String.valueOf(post.getNumLikes()));
             upvoteArrow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i("C", "CLICKED");
-                    post.setNumLikes(post.getNumLikes() + 1);
-                    Backendless.Persistence.save(post, new AsyncCallback<Post>() {
+                    @Override
+                    public void onClick(View v) {
+                    AsyncCallback<BackendlessCollection<upvoted>> callback = new AsyncCallback<BackendlessCollection<upvoted>>()
+                    {
                         @Override
-                        public void handleResponse(Post post) {
-                            numlikes.setText(Integer.toString(post.getNumLikes()));
+                        public void handleResponse(BackendlessCollection<upvoted> upvotedBackendlessCollection)
+                        {
+                            List<upvoted> list = upvotedBackendlessCollection.getCurrentPage();
+                            if(list.isEmpty())
+                            {
+                                post.setNumLikes(post.getNumLikes() + 1);
+                                Backendless.Persistence.save(post, new AsyncCallback<Post>() {
+                                    @Override
+                                    public void handleResponse(Post post) {
+                                        numlikes.setText(Integer.toString(post.getNumLikes()));
+                                    }
+
+                                    @Override
+                                    public void handleFault(BackendlessFault backendlessFault) {
+
+                                    }
+                                });
+                                upvoted uv = new upvoted();
+                                uv.setPostid(post.getObjectId());
+                                uv.setUserid(user.getObjectId());
+                                Backendless.Persistence.save(uv, new AsyncCallback<upvoted>() {
+                                    @Override
+                                    public void handleResponse(upvoted upvoted) {
+
+                                    }
+
+                                    @Override
+                                    public void handleFault(BackendlessFault backendlessFault) {
+
+                                    }
+                                });
+                                user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
+                                util.updateUser(user);
+                            }
+
                         }
 
                         @Override
                         public void handleFault(BackendlessFault backendlessFault) {
 
                         }
-                    });
-                    user.setProperty("numlikes", (Integer) user.getProperty("numlikes") + 1);
-                    util.updateUser(user);
+                    };
+                    BackendlessDataQuery query = new BackendlessDataQuery();
+                    QueryOptions qo = new QueryOptions();
+                    query.setWhereClause("postid = '" + post.getObjectId() + "' AND userid = '" + user.getObjectId() + "'");
+                    query.setQueryOptions(qo);
+                    Backendless.Data.of(upvoted.class).find(query, callback);
+
                 }
             });
             return itemView;

@@ -24,6 +24,8 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
     recentsearch fromR;
     searchByTags fromS;
     commentView fromC;
+    int locF;
+
 
     public commentView getFromC() {
         return fromC;
@@ -76,11 +78,55 @@ public class DownloadImagesClass extends AsyncTask<ArrayList<String>, Integer, A
     @Override
     protected ArrayList<Drawable> doInBackground(ArrayList<String>... params)
     {
+        if(from != null)
+        {
+            locF = 0;
+        }
+        else if(fromT != null)
+        {
+            locF = 1;
+        }
+        else if(fromR != null)
+        {
+            locF = 2;
+        }
+        else if(fromS != null)
+        {
+            locF = 3;
+        }
+        else
+        {
+            locF = 4;
+        }
         ArrayList<String> ListofURls = params[0];
         ArrayList<Drawable> images = new ArrayList<>();
+
         for (int i = 0;i<ListofURls.size();i++)
         {
-            images.add(downloadImage(ListofURls.get(i)));
+            Drawable D = downloadImage(ListofURls.get(i));
+            if(D != null)
+            {
+                images.add(D);
+            }
+            else
+            {
+                switch (locF)
+                {
+                    case 0:
+                        from.posArr.add(i);
+                        break;
+                    case 1:
+                        fromT.posArr.add(i);
+                        break;
+                    case 2:
+                        fromR.posArr.add(i);
+                        break;
+                    case 3:
+                        fromS.posArr.add(i);
+                        break;
+                }
+            }
+
         }
         return images;
 

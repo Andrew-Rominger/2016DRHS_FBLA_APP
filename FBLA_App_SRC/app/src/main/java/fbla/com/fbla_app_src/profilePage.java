@@ -93,8 +93,6 @@ public class profilePage extends AppCompatActivity{
 
         numPosts.setText(numposts);
         numLikes.setText(numlikes);
-
-
         //SEE EDIT PORFILE SETTINGS
         if(!(user.getProperty("coverPhotoID") == null))
         {

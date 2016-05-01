@@ -3,6 +3,8 @@ package fbla.com.fbla_app_src;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.ParseException;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -10,6 +12,9 @@ import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.files.BackendlessFile;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Andrew on 2/3/2016.
@@ -72,6 +77,32 @@ public class util
             }
         });
 
+
+    }
+    public static void hasUserUpDooted(Post p, BackendlessUser user, final mostupvotessearch muv)
+    {
+
+
+    }
+    public static String formateDateFromstring(String inputFormat, String outputFormat, String inputDate){
+
+        Date parsed = null;
+        String outputDate = "";
+
+        SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, java.util.Locale.getDefault());
+        SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, java.util.Locale.getDefault());
+
+        try {
+            parsed = df_input.parse(inputDate);
+            outputDate = df_output.format(parsed);
+
+        } catch (ParseException e) {
+            Log.e("EXEPTION", "ParseException - dateFormat");
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        return outputDate;
 
     }
     //updates inputted user

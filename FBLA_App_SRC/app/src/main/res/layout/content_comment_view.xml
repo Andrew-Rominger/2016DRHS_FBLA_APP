@@ -24,14 +24,24 @@
             android:src="@drawable/x"
             android:layout_gravity="left|center_vertical" />
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/commentView"
             android:textColor="#FFF"
             android:textSize="30sp"
-            android:text="comments"
+            android:text="Comments"
             android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:id="@+id/addComment"
+            android:layout_marginRight="10dip"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/addpostnavicon"
+            android:layout_gravity="right|center_vertical" />
+
     </FrameLayout>
 
     <ListView
