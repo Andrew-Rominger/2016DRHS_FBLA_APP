@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="fbla.com.fbla_app_src.createComment"
+    tools:showIn="@layout/activity_create_comment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#EA6C55"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/wrapper_createComment">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:id="@+id/closeAddComment"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/x"
+            android:layout_gravity="left|center_vertical" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_Comment_View"
+            android:textColor="#FFF"
+            android:textSize="30sp"
+            android:text="Add a Comment"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:background="@drawable/captionbckg"
+        android:hint="Add your comment here"
+        android:paddingLeft="10dp"
+        android:id="@+id/commentContentField"
+        android:layout_below="@+id/wrapper_createComment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Add Comment"
+        android:background="@drawable/mybutton"
+        android:id="@+id/addCommentButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp" />
+</RelativeLayout>
