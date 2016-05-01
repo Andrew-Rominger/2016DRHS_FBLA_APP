@@ -197,8 +197,6 @@ public class yourupvotes extends AppCompatActivity {
                 query.setQueryOptions(qo);
                 Backendless.Data.of(upvoted.class).find(query, upvotedCallback);
 
-
-
                 DLC.setDlList(draw);
                 DLC.setFromY(yourupvotes.this);
                 DLC.execute(getURLS(postsToBeDisplayed));

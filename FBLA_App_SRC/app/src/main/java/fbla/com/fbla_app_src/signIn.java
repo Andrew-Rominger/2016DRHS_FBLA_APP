@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -28,6 +29,7 @@ public class signIn extends AppCompatActivity {
     public EditText PassowrdIn;
     String Password;
     public Button signinButton;
+    TextView recoverypassword;
     public static ProgressBar spinner;
     public ImageView goBackButton;
     static Intent moveTo;
@@ -45,6 +47,7 @@ public class signIn extends AppCompatActivity {
         UsernameIn = (EditText) findViewById(R.id.userNameLogin);
         PassowrdIn = (EditText) findViewById(R.id.passwordLogin);
         spinner = (ProgressBar) findViewById(R.id.signInSpinenr);
+        recoverypassword = (TextView) findViewById(R.id.recoverPassword);
         spinner.setVisibility(View.GONE);
 
 
@@ -71,6 +74,13 @@ public class signIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(signIn.this, MainActivity.class));
+            }
+        });
+        recoverypassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(signIn.this, recoverPassword.class));
             }
         });
 
