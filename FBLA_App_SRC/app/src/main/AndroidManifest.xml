@@ -88,7 +88,7 @@
             android:name=".trendingsearch"
             android:label="@string/title_activity_trendingsearch"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".recentsearch"
             android:label="@string/title_activity_recentsearch"
@@ -121,7 +121,11 @@
             android:name=".usersPosts"
             android:label="@string/title_activity_users_posts"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".addComment"></activity>
+        <activity android:name=".addComment" />
+        <activity
+            android:name=".recoverPassword"
+            android:label="@string/title_activity_recover_password"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
