@@ -87,7 +87,8 @@
         <activity
             android:name=".trendingsearch"
             android:label="@string/title_activity_trendingsearch"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".recentsearch"
             android:label="@string/title_activity_recentsearch"

@@ -154,14 +154,14 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_weight=".1"
-            android:id="@+id/relativeLayout2" >
+            android:id="@+id/relativeLayout2">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/linearLayout"
-                android:background="#7D8C93" >
+                android:background="#7D8C93">
 
                 <FrameLayout
                     android:layout_width="wrap_content"
